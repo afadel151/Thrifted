@@ -1,10 +1,13 @@
 import './bootstrap';
 import '../css/app.css';
 import 'primevue/resources/themes/lara-light-green/theme.css'
+import 'primeicons/primeicons.css'
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import ToastService from 'primevue/toastservice';
+
 import PrimeVue from 'primevue/config';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 createInertiaApp({
@@ -15,6 +18,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(PrimeVue)
+            .use(ToastService)
             .mount(el);
     },
     progress: {
