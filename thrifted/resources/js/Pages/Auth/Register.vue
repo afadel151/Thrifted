@@ -31,7 +31,7 @@ const submit = () => {
                 <TextInput
                     id="name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="block mt-1 w-full"
                     v-model="form.name"
                     required
                     autofocus
@@ -47,7 +47,7 @@ const submit = () => {
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="block mt-1 w-full"
                     v-model="form.email"
                     required
                     autocomplete="username"
@@ -62,7 +62,7 @@ const submit = () => {
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block mt-1 w-full"
                     v-model="form.password"
                     required
                     autocomplete="new-password"
@@ -77,7 +77,7 @@ const submit = () => {
                 <TextInput
                     id="password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block mt-1 w-full"
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
@@ -86,10 +86,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex justify-end items-center mt-4">
                 <Link
                     :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="rounded-md text-gray-600 text-sm hover:text-gray-900 underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Already registered?
                 </Link>
@@ -98,6 +98,8 @@ const submit = () => {
                     Register
                 </PrimaryButton>
             </div>
+            <a href="/auth/github/redirect">Github</a>
+            <a href="/auth/google/redirect">Google</a>
         </form>
     </GuestLayout>
 </template>
