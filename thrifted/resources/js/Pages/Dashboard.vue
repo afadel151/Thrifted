@@ -12,11 +12,11 @@ import NavBar from '../Components/NavBar.vue';
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Home" />
     <NavBar />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-gray-800 text-xl leading-tight">Dashboard</h2>
+            <h2 class="font-semibold text-gray-800 text-xl leading-tight">Home</h2>
         </template>
 
         <div class="py-12">

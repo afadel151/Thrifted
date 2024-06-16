@@ -30,9 +30,9 @@ const showingNavigationDropdown = ref(false);
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Home
                                 </NavLink>
-                                <NavLink :href="route('my_books')" :active="route().current('my_books')">
+                                <NavLink :href="route('books.my_books')" :active="route().current('books.my_books')">
                                     My Books
                                 </NavLink>
                             </div>
