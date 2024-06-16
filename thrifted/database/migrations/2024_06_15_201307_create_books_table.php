@@ -21,11 +21,12 @@ return new class extends Migration
             $table->string('isbn')->nullable();
             $table->string('edition')->nullable();
             $table->string('condition');
-            $table->boolean('new')->default(false);
+            $table->boolean('new');
+            $table->boolean('original');
             $table->unsignedBigInteger('price')->default(0);
             $table->string('format');
             $table->unsignedBigInteger('old_price')->nullable();
-            $table->string('available')->default(true);            
+            $table->boolean('available')->default(true);            
             $table->timestamps();
         });
     }

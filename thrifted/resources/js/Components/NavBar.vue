@@ -3,7 +3,7 @@ import { ref } from "vue";
 import Menubar from "primevue/menubar";
 import Badge from "primevue/badge";
 import Avatar from "primevue/avatar";
-import InputText from "primevue/inputtext/InputText.vue";
+import InputText from "primevue/inputtext";
 
 const items = ref([
     {

@@ -1,9 +1,4 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref, computed } from "vue";
-import axios from 'axios';
-import { Link } from '@inertiajs/vue3';
 import Button from "primevue/button";
 import Textarea from "primevue/textarea";
 import NavBar from '../Components/NavBar.vue';
@@ -15,6 +10,20 @@ import InputNumber from "primevue/inputnumber";
 import Tag from 'primevue/tag';
 import SelectButton from 'primevue/selectbutton';
 import Select from "primevue/select";
+const props = defineProps({
+    user:{
+        type:Object,
+        required:true
+    },
+    categories:{
+        type:Array,
+        required:true
+    },
+    tags:{
+        type:Array,
+        required:true
+    },
+});
 const file = ref(null);
 const InputTitle = ref('');
 const InputEdition = ref('');
@@ -88,89 +97,9 @@ function onChange(e) {
     file.value = e.target.files[0];
 }
 
-
-const props = defineProps(
-    {
-        user: {
-            type: Object,
-            required: true,
-        },
-        books: {
-            type: Array,
-            required: true,
-        },
-        tags: {
-            type: Array,
-            required: true,
-        },
-        categories: {
-            type: Array,
-            required: true,
-        },
-    },
-);
-const MyBooks = ref(props.books);
-const getSeverity = (status) => {
-    switch (status) {
-        case '1':
-            return 'success';
-
-
-        case '0':
-            return 'danger';
-
-        default:
-            return null;
-    }
-};
 </script>
-
 <template>
-
-    <Head title="My Books" />
-    <NavBar />
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-gray-800 text-xl leading-tight">My books </h2>
-        </template>
-
-        <div class="py-12">
-            <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                <div class="bg-white shadow-sm p- p-5 sm:rounded-lg overflow-hidden">
-                    <div class="p-6 text-gray-900">Here are your books!</div>
-                    <div class="grid grid-cols-4">
-                        <div v-for="book in MyBooks">
-                            <div class="m-2 p-2 border rounded">
-                                <Tag :severity="getSeverity(book.available)"
-                                    :value="book.available = 1 ? 'available' : 'sold'" rounded></Tag>
-                                <Link :href="route('books.show', { id: book.id })">
-                                <div class="mb-4">
-                                    <div class="relative flex justify-center mx-auto">
-
-                                        <img :src="book.cover == null ? '/cover-not-available.jpg' : book.cover.replace('public/', '/storage/')"
-                                            :alt="book.title" class="rounded h-40" />
-
-
-                                    </div>
-                                </div>
-                                </Link>
-                                <div class="mb-1 font-medium text-xl">{{ book.title }}</div>
-                                <div class="mb-4 font-medium text-sm">{{ book.author }}</div>
-                                <div class="flex justify-between items-center">
-                                    <p class="mt-0 font-semibold text-xl">{{ book.price == 0 ? 'No price yet' :
-                                        book.price }}
-                                    </p>
-                                    <span>
-
-                                        <Button icon="pi pi-trash" style="font-size: 0.5rem" severity="secondary"
-                                            outlined />
-                                        <Button icon="pi pi-pencil" style="font-size: 0.5rem" class="ml-2" />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <Button label="Show" @click="visible = true" />
+    <Button label="Show" @click="visible = true" />
                     <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '40rem' }">
                         <template #header>
                             <div class="inline-flex justify-center items-center gap-2">
@@ -246,9 +175,5 @@ const getSeverity = (status) => {
                             <Button label="Save" outlined severity="secondary" @click="SaveBook" autofocus />
                         </template>
                     </Dialog>
-
-                </div>
-            </div>
-        </div>
-    </AuthenticatedLayout>
+</template>         </Dialog>
 </template>

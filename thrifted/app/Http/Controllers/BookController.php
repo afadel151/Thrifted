@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +30,12 @@ class BookController extends Controller
         $books = auth()->user()->books;
         $tags = Tag::all();
         $user = auth()->user();
+        $categories = Category::all();
         return Inertia::render('MyBoooks', [
             'books' => $books,
             'tags' => $tags,
-            'user' => $user
+            'user' => $user,
+            'categories' => $categories
         ]);
     }
     public function create(Request $request)
@@ -56,6 +59,10 @@ class BookController extends Controller
         $book->user_id = $request->input('user_id');
         $book->format = $request->input('format');
         $book->condition = $request->input('condition');
+        $book->new = $request->input('state') === 'New' ? true : false;
+        $book->category_id = $request->input('category_id');
+        $book->price = $request->input('price');
+        $book->original = $request->input('original') === 'Original' ? true : false;
         $book->save();
         $tags = $request->input('tags', []);
                 foreach ($tags as $tag) {
@@ -69,8 +76,9 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::find($id);
+       
         return Inertia::render('BookShow', [
-            'book' => $book
+            'book' => $book,
         ]);
     }
 
