@@ -89,7 +89,12 @@ class BookController extends Controller
         $book->save();
         $tags = $request->input('tags', []);
         foreach ($tags as $tag) {
-            \Log::info('tags:' . $tag);
+            DB::table('book_tags')->insert(
+                [
+                    'book_id' => $book->id,
+                    'tag_id' => $tag,
+                ]
+            );
         }
         return response()->json($book);
 
@@ -98,19 +103,19 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = Book::with('category', 'tags', 'user', 'pictures')->find($id);
         $tagsIds = $book->tags->pluck('id')->toArray();
         $relatedcategory = Book::where('books.id', '!=', $book->id)
             ->where('category_id', $book->category_id)
             ->pluck('id')
             ->toArray();
-        $relatedtags= DB::table('book_tags')->select('book_id')
-                                                    ->whereIn('tag_id',$tagsIds)
-                                                    ->where('book_id','!=', $book->id);
-        $relatedbooks = Book::whereIn('id',$relatedcategory)
-                            ->orWhereIn('id', $relatedtags)
-                            ->take(10)
-                            ->get();
+        $relatedtags = DB::table('book_tags')->select('book_id')
+            ->whereIn('tag_id', $tagsIds)
+            ->where('book_id', '!=', $book->id);
+        $relatedbooks = Book::whereIn('id', $relatedcategory)
+            ->orWhereIn('id', $relatedtags)
+            ->take(10)
+            ->get();
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,
             'book' => $book,

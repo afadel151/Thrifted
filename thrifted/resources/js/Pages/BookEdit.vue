@@ -113,71 +113,71 @@ async function UpdateBook() {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-gray-800 text-xl leading-tight">Book view </h2>
+                <h2 class="font-semibold text-gray-800 text-xl leading-tight">Book Edit </h2>
                 <div class="space-x-4">
                     <Link v-if="props.book.user_id == user.id" :href="route('books.show', { id: props.book.id })">
-                    <Button icon="pi pi-pencil" label="View" severity="contrast" raised outlined size="small" />
+                    <Button icon="pi pi-eye" label="View" severity="contrast" raised outlined size="small" />
                     </Link>
                     <Button icon="pi pi-save" label="Save changes" @click="UpdateBook" severity="contrast" raised outlined size="small" />
                 </div>
             </div>
         </template>
-        <div class="flex justify-center items-stretch gap-4 mt-2 px-96 w-[70%] h-[430px]">
+        <div class="flex justify-center items-stretch gap-4 mt-2 px-96">
             <!-- <img :src="props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit"> -->
             <!-- <Select v-model="selectedCategory" :options="props.categories"  optionLabel="name" optionValue="id" placeholder="Change Category" class="w-full md:w-56" /> -->
-            <div class="flex flex-col justify-start gap-2 w-full">
-                <div class="flex items-center gap-4 mb-2">
+            <div class="flex flex-col justify-start gap-2 md:w-full">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="author" class="w-24 font-semibold">Category</label>
                     <Select v-model="InputCategory" :options="props.categories" optionLabel="name" optionValue="id"
                         placeholder="Select a Category" class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="author" class="w-24 font-semibold">Title</label>
                     <InputText v-model="InputTitle" id="title" autocomplete="off" class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="author" class="w-24 font-semibold">Author</label>
                     <InputText v-model="InputAuthor" id="author" class="flex-auto" autocomplete="off" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="edition" class="w-24 font-semibold">Edition</label>
                     <InputText v-model="InputEdition" id="edition" class="flex-auto" autocomplete="off" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">Price</label>
                     <InputNumber v-model="InputPrice" inputId="integeronly" class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">Format</label>
                     <SelectButton v-model="InputFormat" :options="FormatOptions" aria-labelledby="basic"
                         class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">Original</label>
                     <SelectButton v-model="InputOriginal" :options="OriginalOptions" aria-labelledby="basic"
                         class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">Condition</label>
                     <SelectButton v-model="InputCondition" :options="ConditionOptions" aria-labelledby="basic"
                         class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">State</label>
                     <SelectButton v-model="InputState" :options="StateOptions" aria-labelledby="basic"
                         class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">ISBN</label>
                     <InputNumber v-model="InputIsbn" inputId="integeronly" class="flex-auto" />
                 </div>
-                <div class="flex items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label class="w-24 font-semibold">Description</label>
                     <Textarea v-model="InputDescription" rows="5" cols="30" class="flex-auto" />
                 </div>
-                <div class="flex justify-between items-center gap-4 mb-2">
+                <div class="flex md:flex-row sm:flex-col justify-between items-center gap-4 mb-2">
                     <p class="font-bold text-3xl">Book pictures</p>
-                    <div class="flex justify-center card">
+                    <div v-if="images.length < 3" class="flex justify-center card">
                         <Button type="button" icon="pi pi-plus-circle" label="Add" @click="toggle" />
 
                         <Popover ref="op">
@@ -190,7 +190,7 @@ async function UpdateBook() {
                         </Popover>
                     </div>
                 </div>
-                <div class="card">
+                <div class="md:card sm:flex sm:justify-center sm:w-[768px]">
                     <Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5"
                         containerStyle="max-width: 640px">
                         <template #item="slotProps">
