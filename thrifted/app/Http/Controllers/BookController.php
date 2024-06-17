@@ -14,13 +14,15 @@ class BookController extends Controller
 {
     public function edit($id)
     {
-        $book = Book::find($id);
+        $book = Book::with('category','tags')->find($id);
+        $categories = Category::all();
         if ($book) {
             if ($book->user_id != auth()->user()->id) {
                 abort(403);
             } else {
                 return Inertia::render('BookEdit', [
                     'book' => $book,
+                    'categories' => $categories
                 ]);
             }
         }

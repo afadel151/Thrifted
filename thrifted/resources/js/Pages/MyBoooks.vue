@@ -51,7 +51,10 @@ const AddNewBook = (book) => {
         <div class="py-12">
             <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
                 <div class="bg-white shadow-sm p- p-5 sm:rounded-lg overflow-hidden">
-                    <div class="p-6 text-gray-900">Here are your books!</div>
+                    <div class="flex justify-between items-center">
+                        <div class="p-6 text-gray-900">Here are your books!</div>
+                    <BookAdd :user="props.user" :categories="props.categories" :tags="props.tags" @add-book="AddNewBook" />
+                    </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div v-for="book in MyBooks">
                             <div class="m-2 p-2 border rounded">
@@ -84,7 +87,7 @@ const AddNewBook = (book) => {
                             </div>
                         </div>
                     </div>
-                    <BookAdd :user="props.user" :categories="props.categories" :tags="props.tags" @add-book="AddNewBook" />
+                    
 
                 </div>
             </div>

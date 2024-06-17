@@ -100,7 +100,7 @@ function onChange(e) {
 
 </script>
 <template>
-    <Button label="Show" @click="visible = true" />
+    <Button  icon="pi pi-plus-circle" @click="visible = true" />
     <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '40rem' }">
         <template #header>
             <div class="inline-flex justify-center items-center gap-2">
