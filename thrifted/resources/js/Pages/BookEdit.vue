@@ -4,11 +4,12 @@ import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 import Select from 'primevue/select';
 import SelectButton from 'primevue/selectbutton';
-
+import axios from "axios";
 import InputText from 'primevue/inputtext';
 import MultiSelect from 'primevue/multiselect';
 import Textarea from 'primevue/textarea';
 import InputNumber from 'primevue/inputnumber';
+import Popover from 'primevue/popover';
 import FileUpload from 'primevue/fileupload';
 import { computed, ref } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3'
@@ -23,8 +24,8 @@ const props = defineProps({
         type: Array,
         required: true,
     }
-})
-const selectedCategory = ref(props.book.category_id);
+});
+const file = ref(null);
 const InputTitle = ref(props.book.title);
 const InputEdition = ref(props.book.edition);
 const InputAuthor = ref(props.book.author);
@@ -38,22 +39,72 @@ const InputFormat = ref(props.book.format);
 const ConditionOptions = ref(['Low', 'Acceptable', 'Normal', 'Good ', 'High']);
 const StateOptions = ref(['New', 'Used']);
 const InputState = ref(props.book.new == true ? 'New' : 'Used');
+const InputCategory = ref(props.book.category_id);
 const InputCondition = ref(props.book.condition);
+const op = ref();
 const user = computed(() => { return page.props.auth.user; })
-// const images = computed(() => { 
-    
-//     return props.book.cover; 
-// });
-// const responsiveOptions = ref([
-//     {
-//         breakpoint: '1300px',
-//         numVisible: 4
-//     },
-//     {
-//         breakpoint: '575px',
-//         numVisible: 1
-//     }
-// ]);
+const images = computed(() => {
+    let images = [];
+    images.push(props.book.cover);
+    props.book.pictures.forEach(picture => {
+        images.push(picture.picture);
+    });
+    return images;
+});
+const responsiveOptions = ref([
+    {
+        breakpoint: '1300px',
+        numVisible: 4
+    },
+    {
+        breakpoint: '575px',
+        numVisible: 1
+    }
+]);
+const toggle = (event) => {
+    op.value.toggle(event);
+}
+function onChange(e) {
+    file.value = e.target.files[0];
+}
+async function AddPicture(){
+    let formData = new FormData();
+    formData.append('book_id', props.book.id);
+    formData.append('file', file.value);
+    try {
+        let response = await axios.post('/api/books/add_picture', formData);
+        if (response.status == 200) {
+            location.reload();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function UpdateBook() {
+
+    let formData = new FormData();
+    formData.append('book_id', props.book.id);//
+    formData.append('title', InputTitle.value);//
+    formData.append('edition', InputEdition.value);//
+    formData.append('author', InputAuthor.value);//
+    formData.append('isbn', InputIsbn.value);//
+    formData.append('price', InputPrice.value);//
+    formData.append('description', InputDescription.value);//
+    formData.append('format', InputFormat.value);//
+    formData.append('original', InputOriginal.value);//
+    formData.append('state', InputState.value);//
+    formData.append('condition', InputCondition.value);//
+    formData.append('category_id', InputCategory.value);//
+    try {
+        let response = await axios.post('/api/books/update', formData);
+        if (response.status == 200) {
+            location.reload();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 <template>
 
@@ -63,9 +114,12 @@ const user = computed(() => { return page.props.auth.user; })
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-gray-800 text-xl leading-tight">Book view </h2>
-                <Link v-if="props.book.user_id == user.id" :href="route('books.show', { id: props.book.id })">
-                <Button icon="pi pi-pencil" label="View" severity="contrast" raised outlined size="small" />
-                </Link>
+                <div class="space-x-4">
+                    <Link v-if="props.book.user_id == user.id" :href="route('books.show', { id: props.book.id })">
+                    <Button icon="pi pi-pencil" label="View" severity="contrast" raised outlined size="small" />
+                    </Link>
+                    <Button icon="pi pi-save" label="Save changes" @click="UpdateBook" severity="contrast" raised outlined size="small" />
+                </div>
             </div>
         </template>
         <div class="flex justify-center items-stretch gap-4 mt-2 px-96 w-[70%] h-[430px]">
@@ -109,6 +163,11 @@ const user = computed(() => { return page.props.auth.user; })
                         class="flex-auto" />
                 </div>
                 <div class="flex items-center gap-4 mb-2">
+                    <label for="ssn" class="w-24 font-semibold">State</label>
+                    <SelectButton v-model="InputState" :options="StateOptions" aria-labelledby="basic"
+                        class="flex-auto" />
+                </div>
+                <div class="flex items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">ISBN</label>
                     <InputNumber v-model="InputIsbn" inputId="integeronly" class="flex-auto" />
                 </div>
@@ -116,21 +175,38 @@ const user = computed(() => { return page.props.auth.user; })
                     <label class="w-24 font-semibold">Description</label>
                     <Textarea v-model="InputDescription" rows="5" cols="30" class="flex-auto" />
                 </div>
-                <p>Book pictures</p>
-                <!-- <div class="card">
+                <div class="flex justify-between items-center gap-4 mb-2">
+                    <p class="font-bold text-3xl">Book pictures</p>
+                    <div class="flex justify-center card">
+                        <Button type="button" icon="pi pi-plus-circle" label="Add" @click="toggle" />
+
+                        <Popover ref="op">
+                            <div class="flex items-center gap-6">
+                                <label for="Cover" class="font-semibold">Add a picture</label>
+                                <input name="file" type="file" class="flex-auto" @change="onChange" />
+                                <Button label="Add" outlined severity="contrast" @click="AddPicture" />
+                            </div>
+                            
+                        </Popover>
+                    </div>
+                </div>
+                <div class="card">
                     <Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5"
                         containerStyle="max-width: 640px">
                         <template #item="slotProps">
-                            <img :src="slotProps.item.cover" :alt="slotProps.item.alt" style="width: 100%" />
+                            <img :src="slotProps.item == null ? '' : slotProps.item.replace('public/', '/storage/')"
+                                :alt="slotProps.item == null ? 'no image' : 'My image'" style="width: 70%" />
                         </template>
                         <template #thumbnail="slotProps">
-                            <img :src="slotProps.item.thumbnailImageSrc" :alt="slotProps.item.alt" />
+                            <img :src="slotProps.item == null ? '' : slotProps.item.replace('public/', '/storage/')"
+                                :alt="slotProps.item == null ? 'no image' : 'My image'" />
                         </template>
                     </Galleria>
-                </div> -->
+                </div>
+
             </div>
+
         </div>
-        <Divider />
 
     </AuthenticatedLayout>
 </template>

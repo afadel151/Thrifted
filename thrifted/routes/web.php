@@ -18,23 +18,25 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::prefix('/api')->group(function (){
-    Route::prefix('books')->group(function (){
-        Route::post('create',[BookController::class, 'create'])->name('books.create');
+Route::prefix('/api')->group(function () {
+    Route::prefix('books')->group(function () {
+        Route::post('create', [BookController::class, 'create'])->name('books.create');
+        Route::post('add_picture', [BookController::class, 'add_picture']);
+        Route::post('update', [BookController::class, 'update']);
     });
 });
 Route::get('/dashboard', function () {
     $newbooks = Book::orderBy('created_at', 'desc')->take(10)->get();
-    return Inertia::render('Dashboard',[
+    return Inertia::render('Dashboard', [
         'newbooks' => $newbooks,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::prefix('/books')->group(function () {
-    Route::get('/my_books',[BookController::class,'my_books'])->middleware(['auth', 'verified'])->name('books.my_books');
-    Route::get('/{id}',[BookController::class,'show'])->name('books.show');
-    Route::get('/{id}/edit',[BookController::class,'edit'])->middleware(['auth','verified'])->name('books.edit');
+    Route::get('/my_books', [BookController::class, 'my_books'])->middleware(['auth', 'verified'])->name('books.my_books');
+    Route::get('/{id}', [BookController::class, 'show'])->name('books.show');
+    Route::get('/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -3,18 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\BookPicture;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BookController extends Controller
 {
+    public function add_picture(Request $request)
+    {
+        $book = Book::find($request->input('book_id'));
+        if ($book) {
+            if ($book->user_id != auth()->user()->id) {
+                abort(403);
+            } else {
+                if ($request->hasFile('file')) {
+                    $request_file = $request->file('file');
+                    $path = '/public/books/';
+                    $NewPath = Storage::disk('local')->putFile($path, $request_file);
+                    BookPicture::create([
+                        'book_id' => $book->id,
+                        'picture' => $NewPath
+                    ]);
+                }
+            }
+        }
+    }
     public function edit($id)
     {
-        $book = Book::with('category','tags')->find($id);
+        $book = Book::with('category', 'pictures', 'tags')->find($id);
         $categories = Category::all();
         if ($book) {
             if ($book->user_id != auth()->user()->id) {
@@ -67,8 +88,8 @@ class BookController extends Controller
         $book->original = $request->input('original') === 'Original' ? true : false;
         $book->save();
         $tags = $request->input('tags', []);
-                foreach ($tags as $tag) {
-            \Log::info('tags:'. $tag);
+        foreach ($tags as $tag) {
+            \Log::info('tags:' . $tag);
         }
         return response()->json($book);
 
@@ -78,13 +99,46 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::find($id);
-        $relatedbooks = Book::where('category_id', $book->category_id)
-                                ->where('id', '!=', $book->id)
-                                ->take(10)->get();
+        $tagsIds = $book->tags->pluck('id')->toArray();
+        $relatedcategory = Book::where('books.id', '!=', $book->id)
+            ->where('category_id', $book->category_id)
+            ->pluck('id')
+            ->toArray();
+        $relatedtags= DB::table('book_tags')->select('book_id')
+                                                    ->whereIn('tag_id',$tagsIds)
+                                                    ->where('book_id','!=', $book->id);
+        $relatedbooks = Book::whereIn('id',$relatedcategory)
+                            ->orWhereIn('id', $relatedtags)
+                            ->take(10)
+                            ->get();
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,
             'book' => $book,
         ]);
+    }
+    public function update(Request $request)
+    {
+
+        $book = Book::find($request->input('book_id'));
+        if ($book && $book->user_id == Auth::user()->id) {
+            if ($request->input('price') != $book->price) {
+                $book->old_price = $book->price;
+                $book->price = $request->input('price');
+            }
+            $book->update([
+                'title' => $request->input('title'),
+                'author' => $request->input('author'),
+                'edition' => $request->input('edition'),
+                'category_id' => $request->input('category_id'),
+                'condition' => $request->input('condition'),
+                'isbn' => $request->input('isbn'),
+                'description' => $request->input('description'),
+                'format' => $request->input('format'),
+                'new' => $request->input('state') === 'New' ? true : false,
+                'original' => $request->input('original') === 'Original' ? true : false,
+            ]);
+            return response()->json($book);
+        }
     }
 
 }

@@ -52,7 +52,7 @@ const user = computed(() => { return page.props.auth.user; })
 
     <Head title="Book view" />
     <NavBar />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout class="px-20">
         <template #header>
             <div class="flex justify-between items-center" >
                 <h2 class="font-semibold text-gray-800 text-xl leading-tight">Book view </h2>
@@ -88,7 +88,7 @@ const user = computed(() => { return page.props.auth.user; })
         </div>
         <Divider />
         <p class="ml-10 font-black text-4xl">See Also</p>
-        <Carousel :value="props.related_books" :numVisible="4" :numScroll="1"
+        <Carousel :value="props.related_books" :numVisible="props.related_books.length > 4 ? 4 : props.related_books.length" :numScroll="1"
                         :responsiveOptions="responsiveOptions">
                         <template #item="slotProps">
                             <div class="border-2 m-2 p-4 rounded">

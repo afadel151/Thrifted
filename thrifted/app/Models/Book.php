@@ -8,7 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'user_id',
+        'category_id',
+        'title',
+        'description',
+        'author',
+        'edition',
+        'price',
+        'isbn',
+        'cover',
+        'condition',
+        'new',
+        'original',
+        'format',
+        'old_price',
+        'available',
+    ];
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'book_tags', 'book_id', 'tag_id');
@@ -20,5 +36,9 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+    public function pictures()
+    {
+        return $this->hasMany(BookPicture::class);
     }
 }
