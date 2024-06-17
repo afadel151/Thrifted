@@ -2,17 +2,49 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
-import TabPanel from 'primevue/tabpanel';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3'
-
+import Carousel from 'primevue/carousel';
 const page = usePage()
 const props = defineProps({
     book: {
         type: Object,
         required: true,
+    },
+    related_books:{
+        type:Array,
+        required: true,
     }
-})
+});
+const getSeverity = (status) => {
+    if (status == true) {
+        return 'success';
+    } else {
+        return 'danger';
+    }
+};
+const responsiveOptions = ref([
+    {
+        breakpoint: '1400px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '1199px',
+        numVisible: 3,
+        numScroll: 1
+    },
+    {
+        breakpoint: '767px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '575px',
+        numVisible: 1,
+        numScroll: 1
+    }
+]);
 const user = computed(() => { return page.props.auth.user; })
 </script>
 
@@ -55,6 +87,32 @@ const user = computed(() => { return page.props.auth.user; })
             </div>
         </div>
         <Divider />
-
+        <p class="ml-10 font-black text-4xl">See Also</p>
+        <Carousel :value="props.related_books" :numVisible="4" :numScroll="1"
+                        :responsiveOptions="responsiveOptions">
+                        <template #item="slotProps">
+                            <div class="border-2 m-2 p-4 rounded">
+                                <Link :href="route('books.show', { id: slotProps.data.id })">
+                                <div class="mb-4">
+                                    <div class="relative flex justify-center mx-auto">
+                                        <img :src="slotProps.data.cover == null ? '/cover-not-available.jpg' : slotProps.data.cover.replace('public/', '/storage/')"
+                                            :alt="slotProps.data.name" class="rounded h-52" />
+                                        <Tag :value="slotProps.data.available == 1 ? 'available' : 'sold'"
+                                            :severity="getSeverity(slotProps.data.available)" class="absolute"
+                                            style="left:5px; top: 5px" />
+                                    </div>
+                                </div>
+                                </Link>
+                                <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
+                                <div class="flex justify-between items-center">
+                                    <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div>
+                                    <span>
+                                        <Button icon="pi pi-heart" severity="secondary" outlined />
+                                        <Button icon="pi pi-shopping-cart" class="ml-2" />
+                                    </span>
+                                </div>
+                            </div>
+                        </template>
+                    </Carousel>
     </AuthenticatedLayout>
 </template>

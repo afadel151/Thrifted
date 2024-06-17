@@ -28,16 +28,10 @@ const props = defineProps(
 );
 const MyBooks = ref(props.books);
 const getSeverity = (status) => {
-    switch (status) {
-        case '1':
-            return 'success';
-
-
-        case '0':
-            return 'danger';
-
-        default:
-            return null;
+    if (status == true) {
+        return 'success';
+    }else{
+        return 'danger';
     }
 };
 const AddNewBook = (book) => {
@@ -58,7 +52,7 @@ const AddNewBook = (book) => {
             <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
                 <div class="bg-white shadow-sm p- p-5 sm:rounded-lg overflow-hidden">
                     <div class="p-6 text-gray-900">Here are your books!</div>
-                    <div class="grid grid-cols-4">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div v-for="book in MyBooks">
                             <div class="m-2 p-2 border rounded">
                                 <Tag :severity="getSeverity(book.available)"

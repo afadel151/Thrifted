@@ -24,7 +24,10 @@ Route::prefix('/api')->group(function (){
     });
 });
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $newbooks = Book::orderBy('created_at', 'desc')->take(10)->get();
+    return Inertia::render('Dashboard',[
+        'newbooks' => $newbooks,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

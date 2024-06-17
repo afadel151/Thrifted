@@ -76,8 +76,11 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::find($id);
-       
+        $relatedbooks = Book::where('category_id', $book->category_id)
+                                ->where('id', '!=', $book->id)
+                                ->take(10)->get();
         return Inertia::render('BookShow', [
+            'related_books' => $relatedbooks,
             'book' => $book,
         ]);
     }
