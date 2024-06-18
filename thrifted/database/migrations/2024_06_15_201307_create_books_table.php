@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('price')->default(0);
             $table->string('format');
             $table->unsignedBigInteger('old_price')->nullable();
-            $table->boolean('available')->default(true);            
+           $table->unsignedBigInteger('pages')->default(0); $table->boolean('available')->default(true);            
             $table->timestamps();
         });
     }
