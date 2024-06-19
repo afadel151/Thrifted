@@ -70,7 +70,7 @@ const user = computed(() => { return page.props.auth.user; })
                 <p class="font-semibold text-2xl text-gray-500">{{ props.book.category.name }}</p>
                 <p class="text-4xl">{{ props.book.title }}</p>
                 <p class="font-bold text-3xl">{{ props.book.price }}DA <span v-if="props.book.old_price != null" class="text-red-300 text-xl line-through">{{ props.book.old_price }} DA</span></p>
-                <p class="font-bold text-xl">256 pages</p>
+                <p class="font-bold text-2xl">256 pages</p>
 
                 <p class="font-bold text-base">{{ props.book.format }}</p>
                 <p class="text-xl" :class="props.book.available ? 'text-green-500' : 'text-red-400'">{{
