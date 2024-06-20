@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b80ffabeb2c2ee99d0a7785627097e32",
+    "content-hash": "72d8d682e2a252b81b64f66b7fb85f10",
     "packages": [
         {
             "name": "brick/math",
@@ -639,6 +639,89 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "giggsey/libphonenumber-for-php-lite",
+            "version": "8.13.39",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php-lite.git",
+                "reference": "5915119499c321bd78b12680b0b19316dace0756"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php-lite/zipball/5915119499c321bd78b12680b0b19316dace0756",
+                "reference": "5915119499c321bd78b12680b0b19316dace0756",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/polyfill-mbstring": "^1.17"
+            },
+            "conflict": {
+                "giggsey/libphonenumber-for-php": "*"
+            },
+            "require-dev": {
+                "ext-dom": "*",
+                "friendsofphp/php-cs-fixer": "^3.12",
+                "infection/infection": "^0.28",
+                "pear/pear-core-minimal": "^1.10.11",
+                "pear/pear_exception": "^1.0.2",
+                "pear/versioncontrol_git": "^0.7",
+                "phing/phing": "^2.17.4",
+                "phpstan/extension-installer": "^1.2",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.2",
+                "phpunit/phpunit": "^10.5",
+                "symfony/console": "^6.0",
+                "symfony/var-exporter": "^6.0"
+            },
+            "suggest": {
+                "giggsey/libphonenumber-for-php": "Use libphonenumber-for-php for geocoding, carriers, timezones and matching"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "libphonenumber\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/src/data/",
+                    "/src/carrier/data/",
+                    "/src/geocoding/data/",
+                    "/src/timezone/data/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "https://giggsey.com/"
+                }
+            ],
+            "description": "A lite version of giggsey/libphonenumber-for-php, which is a PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php-lite",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/giggsey/libphonenumber-for-php-lite/issues",
+                "source": "https://github.com/giggsey/libphonenumber-for-php-lite"
+            },
+            "time": "2024-06-14T12:42:38+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -3030,6 +3113,140 @@
             "time": "2024-03-03T02:14:58+00:00"
         },
         {
+            "name": "pnlinh/laravel-infobip-sms",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pnlinh/laravel-infobip-sms.git",
+                "reference": "716d55bb3a5e0ebe17580703e136c7533a08a40b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pnlinh/laravel-infobip-sms/zipball/716d55bb3a5e0ebe17580703e136c7533a08a40b",
+                "reference": "716d55bb3a5e0ebe17580703e136c7533a08a40b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^7.3|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^8.4@dev|^9.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pnlinh\\InfobipSms\\Providers\\InfobipSmsServiceProvider"
+                    ],
+                    "aliases": {
+                        "InfobipSms": "Pnlinh\\InfobipSms\\Facades\\InfobipSms"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Pnlinh\\InfobipSms\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pham Ngoc Linh",
+                    "email": "pnlinh1207@gmail.com"
+                }
+            ],
+            "description": "Infobip Sms Service in Laravel",
+            "keywords": [
+                "infobip sms",
+                "laravel infobip"
+            ],
+            "support": {
+                "issues": "https://github.com/pnlinh/laravel-infobip-sms/issues",
+                "source": "https://github.com/pnlinh/laravel-infobip-sms/tree/v1.0.4"
+            },
+            "time": "2021-09-27T07:25:19+00:00"
+        },
+        {
+            "name": "propaganistas/laravel-phone",
+            "version": "5.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Propaganistas/Laravel-Phone.git",
+                "reference": "44efd6edc181616c49f895fff97ad1cc0f3fecb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/44efd6edc181616c49f895fff97ad1cc0f3fecb2",
+                "reference": "44efd6edc181616c49f895fff97ad1cc0f3fecb2",
+                "shasum": ""
+            },
+            "require": {
+                "giggsey/libphonenumber-for-php-lite": "^8.13.35",
+                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/support": "^10.0|^11.0",
+                "illuminate/validation": "^10.0|^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "orchestra/testbench": "*",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Propaganistas\\LaravelPhone\\PhoneServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Propaganistas\\LaravelPhone\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Propaganistas",
+                    "email": "Propaganistas@users.noreply.github.com"
+                }
+            ],
+            "description": "Adds phone number functionality to Laravel based on Google's libphonenumber API.",
+            "keywords": [
+                "laravel",
+                "libphonenumber",
+                "phone",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/Propaganistas/Laravel-Phone/issues",
+                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/5.3.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Propaganistas",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-24T09:18:58+00:00"
+        },
+        {
             "name": "psr/clock",
             "version": "1.0.0",
             "source": {
@@ -3744,6 +3961,66 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-20T07:29:11+00:00"
         },
         {
             "name": "symfony/clock",
@@ -6169,6 +6446,59 @@
             "time": "2023-12-08T13:03:43+00:00"
         },
         {
+            "name": "twilio/sdk",
+            "version": "7.16.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "02ad214b0cc9fc513bd67df251d54aed8901284f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/02ad214b0cc9fc513bd67df251d54aed8901284f",
+                "reference": "02ad214b0cc9fc513bd67df251d54aed8901284f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "phpunit/phpunit": ">=7.0 < 10"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "src/Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "https://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "support": {
+                "issues": "https://github.com/twilio/twilio-php/issues",
+                "source": "https://github.com/twilio/twilio-php/tree/7.16.2"
+            },
+            "time": "2024-04-01T10:34:42+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.0",
             "source": {
@@ -6383,6 +6713,79 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "worksome/verify-by-phone",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/worksome/verify-by-phone.git",
+                "reference": "3d30a368e5cb4004137dab92a00c5e7dd105479b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/worksome/verify-by-phone/zipball/3d30a368e5cb4004137dab92a00c5e7dd105479b",
+                "reference": "3d30a368e5cb4004137dab92a00c5e7dd105479b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0 || ^11.0",
+                "php": "^8.2",
+                "propaganistas/laravel-phone": "^5.2",
+                "spatie/laravel-package-tools": "^1.16",
+                "twilio/sdk": "^6.44 || ^7.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.8",
+                "nunomaduro/collision": "^7.10 || ^8.1",
+                "orchestra/testbench": "^8.21 || ^9.0",
+                "pestphp/pest": "^2.33",
+                "pestphp/pest-plugin-laravel": "^2.2",
+                "worksome/coding-style": "^2.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Worksome\\VerifyByPhone\\VerifyByPhoneServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Worksome\\VerifyByPhone\\": "src",
+                    "Worksome\\VerifyByPhone\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luke Downing",
+                    "email": "luke@worksome.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Verify your users by call or SMS",
+            "homepage": "https://github.com/worksome/verify-by-phone",
+            "keywords": [
+                "laravel",
+                "verify-by-phone",
+                "worksome"
+            ],
+            "support": {
+                "issues": "https://github.com/worksome/verify-by-phone/issues",
+                "source": "https://github.com/worksome/verify-by-phone/tree/v0.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/worksome",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-21T09:37:08+00:00"
         }
     ],
     "packages-dev": [

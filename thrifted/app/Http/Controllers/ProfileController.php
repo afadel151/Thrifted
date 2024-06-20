@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Propaganistas\LaravelPhone\PhoneNumber;
+use Worksome\VerifyByPhone\Contracts\PhoneVerificationService;
 
 class ProfileController extends Controller
 {
@@ -24,6 +26,30 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function sendVerificationCode(Request $request, PhoneVerificationService $verificationService)
+    {
+        $parsePhone = '+213'.  preg_replace('/^./', '', $request->input('phone'));
+       
+        // Send a verification code to the given number
+        $verificationService->send(new PhoneNumber($parsePhone));
+
+        return Inertia::render('VerifyCode',['phone'=>$parsePhone]);
+    }
+    public function verifyCode(Request $request, PhoneVerificationService $verificationService)
+    {
+      
+        //Verify the verification code for the given phone number
+        // $valid = $verificationService->verify(
+        //     new PhoneNumber($request->input('phone')),
+        //     $request->input('code')
+        // );
+
+        // if ($valid) {
+        //     // Mark your user as valid
+        //     dd('user_valid');
+        // }
+        
+    }
     /**
      * Update the user's profile information.
      */
