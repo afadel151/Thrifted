@@ -27,7 +27,7 @@ Route::prefix('/api')->group(function () {
     
 });
 Route::get('/dashboard', function () {
-    $newbooks = Book::orderBy('created_at', 'desc')->take(10)->get();
+    $newbooks = Book::with('user')->orderBy('created_at', 'desc')->take(10)->get();
     return Inertia::render('Dashboard', [
         'newbooks' => $newbooks,
     ]);

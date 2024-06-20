@@ -75,8 +75,9 @@ const responsiveOptions = ref([
                                 </div>
                                 </Link>
                                 <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
+                                <div class="mb-4 font-medium"> <i class="pi pi-map-marker" style="color: green"></i> {{ slotProps.data.user.adress }}</div>
                                 <div class="flex justify-between items-center">
-                                    <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div>
+                                    <div class="mt-0 font-semibold text-xl">{{ slotProps.data.price }} DA</div>
                                     <span>
                                         <Button icon="pi pi-heart" severity="secondary" outlined />
                                         <Button icon="pi pi-shopping-cart" class="ml-2" />
