@@ -53,4 +53,12 @@ class User extends Authenticatable
     public function books(){
         return $this->hasMany(Book::class);
     }
+    public function created_chats()
+    {
+        return $this->hasMany(Chat::class,'creator_id');
+    }
+    public function targeted_chats()
+    {   
+        return $this->hasMany(Chat::class,'target_id');
+    }
 }

@@ -50,14 +50,14 @@ const responsiveOptions = ref([
     <Head title="Home" />
     <NavBar />
     <AuthenticatedLayout>
-        <template #header>
+        <!-- <template #header>
             <h2 class="font-semibold text-gray-800 text-xl leading-tight">Home</h2>
-        </template>
+        </template> -->
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl">
                 <div class="bg-white shadow-sm p-5 sm:rounded-lg overflow-hidden">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+                    <!-- <div class="p-6 text-gray-900">You're logged in!</div> -->
                     <p class="mb-2 ml-10 font-bold text-4xl">Recently added</p>
                     <Carousel :value="props.newbooks" :numVisible="4" :numScroll="1"
                         :responsiveOptions="responsiveOptions">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Models\Book;
@@ -32,13 +33,20 @@ Route::get('/dashboard', function () {
         'newbooks' => $newbooks,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
+Route::get('chat', function () {
+    return view('chat');
+});
+Route::prefix('/chats')->group(function() {
+    Route::get('/sellings', [ChatController::class,'selling_chats'])->name('chats.selling');
+    Route::get('/buying', [ChatController::class,'buying_chats'])->name('chats.buying');
+    Route::get('/{id}', [ChatController::class,'show'])->name('chats.show');
+    Route::post('/',[ChatController::class,'create'])->name('chats.create');
+})->middleware(['auth', 'verified']);
 Route::prefix('/books')->group(function () {
     Route::get('/my_books', [BookController::class, 'my_books'])->middleware(['auth', 'verified'])->name('books.my_books');
     Route::get('/{id}', [BookController::class, 'show'])->name('books.show');
     Route::get('/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
-});
+})->middleware(['auth', 'verified']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

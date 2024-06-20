@@ -17,7 +17,7 @@ const SearchInput = ref('');
 <template>
 
     <div>
-        <div>
+        <div class="h-screen">
             <nav class="border-gray-100 bg-white border-b">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -32,10 +32,14 @@ const SearchInput = ref('');
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Home
+                                    <Button label="Home" icon="pi pi-home " text plain/>
+                                    <!-- pi-home -->
                                 </NavLink>
                                 <NavLink :href="route('books.my_books')" :active="route().current('books.my_books')">
-                                    My Books
+                                    <Button label="My Books" icon="pi pi-book" text plain/>
+                                </NavLink>
+                                <NavLink :href="route('chats.selling')" :active="route().current('chats.selling') || route().current('chats.buying')">
+                                    <Button label="Chats" icon="pi pi-comments" plain text />
                                 </NavLink>
                             </div>
                         </div>
@@ -137,7 +141,7 @@ const SearchInput = ref('');
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="h-full">
                 <slot />
             </main>
         </div>

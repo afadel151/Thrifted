@@ -63,7 +63,7 @@ const user = computed(() => { return page.props.auth.user; })
                 </Link>
             </div>
         </template>
-        <div class="flex md:flex-row min-[200px]:flex-col sm:flex-col justify-center items-stretch gap-4 mt-2 2xl:px-96 w-full 2xl:h-[430px]">
+        <div class="flex md:flex-row min-[200px]:flex-col sm:flex-col justify-center items-stretch gap-4 mt-2 2xl:px-96 w-full  2xl:h-[430px]">
             <img :src="props.book.cover == null ? '/cover-not-available.jpg' : props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit">
 
             <div class="flex flex-col justify-start gap-2 w-full">
