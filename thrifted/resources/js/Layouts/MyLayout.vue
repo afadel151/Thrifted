@@ -17,12 +17,12 @@ const SearchInput = ref('');
 <template>
 
     <div>
-        <div class="h-screen ">
+        <div class="h-screen flex">
             <nav class="border-gray-100 bg-white  border-b">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-                    <div class="flex items-stretch justify-between h-16">
-                        <div class="flex">
+                    <div class="flex flex-col w-[100px] items-stretch justify-between h-16">
+                        <div class="flex flex-col w-[100px]">
                             <!-- Logo -->
                             <div class="flex items-center shrink-0">
                                 <Link :href="route('dashboard')">
@@ -30,29 +30,29 @@ const SearchInput = ref('');
                                 </Link>
                             </div>
 
-                            <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
+                            <div class="sm:flex sm:flex-col  ">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    <Button label="Home" icon="pi pi-home " text plain/>
+                                    <Button  icon="pi pi-home " text plain/>
                                     <!-- pi-home -->
                                 </NavLink>
                                 <NavLink :href="route('books.my_books')" :active="route().current('books.my_books')">
-                                    <Button label="My Books" icon="pi pi-book" text plain/>
+                                    <Button  icon="pi pi-book" text plain/>
                                 </NavLink>
                                 <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
-                                    <Button label="Chats" icon="pi pi-comments" plain text />
+                                    <Button  icon="pi pi-comments" plain text />
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="px-20 self-center">
+                        <!-- <div class="px-20 self-center">
                             <InputGroup>
                                 <Button icon="pi pi-search"  size="small" severity="contrast" raised  />
                                 <InputText v-model="SearchInput" placeholder="Search" />
                             </InputGroup>
-                        </div>
-                        <div class="sm:flex sm:items-center hidden sm:ms-6">
+                        </div> -->
+                        <div class="sm:flex sm:items-center ">
                             <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
+                            <div class="relative ">
 
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
@@ -85,7 +85,7 @@ const SearchInput = ref('');
                         </div>
 
                         <!-- Hamburger -->
-                        <div class="flex items-center sm:hidden -me-2">
+                        <div class="flex items-center sm:hidden ">
                             <button @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex justify-center items-center hover:bg-gray-100 focus:bg-gray-100 p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out">
                                 <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ const SearchInput = ref('');
 
                     <!-- Responsive Settings Options -->
                     <div class="border-gray-200 pt-4 pb-1 border-t">
-                        <div class="px-4">
+                        <div class="">
                             <div class="font-medium text-base text-gray-800">
                                 {{ $page.props.auth.user.name }}
                             </div>
@@ -141,7 +141,7 @@ const SearchInput = ref('');
             </header> -->
 
             <!-- Page Content -->
-            <main class="h-full">
+            <main class="h-full w-full">
                 <slot />
             </main>
         </div>

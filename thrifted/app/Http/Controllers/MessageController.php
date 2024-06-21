@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSend;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,7 @@ class MessageController extends Controller
             'message' => $request->input('message'),
             'chat_id'=> $request->input('chat_id')
         ]);
+        MessageSend::dispatch($message);
         return response()->json($message);
     }
     public function destroy($id)
