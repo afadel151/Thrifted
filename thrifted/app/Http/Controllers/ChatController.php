@@ -33,9 +33,10 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         $messages = Message::with('chat')->where('chat_id',$id)->get();
+        $chat = Chat::find($id);
         $chats = Chat::with('creator','target')->where('creator_id',$user->id)->orWhere('target_id',$user->id)->get();
         $Creator = Chat::find($id)->creator_id == $user->id ? true : false; 
-        return Inertia::render('Chat',['messages' => $messages, 'chats' => $chats,'creator'=>$Creator]);
+        return Inertia::render('Chat',['messages' => $messages, 'chats' => $chats,'creator'=>$Creator,'chat'=>$chat]);
 
     }
     public function destroy($id)

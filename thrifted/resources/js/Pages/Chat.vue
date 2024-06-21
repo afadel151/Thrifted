@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";  
+import axios from "axios";
 const props = defineProps({
     messages:{
         type: Array,
@@ -12,10 +13,23 @@ const props = defineProps({
     creator:{
         type: Boolean,
         required:true
+    },
+    chat:{
+        type: Object,
+        required:true
     }
 });
-const value = ref('')
-
+const value = ref('');
+async function SendMessage(){
+    if(value.value != ''){
+        let response = await axios.post('/api/messages/',{
+            chat_id : props.chat.id,
+            message: value.value,
+            creator: props.creator
+        });
+        console.log(response.data);
+    }
+}
 import Chats from "./Chats.vue";
 import InputText from 'primevue/inputtext';
 import Button from "primevue/button";
@@ -33,7 +47,7 @@ import Button from "primevue/button";
             </div>
             <div class="flex mt-3 w-full justify-start gap-4 b  py-2 h-14 rounded-xl">
                 <InputText type="text" v-model="value" class="w-11/12" />
-                <Button label="Send" outlined severity="contrast" class="w-1/12" />
+                <Button label="Send" @click="SendMessage" outlined severity="contrast" class="w-1/12" />
             </div>
         </div>
 

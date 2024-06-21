@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Models\Book;
@@ -24,6 +25,9 @@ Route::prefix('/api')->group(function () {
         Route::post('create', [BookController::class, 'create'])->name('books.create');
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
+    });
+    Route::prefix('messages')->group(function(){
+        Route::post('/',[MessageController::class, 'store']);
     });
     
 });
