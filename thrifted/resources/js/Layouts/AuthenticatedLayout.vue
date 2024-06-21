@@ -38,7 +38,7 @@ const SearchInput = ref('');
                                 <NavLink :href="route('books.my_books')" :active="route().current('books.my_books')">
                                     <Button label="My Books" icon="pi pi-book" text plain/>
                                 </NavLink>
-                                <NavLink :href="route('chats.selling')" :active="route().current('chats.selling') || route().current('chats.buying')">
+                                <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
                                     <Button label="Chats" icon="pi pi-comments" plain text />
                                 </NavLink>
                             </div>

@@ -13,6 +13,10 @@ class ChatController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $chats = Chat::with('creator','target')->where('creator_id', $user->id)
+                                                ->orWhere('target_id',$user->id)->get();
+        // dd($chats);
+        return Inertia::render('Chats',['chats' => $chats]);
     }
     public function selling_chats()
     {
@@ -27,8 +31,11 @@ class ChatController extends Controller
     }
     public function show($id)
     {
+        $user = Auth::user();
         $messages = Message::with('chat')->where('chat_id',$id)->get();
-        return Inertia::render('Chat',['messages' => $messages]);
+        $chats = Chat::with('creator','target')->where('creator_id',$user->id)->orWhere('target_id',$user->id)->get();
+        $Creator = Chat::find($id)->creator_id == $user->id ? true : false; 
+        return Inertia::render('Chat',['messages' => $messages, 'chats' => $chats,'creator'=>$Creator]);
 
     }
     public function destroy($id)

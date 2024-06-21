@@ -37,6 +37,7 @@ Route::get('chat', function () {
     return view('chat');
 });
 Route::prefix('/chats')->group(function() {
+    Route::get('/',[ChatController::class,'index'])->name('chats.index');
     Route::get('/sellings', [ChatController::class,'selling_chats'])->name('chats.selling');
     Route::get('/buying', [ChatController::class,'buying_chats'])->name('chats.buying');
     Route::get('/{id}', [ChatController::class,'show'])->name('chats.show');
