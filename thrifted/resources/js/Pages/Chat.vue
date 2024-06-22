@@ -1,5 +1,5 @@
 <script setup>
-
+import NavLink from '@/Components/NavLink.vue';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
@@ -60,11 +60,11 @@ echo.channel(`chats.${chatId}`).listen('MessageSend', (e) => {
 });
 const chatContainer = ref(null);
 const scrollToBottom = () => {
-            if (chatContainer.value) {
-                chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
-            }
-        };
-onMounted(()=>{
+    if (chatContainer.value) {
+        chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+    }
+};
+onMounted(() => {
     scrollToBottom();
 })
 </script>
@@ -82,10 +82,11 @@ onMounted(()=>{
             </div>
 
         </div>
-        {{ value }}
         <div class="flex  w-full justify-start gap-4 py-2 px-3 h-14 rounded-xl">
             <InputText type="text" v-model="value" class="w-11/12" />
             <Button label="Send" @click="SendMessage" outlined severity="contrast" class="w-1/12" />
         </div>
     </Chats>
+    
 </template>
+

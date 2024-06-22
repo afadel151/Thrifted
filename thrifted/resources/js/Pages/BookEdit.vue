@@ -111,8 +111,8 @@ async function UpdateBook() {
     <Head title="Book view" />
     <NavBar />
     <AuthenticatedLayout>
-        <template #header>
-            <div class="flex justify-between items-center">
+        <!-- <template #header> -->
+            <div class="flex justify-between px-32 my-10  items-center">
                 <h2 class="font-semibold text-gray-800 text-xl leading-tight">Book Edit </h2>
                 <div class="space-x-4">
                     <Link v-if="props.book.user_id == user.id" :href="route('books.show', { id: props.book.id })">
@@ -121,7 +121,7 @@ async function UpdateBook() {
                     <Button icon="pi pi-save" label="Save changes" @click="UpdateBook" severity="contrast" raised outlined size="small" />
                 </div>
             </div>
-        </template>
+        <!-- </template> -->
         <div class="flex justify-center items-stretch gap-4 mt-2 px-96">
             <!-- <img :src="props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit"> -->
             <!-- <Select v-model="selectedCategory" :options="props.categories"  optionLabel="name" optionValue="id" placeholder="Change Category" class="w-full md:w-56" /> -->

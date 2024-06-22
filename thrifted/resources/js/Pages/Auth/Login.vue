@@ -6,7 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-
+import Button from 'primevue/button';
 defineProps({
     canResetPassword: {
         type: Boolean,
@@ -38,8 +38,11 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <a href="/auth/github/redirect">Github</a>
-            <a href="/auth/google/redirect">Google</a>
+
+         <div class="w-full flex flex-col gap-2 justify-around items-center">
+            <a class="w-full bg-gray-700 text-white rounded-xl py-2 flex justify-center items-center space-x-2" href="/auth/github/redirect"> <i class="pi pi-github"></i> <p>Github</p></a>
+            <a class="w-full  text-gray-950 bg-gray-200  rounded-xl py-2 flex justify-center items-center text-xl space-x-2" href="/auth/google/redirect"> <i class="pi pi-google"></i>oogle</a>
+         </div>
             <div>
                 <InputLabel for="email" value="Email" />
 
