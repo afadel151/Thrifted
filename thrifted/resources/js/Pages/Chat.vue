@@ -71,7 +71,7 @@ onMounted(()=>{
 <template>
     <Chats :chats="props.chats">
         <div ref="chatContainer" class="h-full p-5 w-full flex gap-1 flex-col overflow-y-scroll  items-stretch ">
-            <div class="chat place w-full flex" v-for="message in Messages" :key="message.id"
+            <div class="chat place w-full  flex" v-for="message in Messages" :key="message.id"
                 :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'justify-end' : 'justify-start'">
                 <div class="flex cursor-pointer">
                     <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2"
@@ -82,6 +82,7 @@ onMounted(()=>{
             </div>
 
         </div>
+        {{ value }}
         <div class="flex  w-full justify-start gap-4 py-2 px-3 h-14 rounded-xl">
             <InputText type="text" v-model="value" class="w-11/12" />
             <Button label="Send" @click="SendMessage" outlined severity="contrast" class="w-1/12" />

@@ -24,11 +24,11 @@ const SearchInput = ref('');
                     <div class="flex items-stretch justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="flex items-center shrink-0">
+                            <!-- <div class="flex items-center shrink-0">
                                 <Link :href="route('dashboard')">
                                 <ApplicationLogo class="block w-auto h-9 text-gray-800 fill-current" />
                                 </Link>
-                            </div>
+                            </div> -->
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -41,6 +41,7 @@ const SearchInput = ref('');
                                 <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
                                     <Button label="Chats" icon="pi pi-comments" plain text />
                                 </NavLink>
+                                <Button label="Card" icon="pi pi-shopping-cart" plain text />
                             </div>
                         </div>
 

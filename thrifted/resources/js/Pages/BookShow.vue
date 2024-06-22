@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 import { computed, ref } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3';
+import NavLink from '@/Components/NavLink.vue';
 import Carousel from 'primevue/carousel';
 import Badge from 'primevue/badge';
 import Tag from 'primevue/tag';
@@ -73,12 +74,18 @@ const user = computed(() => { return page.props.auth.user; })
                 <p class="font-bold text-2xl">256 pages</p>
 
                 <p class="font-bold text-base">{{ props.book.format }}</p>
+                <p class="font-bold text-base">{{ props.book.condition }} quality</p>
                 <p class="text-xl" :class="props.book.available ? 'text-green-500' : 'text-red-400'">{{
                     props.book.available ?
                     'Available' : 'Sold' }}</p>
-                <div class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full">
-                    <Button label="Buy" icon="pi pi-credit-card" size="small" raised />
-                    <Button label="Add " icon="pi pi-shopping-cart" size="small" severity="contrast" raised />
+                <div class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full" v-if="props.book.user_id != user.id ">
+                    <Button label="Chat with seller" icon="pi pi-credit-card" size="small" raised />
+                    <Button label="Add to card" icon="pi pi-shopping-cart" size="small" severity="contrast" raised />
+                </div>
+                <div v-else class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full">
+                    <NavLink :href="route('books.edit',{id:props.book.id})" >
+                    <Button label="Update" icon="pi pi-pencil" size="small" raised />
+                    </NavLink>
                 </div>
                 <div class="flex flex-col justify-self-end justify-start items-stretch mt-auto">
                     <p>ISBN : {{ props.book.isbn }}</p>

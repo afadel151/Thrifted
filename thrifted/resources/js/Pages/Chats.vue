@@ -31,8 +31,8 @@ const EnterChat = (target_id)=>{
                         <div class="w-1/6 bg-white flex flex-col justify-start border-r h-full border-gray-300">
                             <div class="overflow-y-auto" v-for="chat in props.chats" :key="chat.id">
                                 <div class="flex items-center cursor-pointer hover:bg-gray-100 rounded-md">
-                                    <NavLink :href="route('chats.show', { id: chat.id })" :active="route().current('chats.show', { id: chat.id })">
-                                        <Button :label="chat.target_id == user.id ? chat.creator.name : chat.target.name" icon="pi pi-shop" text plain />
+                                    <NavLink class="w-full" :href="route('chats.show', { id: chat.id })" :active="route().current('chats.show', { id: chat.id })">
+                                        <Button :label="chat.target_id == user.id ? chat.creator.name : chat.target.name" icon="pi pi-shop" class="w-full" text plain />
                                     </NavLink>
                                 </div>
                             </div>
