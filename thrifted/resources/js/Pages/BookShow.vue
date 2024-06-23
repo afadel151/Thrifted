@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
-import { computed, ref } from 'vue';
+import { computed, popScopeId, ref } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
 import Carousel from 'primevue/carousel';
@@ -65,8 +65,8 @@ const BookImages = computed(() => {
 
 <template>
 
-    <Head title="Book view" />
-    <NavBar />
+    <!-- <Head title="Book view" />
+    <NavBar /> -->
     <AuthenticatedLayout class="px-20">
         <template #header>
             <div class="flex justify-between items-center">
@@ -82,13 +82,12 @@ const BookImages = computed(() => {
 
                 alt="" class="w-fit"> -->
             <Carousel :value="BookImages" :numVisible="1" :numScroll="1" class="sm:w-[500px]  ">
-                <template #item="slotProps" >
+                <template #item="slotProps">
                     <div class="border   border-surface-200 dark:border-surface-700 rounded ">
-                            <div class="w-full">
-                                <img :src="slotProps.data"
-                                    :alt="slotProps.data" class="w-full  rounded" />
-                                
-                            </div>
+                        <div class="w-full">
+                            <img :src="slotProps.data" :alt="slotProps.data" class="w-full  rounded" />
+
+                        </div>
                     </div>
                 </template>
             </Carousel>
@@ -107,7 +106,9 @@ const BookImages = computed(() => {
                         'Available' : 'Sold' }}</p>
                 <div class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full"
                     v-if="props.book.user_id != user.id">
-                    <Button label="Chat with seller" icon="pi pi-credit-card" size="small" raised />
+                    <!-- <Link>
+                        <Button label="Chat with seller" icon="pi pi-credit-card" size="small" raised />
+                    </Link> -->
                     <Button label="Add to card" icon="pi pi-shopping-cart" size="small" severity="contrast" raised />
                 </div>
                 <div v-else class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full">
@@ -130,7 +131,7 @@ const BookImages = computed(() => {
         </div>
         <Divider />
         <p class="ml-10 font-black text-4xl">See Also</p>
-        <Carousel :value="props.related_books" 
+        <Carousel :value="props.related_books"
             :numVisible="props.related_books.length < 4 ? 4 : props.related_books.length" :numScroll="1"
             :responsiveOptions="responsiveOptions">
             <template #item="slotProps">

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Chat extends Model
 {
     use HasFactory;
@@ -13,6 +12,7 @@ class Chat extends Model
         'target_id',
         'last_update'
     ];
+   
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
@@ -31,6 +31,6 @@ class Chat extends Model
     }
     public function latest_message()
     {
-        return $this->messages();
+        return $this->messages()->orderBy('created_at', 'desc')->take(1)->get()->first();
     }
 }

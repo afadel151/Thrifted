@@ -1,6 +1,7 @@
 <script setup>
-import NavLink from '@/Components/NavLink.vue';
 import Pusher from 'pusher-js';
+// import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/vue3';
 window.Pusher = Pusher;
 import axios from 'axios';
 import Echo from 'laravel-echo';
@@ -49,7 +50,7 @@ async function SendMessage() {
 async function MarkAsSeen() {
     try {
         let response = await axios.post('/api/chats/mark_seen', {
-            chat_id : props.chat.id
+            chat_id: props.chat.id
         });
         console.log(response.data);
     } catch (error) {
@@ -77,17 +78,50 @@ const scrollToBottom = () => {
 onMounted(() => {
     MarkAsSeen();
     scrollToBottom();
-})
+});
+const getSeverity = (status) => {
+    if (status == true) {
+        return 'success';
+    } else {
+        return 'danger';
+    }
+};
+function ViewBook(bookId) {
+    Inertia.visit(route('books.show', { id: bookId }));
+}
 </script>
 <template>
-    <Chats :chats="props.chats">
+    <Chats :chats="props.chats" :opened="true">
         <div ref="chatContainer" class="h-full p-5 w-full flex gap-1 flex-col overflow-y-scroll  items-stretch ">
-            <div class="chat place w-full  flex" v-for="message in Messages" :key="message.id"
+            <div class=" w-full   flex" v-for="message in Messages" :key="message.id"
                 :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'justify-end' : 'justify-start'">
-                <div class="flex cursor-pointer">
-                    <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2"
+                <div :class="message.book_id != 0 ? ' border rounded-lg' : ''">
+                    <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2" v-if="message.book_id == 0"
                         :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'bg-gray-200' : 'bg-white'">
                         <p class="text-gray-700">{{ message.message }}</p>
+                    </div>
+
+                    <div v-else class="m-2 p-4  h-full  w-full  ">
+                        <Link :href="route('books.show', { id: message.book.id })"  class=" h-full flex flex-col items-center justify-between w-full" >
+
+
+
+                        <img :src="message.book.cover == null ? '/cover-not-available.jpg' : message.book.cover.replace('public/', '/storage/')"
+                            :alt="message.book.title" class="rounded w-40 " />
+
+
+
+                        <div class="font-medium text-xl">{{ message.book.title }}</div>
+                        <div class=" font-medium text-sm">{{ message.book.author }}</div>
+                        <div class="flex w-full justify-center items-center">
+                            <p class="mt-0 font-semibold text-xl">{{ message.book.price == 0 ? 'No price yet' :
+                                message.book.price }}
+                            </p>
+                        </div>
+                        <!-- <div class="flex w-full justify-start items-center">
+                            {{props.chat.creator_id == user.id && message.book.creator == true ? chat.creator.name : chat.target.name}}
+                        </div> -->
+                        </Link>
                     </div>
                 </div>
             </div>

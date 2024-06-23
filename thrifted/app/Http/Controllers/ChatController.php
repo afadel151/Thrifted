@@ -13,7 +13,7 @@ class ChatController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $chats = Chat::with('creator', 'target', 'unseen_messages','latest_message')->where('creator_id', $user->id)
+        $chats = Chat::with('creator', 'target', 'unseen_messages')->where('creator_id', $user->id)
             ->orWhere('target_id', $user->id)->get();
         // dd($chats);
         return Inertia::render('Chats', ['chats' => $chats]);
@@ -32,9 +32,9 @@ class ChatController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $messages = Message::with('chat')->where('chat_id', $id)->get();
-        $chat = Chat::find($id);
-        $chats = Chat::with('creator', 'target','unseen_messages','latest_message')->where('creator_id', $user->id)->orWhere('target_id', $user->id)->get();
+        $messages = Message::with('chat','book')->where('chat_id', $id)->get();
+        $chat = Chat::with('creator','target')->find($id);
+        $chats = Chat::with('creator', 'target','unseen_messages')->where('creator_id', $user->id)->orWhere('target_id', $user->id)->get();
         $Creator = Chat::find($id)->creator_id == $user->id ? true : false;
         return Inertia::render('Chat', ['messages' => $messages, 'chats' => $chats, 'creator' => $Creator, 'chat' => $chat]);
 
@@ -42,6 +42,41 @@ class ChatController extends Controller
     public function destroy($id)
     {
 
+    }
+    public function get_unseen_messages(Request $request)
+    {
+        $chat_id = $request->input('chat_id'); 
+        $user_id = Auth::user()->id;
+        $chat = Chat::find($chat_id);
+        if ($chat->creator_id == $user_id) {
+            $UnseenMessages = Message::where(function ($query) use ($chat_id) {
+                $query->where('chat_id', $chat_id)
+                    ->where('creator', false)
+                    ->where('seen', false);
+            })->get();
+        } else {
+            $UnseenMessages = Message::where(function ($query) use ($chat_id) {
+                $query->where('chat_id', $chat_id)
+                    ->where('creator', true)
+                    ->where('seen', false);
+            })->get();
+        }
+        return response()->json($UnseenMessages->count());
+    }
+    public function get_last_message(Request $request)
+    {
+
+        $chat_id = $request->input('chat_id'); // Use input() to fetch chat_id from the request
+        \Log::info('chat id: ' . $chat_id);
+    
+        if (!$chat_id) {
+            return response()->json(['error' => 'Chat ID not provided'], 400);
+        }
+    
+        $lastmessage = Message::where('chat_id', $chat_id)->orderByDesc('created_at')->first();
+        \Log::info('Last message: ' . $lastmessage);
+    
+        return response()->json($lastmessage);
     }
     public function buying_chats()
     {
