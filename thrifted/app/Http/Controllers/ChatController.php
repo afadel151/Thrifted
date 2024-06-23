@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -25,10 +26,7 @@ class ChatController extends Controller
         return Inertia::render('Chats', ['chats' => $chats]);
 
     }
-    public function create()
-    {
-
-    }
+    
     public function show($id)
     {
         $user = Auth::user();

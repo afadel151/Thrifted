@@ -106,9 +106,9 @@ const BookImages = computed(() => {
                         'Available' : 'Sold' }}</p>
                 <div class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full"
                     v-if="props.book.user_id != user.id">
-                    <!-- <Link>
-                        <Button label="Chat with seller" icon="pi pi-credit-card" size="small" raised />
-                    </Link> -->
+                    <Link :href="route('books.chat_with_seller',{id:props.book.id})">
+                        <Button label="Request" icon="pi pi-credit-card" size="small" raised />
+                    </Link>
                     <Button label="Add to card" icon="pi pi-shopping-cart" size="small" severity="contrast" raised />
                 </div>
                 <div v-else class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full">

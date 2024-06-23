@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\BookPicture;
 use App\Models\Category;
+use App\Models\Chat;
+use App\Models\Message;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -143,6 +145,33 @@ class BookController extends Controller
                 'original' => $request->input('original') === 'Original' ? true : false,
             ]);
             return response()->json($book);
+        }
+    }
+    public function chat_with_seller($id)
+    {
+        $seller_id = Book::find($id)->user_id;
+        $user_id = Auth::user()->id;
+        $chat = Chat::where(function ($query) use ($seller_id,$user_id){
+            $query->where('creator_id', $user_id)
+                    ->where('target_id',$seller_id);
+        })->orWhere(function ($query) use ($seller_id, $user_id){
+                $query->where('creator_id', $seller_id)
+                    ->where('target_id',$user_id);
+        })->first();
+        if ($chat) {
+            return redirect()->route('chats.show',$chat->id);
+        }else {
+            $chat = Chat::create([
+                'creator_id' => $user_id,
+                'target_id' => $seller_id
+            ]);
+            Message::create([
+                'chat_id'=> $chat->id,
+                'creator'=>true,
+                'message'=>'',
+                'book_id'=>$id
+            ]);
+            return redirect()->route('chats.show',$chat->id);
         }
     }
 

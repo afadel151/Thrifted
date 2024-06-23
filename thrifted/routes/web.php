@@ -6,8 +6,6 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Models\Book;
-use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,6 +54,7 @@ Route::prefix('/books')->group(function () {
     Route::get('/my_books', [BookController::class, 'my_books'])->middleware(['auth', 'verified'])->name('books.my_books');
     Route::get('/{id}', [BookController::class, 'show'])->name('books.show');
     Route::get('/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
+    Route::get('/{id}/chat_with_seller',[BookController::class,'chat_with_seller'])->name('books.chat_with_seller');
 })->middleware(['auth', 'verified']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
