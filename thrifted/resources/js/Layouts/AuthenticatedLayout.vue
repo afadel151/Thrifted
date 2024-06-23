@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 const emit = defineEmits(['search']);
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
 import InputGroup from 'primevue/inputgroup';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -17,73 +15,71 @@ const SearchInput = ref('');
 <template>
 
     <div>
-        <div class="h-screen ">
-            <nav class="border-gray-100 bg-white  border-b">
+        <div class="h-screen font-[Mulish]">
+            <nav class="border-gray-100 bg-white h-[64px]  border-b">
                 <!-- Primary Navigation Menu -->
-                <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <div class="px-10  ">
                     <div class="flex items-stretch justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <!-- <div class="flex items-center shrink-0">
-                                <Link :href="route('dashboard')">
-                                <ApplicationLogo class="block w-auto h-9 text-gray-800 fill-current" />
-                                </Link>
-                            </div> -->
+                        <div class="flex ">
+
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    <Button label="Home" icon="pi pi-home " text plain/>
+                                    <Button label="Home" icon="pi pi-home " text plain />
                                     <!-- pi-home -->
                                 </NavLink>
                                 <NavLink :href="route('books.my_books')" :active="route().current('books.my_books')">
-                                    <Button label="My Books" icon="pi pi-book" text plain/>
+                                    <Button label="My Books" icon="pi pi-book" text plain />
                                 </NavLink>
-                                <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
+                                <NavLink :href="route('chats.index')"
+                                    :active="route().current('chats.index') || route().current('chats.show')">
                                     <Button label="Chats" icon="pi pi-comments" plain text />
                                 </NavLink>
                                 <Button label="Card" icon="pi pi-shopping-cart" plain text />
                             </div>
                         </div>
+                        <div class=" flex justify-start items-center">
+                            <div class="px-20 ">
+                                <InputGroup>
+                                    <Button icon="pi pi-search" size="small" severity="contrast" raised />
+                                    <InputText v-model="SearchInput" placeholder="Search" />
+                                </InputGroup>
+                            </div>
+                            <div class="sm:flex sm:items-center hidden ">
+                                <!-- Settings Dropdown -->
+                                <div class="relative ">
 
-                        <div class="px-20 self-center">
-                            <InputGroup>
-                                <Button icon="pi pi-search"  size="small" severity="contrast" raised  />
-                                <InputText v-model="SearchInput" placeholder="Search" />
-                            </InputGroup>
-                        </div>
-                        <div class="sm:flex sm:items-center hidden sm:ms-6">
-                            <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
+                                    <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <span class="inline-flex rounded-md">
 
-                                <Dropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
+                                                <button type="button"
+                                                    class="inline-flex items-center bg-white px-3 py-2 border border-transparent rounded-md font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out">
+                                                    <img :src="$page.props.auth.user.socials[0] ? $page.props.auth.user.socials[0].provider_avatar : ''"
+                                                        width="30" class="mr-1 rounded-full" alt="">
+                                                    {{ $page.props.auth.user.name }}
 
-                                            <button type="button"
-                                                class="inline-flex items-center bg-white px-3 py-2 border border-transparent rounded-md font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out">
-                                                <img :src="$page.props.auth.user.socials[0] ? $page.props.auth.user.socials[0].provider_avatar : ''"
-                                                    width="30" class="mr-1 rounded-full" alt="">
-                                                {{ $page.props.auth.user.name }}
+                                                    <svg class="w-4 h-4 -me-0.5 ms-2" xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
 
-                                                <svg class="w-4 h-4 -me-0.5 ms-2" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
-                                        </DropdownLink>
-                                    </template>
-                                </Dropdown>
+                                        <template #content>
+                                            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                            <DropdownLink :href="route('logout')" method="post" as="button">
+                                                Log Out
+                                            </DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </div>
                             </div>
                         </div>
+
 
                         <!-- Hamburger -->
                         <div class="flex items-center sm:hidden -me-2">
@@ -142,9 +138,12 @@ const SearchInput = ref('');
             </header> -->
 
             <!-- Page Content -->
-            <main class="h-full">
+            <main>
                 <slot />
             </main>
         </div>
     </div>
 </template>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+</style>

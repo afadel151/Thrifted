@@ -23,9 +23,9 @@ const EnterChat = (target_id)=>{
 
 </script>
 <template>
-    <MyLayout>
-        <div class="h-screen bg-slate-100">
-            <div class="sm:px-6 h-full w-full">
+    <AuthenticatedLayout>
+        <div style="height: calc(100vh - 64px);" class=" bg-slate-100">
+            <div class="sm:px-6 sm:py-6 h-full w-full">
                 <div class="bg-white h-full shadow-sm p-5 sm:rounded-lg">
                     <div class="flex h-full w-full rounded-lg border-2">
                         <div class="w-1/6 bg-white flex flex-col justify-start border-r h-full border-gray-300">
@@ -44,5 +44,5 @@ const EnterChat = (target_id)=>{
                 </div>
             </div>
         </div>
-    </MyLayout>
+    </AuthenticatedLayout>
 </template>
