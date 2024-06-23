@@ -13,16 +13,16 @@ class ChatController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $chats = Chat::with('creator','target')->where('creator_id', $user->id)
-                                                ->orWhere('target_id',$user->id)->get();
+        $chats = Chat::with('creator', 'target', 'unseen_messages','latest_message')->where('creator_id', $user->id)
+            ->orWhere('target_id', $user->id)->get();
         // dd($chats);
-        return Inertia::render('Chats',['chats' => $chats]);
+        return Inertia::render('Chats', ['chats' => $chats]);
     }
     public function selling_chats()
     {
         $user = Auth::user();
         $chats = Chat::with('creator')->where('target_id', $user->id)->get();
-        return Inertia::render('Chats',['chats' => $chats]);
+        return Inertia::render('Chats', ['chats' => $chats]);
 
     }
     public function create()
@@ -32,11 +32,11 @@ class ChatController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $messages = Message::with('chat')->where('chat_id',$id)->get();
+        $messages = Message::with('chat')->where('chat_id', $id)->get();
         $chat = Chat::find($id);
-        $chats = Chat::with('creator','target')->where('creator_id',$user->id)->orWhere('target_id',$user->id)->get();
-        $Creator = Chat::find($id)->creator_id == $user->id ? true : false; 
-        return Inertia::render('Chat',['messages' => $messages, 'chats' => $chats,'creator'=>$Creator,'chat'=>$chat]);
+        $chats = Chat::with('creator', 'target','unseen_messages','latest_message')->where('creator_id', $user->id)->orWhere('target_id', $user->id)->get();
+        $Creator = Chat::find($id)->creator_id == $user->id ? true : false;
+        return Inertia::render('Chat', ['messages' => $messages, 'chats' => $chats, 'creator' => $Creator, 'chat' => $chat]);
 
     }
     public function destroy($id)
@@ -47,6 +47,37 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         $chats = Chat::with('target')->where('creator_id', $user->id)->get();
-        return Inertia::render('Chats',['chats' => $chats]);
+        return Inertia::render('Chats', ['chats' => $chats]);
+    }
+    public function mark_seen(Request $request)
+    {
+        try {
+            $chat_id = $request->input('chat_id');
+            $user_id = Auth::user()->id;
+            $chat = Chat::find($chat_id);
+            if ($chat->creator_id == $user_id) {
+                $UnseenMessages = Message::where(function ($query) use ($chat_id) {
+                    $query->where('chat_id', $chat_id)
+                        ->where('creator', false)
+                        ->where('seen', false);
+                })->get();
+            } else {
+                $UnseenMessages = Message::where(function ($query) use ($chat_id) {
+                    $query->where('chat_id', $chat_id)
+                        ->where('creator', true)
+                        ->where('seen', false);
+                })->get();
+            }
+
+            foreach ($UnseenMessages as $message) {
+                $message->update([
+                    'seen' => true,
+                ]);
+            }
+            return response()->json('Success');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
     }
 }

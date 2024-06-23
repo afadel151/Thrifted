@@ -2,7 +2,7 @@
 import NavLink from '@/Components/NavLink.vue';
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
-
+import axios from 'axios';
 import Echo from 'laravel-echo';
 const echo = new Echo({
     broadcaster: "reverb",
@@ -15,7 +15,6 @@ const echo = new Echo({
 });
 
 import { ref, onMounted } from "vue";
-import axios from "axios";
 import { usePage } from '@inertiajs/vue3';
 const props = defineProps({
     messages: {
@@ -47,6 +46,16 @@ async function SendMessage() {
         console.log(response.data);
     }
 }
+async function MarkAsSeen() {
+    try {
+        let response = await axios.post('/api/chats/mark_seen', {
+            chat_id : props.chat.id
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+}
 const Messages = ref(props.messages);
 import Chats from "./Chats.vue";
 import InputText from 'primevue/inputtext';
@@ -58,6 +67,7 @@ echo.channel(`chats.${chatId}`).listen('MessageSend', (e) => {
     console.log(e);
     value.value = '';
 });
+
 const chatContainer = ref(null);
 const scrollToBottom = () => {
     if (chatContainer.value) {
@@ -65,6 +75,7 @@ const scrollToBottom = () => {
     }
 };
 onMounted(() => {
+    MarkAsSeen();
     scrollToBottom();
 })
 </script>
@@ -87,6 +98,5 @@ onMounted(() => {
             <Button label="Send" @click="SendMessage" outlined severity="contrast" class="w-1/12" />
         </div>
     </Chats>
-    
-</template>
 
+</template>

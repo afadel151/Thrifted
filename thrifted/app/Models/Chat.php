@@ -25,4 +25,12 @@ class Chat extends Model
     {
         return $this->hasMany(Message::class);
     }
+    public function unseen_messages()
+    {
+        return $this->messages()->where('seen',false);
+    }
+    public function latest_message()
+    {
+        return $this->messages();
+    }
 }

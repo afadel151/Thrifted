@@ -29,6 +29,9 @@ Route::prefix('/api')->group(function () {
     Route::prefix('messages')->group(function(){
         Route::post('/',[MessageController::class, 'store']);
     });
+    Route::prefix('chats')->group(function(){
+        Route::post('/mark_seen',[ChatController::class,'mark_seen']);
+    });
     
 });
 Route::get('/dashboard', function () {

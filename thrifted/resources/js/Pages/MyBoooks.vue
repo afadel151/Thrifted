@@ -34,6 +34,7 @@ const getSeverity = (status) => {
         return 'danger';
     }
 };
+
 const AddNewBook = (book) => {
     MyBooks.value.push(book);
 };

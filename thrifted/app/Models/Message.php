@@ -11,11 +11,17 @@ class Message extends Model
     protected $fillable = [
         'chat_id',
         'creator',
-        'message'
+        'message',
+        'seen',
+        'book_id'
     ];
 
     public function chat()
     {
         return $this->belongsTo(Chat::class);
+    }
+    public function book()
+    {
+        return $this->belongsTo(Book::class,'book_id');
     }
 }

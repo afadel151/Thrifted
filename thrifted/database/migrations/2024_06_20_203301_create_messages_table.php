@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('chat_id')->constrained('chats')->cascadeOnDelete();
             $table->boolean('creator');            
             $table->text('message');
+            $table->boolean('seen')->default(false);
+            $table->unsignedBigInteger('book_id')->default(0);
             $table->timestamps();
         });
     }
