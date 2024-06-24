@@ -65,14 +65,12 @@ class ChatController extends Controller
     {
 
         $chat_id = $request->input('chat_id'); // Use input() to fetch chat_id from the request
-        \Log::info('chat id: ' . $chat_id);
     
         if (!$chat_id) {
             return response()->json(['error' => 'Chat ID not provided'], 400);
         }
     
-        $lastmessage = Message::where('chat_id', $chat_id)->orderByDesc('created_at')->first();
-        \Log::info('Last message: ' . $lastmessage);
+        $lastmessage = Message::with('book')->where('chat_id', $chat_id)->orderByDesc('created_at')->first();
     
         return response()->json($lastmessage);
     }

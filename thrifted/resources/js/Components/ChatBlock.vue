@@ -57,10 +57,10 @@ onBeforeMount(()=>{
 
                     severity="contrast"></Badge>
             </div>
-                {{ LastMessage?.creator == 0 && props.chat.target_id == user.id ? 'Vous: ' + LastMessage?.message : '' }} 
-                {{ LastMessage?.creator == 1 && props.chat.creator_id == user.id ? 'Vous: ' + LastMessage?.message : '' }} 
-                {{ LastMessage?.creator == 0 && props.chat.creator_id == user.id ? props.chat.target.name + ' : ' + LastMessage?.message : '' }} 
-                {{ LastMessage?.creator == 1 && props.chat.target_id == user.id ? props.chat.target.name + ' : ' + LastMessage?.message : '' }} 
+                {{ LastMessage?.creator == 0 && props.chat.target_id == user.id ? 'Vous: ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
+                {{ LastMessage?.creator == 1 && props.chat.creator_id == user.id ? 'Vous: ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
+                {{ LastMessage?.creator == 0 && props.chat.creator_id == user.id ? props.chat.target.name + ' : ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
+                {{ LastMessage?.creator == 1 && props.chat.target_id == user.id ? props.chat.target.name + ' : ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
         </NavLink>
 
     </div>

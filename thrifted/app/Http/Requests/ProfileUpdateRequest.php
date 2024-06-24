@@ -20,6 +20,8 @@ class ProfileUpdateRequest extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'adress' => ['string','max:255'],
             'phone' => ['numeric','max:255'],
+            'delivery' => ['boolean'],
+            'payment_on_hand' => ['boolean']
         ];
     }
 }

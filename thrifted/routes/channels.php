@@ -10,3 +10,6 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('chats.{chatId}', function (Message $message, int $chatId) {
     return $message->chat_id === Chat::findOrNew($chatId)->id;
 });
+Broadcast::channel('user.message.{userId}', function (Message $message, int $userId) {
+    return ($message->chat->creator_id == $userId && $message->creator == false) || ($message->chat->target_id == $userId && $message->creator == true);
+});

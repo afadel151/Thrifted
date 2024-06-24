@@ -4,7 +4,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
-
+import ToggleSwitch from 'primevue/toggleswitch';
+import { ref } from 'vue';
 defineProps({
     mustVerifyEmail: {
         type: Boolean,
@@ -15,12 +16,29 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
-
+const Delivery = ref(user.delivery == 1 ? true : false);
+const PaymentOnHand = ref(user.payment_on_hand == 1 ? true : false);
 const form = useForm({
     name: user.name,
     email: user.email,
     adress: user.adress,
+    delivery: user.delivery,
+    payment_on_hand: user.payment_on_hand,
 });
+const TogglePayment = ()=>{
+    if(PaymentOnHand.value){
+        form.payment_on_hand = 1;
+    }else{
+        form.payment_on_hand =0;
+    }
+}
+const ToggleDelivery = ()=>{
+    if(Delivery.value){
+        form.delivery = 1;
+    }else{
+        form.delivery = 0;
+    }
+}
 </script>
 
 <template>
@@ -31,7 +49,6 @@ const form = useForm({
                 Update your account's profile information and email address.
             </p>
         </header>
-
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="name" value="Name" />
@@ -56,7 +73,20 @@ const form = useForm({
                 <TextInput id="adress" type="text" class="mt-1 block w-full" v-model="form.adress" required />
                 <InputError class="mt-2" :message="form.errors.adress" />
             </div>
-           
+            <div>
+                <InputLabel  value="Delivery ?" />
+
+                <ToggleSwitch v-model="Delivery" @change="ToggleDelivery" class="mt-1 block w-full"  />
+                <InputError class="mt-2" :message="form.errors.delivery" />
+
+            </div>
+            <div  v-show="Delivery"> 
+                <InputLabel  value="Payment hand to hand ?" />
+
+                <ToggleSwitch @change="TogglePayment" v-model="PaymentOnHand"  class="mt-1 block w-full"  />
+                <InputError class="mt-2" :message="form.errors.payment_on_hand" />
+
+            </div>
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
                     Your email address is unverified.

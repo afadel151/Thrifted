@@ -55,6 +55,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        \Log::info($request->validated());
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -62,7 +63,7 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
-
+        \Log::info($request->user());
         return Redirect::route('profile.edit');
     }
 

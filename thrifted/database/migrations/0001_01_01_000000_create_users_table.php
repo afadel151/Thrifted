@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('adress')->nullable();
             $table->unsignedBigInteger('phone')->nullable();
             $table->boolean('delivery')->default(false);
+            $table->boolean('payment_on_hand')->default(false);//need migration
+            $table->unsignedInteger('rating')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

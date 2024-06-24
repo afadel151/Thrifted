@@ -44,15 +44,18 @@ async function SendMessage() {
             message: value.value,
             creator: props.creator
         });
-        console.log(response.data);
+        scrollToBottom();
+        // console.log(response.data);
     }
 }
+const Seen = ref(false);
 async function MarkAsSeen() {
     try {
         let response = await axios.post('/api/chats/mark_seen', {
             chat_id: props.chat.id
         });
         console.log(response.data);
+        Seen.value = true;
     } catch (error) {
         console.log(error);
     }
@@ -63,9 +66,7 @@ import InputText from 'primevue/inputtext';
 import Button from "primevue/button";
 const chatId = props.chat.id;
 echo.channel(`chats.${chatId}`).listen('MessageSend', (e) => {
-    // messages.value.push(JSON.parse(e.message));
     Messages.value.push(e.message);
-    console.log(e);
     value.value = '';
 });
 
@@ -79,26 +80,18 @@ onMounted(() => {
     MarkAsSeen();
     scrollToBottom();
 });
-const getSeverity = (status) => {
-    if (status == true) {
-        return 'success';
-    } else {
-        return 'danger';
-    }
-};
-function ViewBook(bookId) {
-    Inertia.visit(route('books.show', { id: bookId }));
-}
+
 </script>
 <template>
     <Chats :chats="props.chats" :opened="true">
-        <div ref="chatContainer" class="h-full p-5 w-full flex gap-1 flex-col overflow-y-scroll  items-stretch ">
+        <div ref="chatContainer" class="h-full p-5 w-full flex gap-1 flex-col overflow-y-scroll   items-stretch ">
             <div class=" w-full   flex" v-for="message in Messages" :key="message.id"
                 :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'justify-end' : 'justify-start'">
                 <div :class="message.book_id != 0 ? ' border rounded-lg' : ''">
                     <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2" v-if="message.book_id == 0"
                         :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'bg-gray-200' : 'bg-white'">
                         <p class="text-gray-700">{{ message.message }}</p>
+                        
                     </div>
 
                     <div v-else class="m-2 p-4  h-full  w-full  ">
@@ -118,11 +111,10 @@ function ViewBook(bookId) {
                                 message.book.price }}
                             </p>
                         </div>
-                        <!-- <div class="flex w-full justify-start items-center">
-                            {{props.chat.creator_id == user.id && message.book.creator == true ? chat.creator.name : chat.target.name}}
-                        </div> -->
+                        
                         </Link>
                     </div>
+                    <p v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id)  )">unseen</p>
                 </div>
             </div>
 

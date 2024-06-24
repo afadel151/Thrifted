@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-const emit = defineEmits(['search']);
+import { onBeforeMount, ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -8,12 +7,56 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import InputGroup from 'primevue/inputgroup';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import axios from 'axios';
 const showingNavigationDropdown = ref(false);
 const SearchInput = ref('');
+const UnseenMessages = ref('');
+import { Inertia } from '@inertiajs/inertia';
+onBeforeMount(()=>{
+    axios.post('/api/users/unseen_messages')
+        .then(response => {
+            UnseenMessages.value = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+});
+
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
+import Echo from 'laravel-echo';
+import { usePage } from '@inertiajs/vue3';
+const echo = new Echo({
+    broadcaster: "reverb",
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT ?? 9000,
+    wssPort: import.meta.env.VITE_REVERB_PORT ?? 9000,
+    forceTLS: false,
+    enabledTransports: ["ws"],
+});
+const userId = usePage().props.auth.user.id;
+echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
+    if (! ('Notification' in window)) {
+              alert('Web Notification is not supported');
+              return;
+            }
+
+            Notification.requestPermission( permission => {
+              let notification = new Notification('ThriftedBooksDz', {
+                body: e.sender.name + ':' + e.message.message,
+                // icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+              });
+
+              // link to page on clicking the notification
+              notification.onclick = () => {
+                    Inertia.visit('/chats/' + e.message.chat_id);
+              };
+            });
+});
 </script>
 
 <template>
-
     <div>
         <div class="h-screen font-[Mulish]">
             <nav class="border-gray-100 bg-white h-[64px]  border-b">
@@ -21,7 +64,6 @@ const SearchInput = ref('');
                 <div class="px-10  ">
                     <div class="flex items-stretch justify-between h-16">
                         <div class="flex ">
-
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -33,7 +75,7 @@ const SearchInput = ref('');
                                 </NavLink>
                                 <NavLink :href="route('chats.index')"
                                     :active="route().current('chats.index') || route().current('chats.show')">
-                                    <Button label="Chats" icon="pi pi-comments" plain text />
+                                    <Button label="Chats"  :badge="UnseenMessages + ''" badgeSeverity="contrast" icon="pi pi-comments" plain text />
                                 </NavLink>
                                 <Button label="Card" icon="pi pi-shopping-cart" plain text />
                             </div>
