@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,16 +30,16 @@ class ProfileController extends Controller
 
     public function sendVerificationCode(Request $request, PhoneVerificationService $verificationService)
     {
-        $parsePhone = '+213'.  preg_replace('/^./', '', $request->input('phone'));
-       
+        $parsePhone = '+213' . preg_replace('/^./', '', $request->input('phone'));
+
         // Send a verification code to the given number
         $verificationService->send(new PhoneNumber($parsePhone));
 
-        return Inertia::render('VerifyCode',['phone'=>$parsePhone]);
+        return Inertia::render('VerifyCode', ['phone' => $parsePhone]);
     }
     public function verifyCode(Request $request, PhoneVerificationService $verificationService)
     {
-      
+
         //Verify the verification code for the given phone number
         // $valid = $verificationService->verify(
         //     new PhoneNumber($request->input('phone')),
@@ -48,7 +50,7 @@ class ProfileController extends Controller
         //     // Mark your user as valid
         //     dd('user_valid');
         // }
-        
+
     }
     /**
      * Update the user's profile information.
@@ -66,7 +68,30 @@ class ProfileController extends Controller
         \Log::info($request->user());
         return Redirect::route('profile.edit');
     }
+    public function show($id)
+    {
+        $user = User::with('socials','ratings')->find($id);
+        $books = Book::with('pictures', 'tags', 'category')->where('user_id', $user->id)->orderByDesc('created_at')->take(10)->get();
+        $ratings = $user->ratings;
+        $result = 0;
+        for ($i = 0; $i < count($ratings); $i++) {
+            $result = $result + $ratings[$i]->rating;
+        }
+        if (count($ratings) > 0) {
+            $result = $result / count($ratings);
+        }
+        $soldbooks = Book::with('pictures', 'tags', 'category')->where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('available', false);
+        })->get();
+        return Inertia::render('Profile/Show', [
+            'user' => $user,
+            'books' => $books,
+            'soldbooks' => $soldbooks,
+            'rating' => $result
+        ]);
 
+    }
     /**
      * Delete the user's account.
      */

@@ -1,8 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import Button from "primevue/button";
-import NavBar from '../Components/NavBar.vue';
 import Tag from 'primevue/tag';
 import Carousel from 'primevue/carousel';
 import { ref } from 'vue';

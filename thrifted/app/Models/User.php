@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,5 +63,9 @@ class User extends Authenticatable
     public function targeted_chats()
     {   
         return $this->hasMany(Chat::class,'target_id');
+    }
+    public function ratings(): HasMany 
+    {
+        return $this->hasMany(Rating::class,'rated_user_id');
     }
 }

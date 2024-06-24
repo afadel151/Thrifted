@@ -112,7 +112,8 @@ echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
                                         </template>
 
                                         <template #content>
-                                            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                            <DropdownLink :href="route('profile.show',{id:userId})"> View Profile </DropdownLink>
+                                            <DropdownLink :href="route('profile.edit')"> Edit Profile </DropdownLink>
                                             <DropdownLink :href="route('logout')" method="post" as="button">
                                                 Log Out
                                             </DropdownLink>

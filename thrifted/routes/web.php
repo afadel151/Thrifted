@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/verify_code',[ProfileController::class, 'verifyCode'])->name('profile.verify_code');
     Route::post('/profile/send_code',[ProfileController::class, 'sendVerificationCode'])->name('profile.send_verification_code');
+    Route::get('/profile/{id}',[ProfileController::class, 'show'])->name('profile.show');
     // send_verification_code
 });
 
