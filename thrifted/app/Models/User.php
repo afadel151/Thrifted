@@ -68,4 +68,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class,'rated_user_id');
     }
+    // Suggestions about futur read , recommondation based on previous reads purchases 
+    // book's rating from reader or seller / owner 
+    // table users_books 
+    // reviews 
+    // friends / same interests 
+    // saved sellers 
+    // saved books
+    // conversations about reviews and opinions (friends)
+    // books selled 
+    // book readers tracking with reviews and comments 
+    // suggestions 
+    
 }
