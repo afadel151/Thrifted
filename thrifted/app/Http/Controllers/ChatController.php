@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatSeen;
 use App\Models\Book;
 use App\Models\Chat;
 use App\Models\Message;
@@ -105,6 +106,7 @@ class ChatController extends Controller
                     'seen' => true,
                 ]);
             }
+            ChatSeen::dispatch($chat_id);
             return response()->json('Success');
         } catch (\Throwable $th) {
             throw $th;

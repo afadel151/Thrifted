@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
@@ -47,6 +48,18 @@ Route::get('/dashboard', function () {
 Route::get('chat', function () {
     return view('chat');
 });
+// 
+Route::prefix('/cards')->group(function (){
+    Route::get('/index',[CardController::class,'index'])->name('cards.index');
+    Route::get('/{id}',[CardController::class,'show'])->name('cards.show');
+    Route::post('/create',[CardController::class,'create'])->name('cards.create');
+    Route::post('/delete',[CardController::class,'delete'])->name('cards.delete');
+    Route::post('/add_book',[CardController::class,'add_book'])->name('cards.add_book');
+    Route::post('/delete_book',[CardController::class,'delete_book'])->name('cards.delete_book');
+    Route::post('/request_all',[CardController::class,'request_all'])->name('cards.request_all');
+
+})->middleware(['auth', 'verified']);
+// 
 Route::prefix('/chats')->group(function() {
     Route::get('/',[ChatController::class,'index'])->name('chats.index');
     Route::get('/sellings', [ChatController::class,'selling_chats'])->name('chats.selling');
@@ -68,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/send_code',[ProfileController::class, 'sendVerificationCode'])->name('profile.send_verification_code');
     // send_verification_code
 });
+
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);
 require __DIR__ . '/auth.php';

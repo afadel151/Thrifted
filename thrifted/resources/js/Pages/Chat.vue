@@ -69,6 +69,9 @@ echo.channel(`chats.${chatId}`).listen('MessageSend', (e) => {
     Messages.value.push(e.message);
     value.value = '';
 });
+echo.channel(`chats.${chatId}`).listen('ChatSeen', (e) => {
+    UnseenNotSeen.value = false;
+});
 
 const chatContainer = ref(null);
 const scrollToBottom = () => {
@@ -80,7 +83,7 @@ onMounted(() => {
     MarkAsSeen();
     scrollToBottom();
 });
-
+const UnseenNotSeen = ref(true);
 </script>
 <template>
     <Chats :chats="props.chats" :opened="true">
@@ -114,7 +117,7 @@ onMounted(() => {
                         
                         </Link>
                     </div>
-                    <p v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id)  )">unseen</p>
+                    <p v-show="UnseenNotSeen" v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id)  )">unseen</p>
                 </div>
             </div>
 
