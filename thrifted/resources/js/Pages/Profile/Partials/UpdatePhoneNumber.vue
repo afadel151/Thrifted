@@ -22,7 +22,7 @@ const form = useForm({
             <div>
                 <InputLabel for="name" value="Phone" />
 
-                <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.phone" required autofocus />
+                <TextInput  type="text" class="mt-1 block w-full" v-model="form.phone" required autofocus />
 
                 <InputError class="mt-2" :message="form.errors.phone" />
             </div>

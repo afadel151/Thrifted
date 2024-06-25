@@ -80,7 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/verify_code',[ProfileController::class, 'verifyCode'])->name('profile.verify_code');
     Route::post('/profile/send_code',[ProfileController::class, 'sendVerificationCode'])->name('profile.send_verification_code');
     Route::get('/profile/{id}',[ProfileController::class, 'show'])->name('profile.show');
-    // send_verification_code
+    Route::get('/profile/{id}/books',[ProfileController::class, 'books'])->name('profile.books');
+    Route::get('/profile/{id}/books_pagination',[ProfileController::class, 'books_pagination'])->name('profile.books_pagination');
+    
 });
 
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);

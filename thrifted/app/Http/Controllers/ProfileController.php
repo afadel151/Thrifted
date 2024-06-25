@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -111,5 +112,18 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    public function books($id)
+    {
+        $books = Book::with('user','category','tags')->where('user_id',$id)->orderBy('available')->paginate(3);
+        
+        return Inertia::render('Profile/Books',[
+            'books'=> $books
+        ]);
+    }
+    public function books_pagination($id)
+    {
+        $posts = Book::with('user','category','tags')->where('user_id',$id)->latest()->paginate(2);
+        return response()->json($posts);
     }
 }

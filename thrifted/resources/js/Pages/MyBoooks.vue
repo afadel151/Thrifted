@@ -52,7 +52,6 @@ const BooksWithNoPrice = computed(() =>{
 
 <template>
     <Head title="My Books" />
-    <NavBar />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-gray-800 text-xl leading-tight">My books </h2>

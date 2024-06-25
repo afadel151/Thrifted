@@ -81,7 +81,9 @@ const getSeverity = (status) => {
             <div class="mx-auto mt-6 flex flex-col items-stretch bg-white max-w-7xl  h-full  shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10">
                 <div class="w-full flex justify-between items-center">  
                     <div class="p-6 text-gray-900 text-4xl">📚 {{ props.user.name }}'s books!</div>
-                    <Button label="View All" severity="contrast" outlined raised />
+                    <Link :href="route('profile.books',{id:props.user.id})">
+                        <Button label="View All" severity="contrast" outlined raised />
+                    </Link>
                 </div>
                 <Carousel :value="props.books" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions">
                     <template #item="slotProps">
