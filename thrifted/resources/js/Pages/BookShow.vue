@@ -104,10 +104,20 @@ const BookImages = computed(() => {
                 <p class="text-xl" :class="props.book.available ? 'text-green-500' : 'text-red-400'">{{
                     props.book.available ?
                         'Available' : 'Sold' }}</p>
+                <p class="text-xl">
+                    Seller :
+                    <Link :href="route('profile.show', { id: props.book.user_id })">
+                    {{
+                        props.book.user.name
+
+                    }}
+                    </Link>
+                </p>
+
                 <div class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full"
                     v-if="props.book.user_id != user.id">
-                    <Link :href="route('books.chat_with_seller',{id:props.book.id})">
-                        <Button label="Request" icon="pi pi-credit-card" size="small" raised />
+                    <Link :href="route('books.chat_with_seller', { id: props.book.id })">
+                    <Button label="Request" icon="pi pi-credit-card" size="small" raised />
                     </Link>
                     <Button label="Add to card" icon="pi pi-shopping-cart" size="small" severity="contrast" raised />
                 </div>

@@ -115,15 +115,16 @@ class ProfileController extends Controller
     }
     public function books($id)
     {
-        $books = Book::with('user','category','tags')->where('user_id',$id)->orderBy('available')->paginate(3);
         
         return Inertia::render('Profile/Books',[
-            'books'=> $books
+            'user_id' => $id,
         ]);
+       
     }
+
     public function books_pagination($id)
     {
-        $posts = Book::with('user','category','tags')->where('user_id',$id)->latest()->paginate(2);
-        return response()->json($posts);
+        $books = Book::with('user','category','tags')->where('user_id',$id)->orderBy('available')->paginate(12);
+        return response()->json($books);
     }
 }

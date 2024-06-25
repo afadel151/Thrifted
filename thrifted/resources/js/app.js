@@ -8,7 +8,7 @@ import ToastService from 'primevue/toastservice';
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
 import 'primeicons/primeicons.css'
-
+import "v3-infinite-loading/lib/style.css";
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

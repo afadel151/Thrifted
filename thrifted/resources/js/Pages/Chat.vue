@@ -1,7 +1,7 @@
 <script setup>
 import Pusher from 'pusher-js';
-// import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/vue3';
+import InfiniteLoading from "v3-infinite-loading";
 window.Pusher = Pusher;
 import axios from 'axios';
 import Echo from 'laravel-echo';
@@ -18,10 +18,6 @@ const echo = new Echo({
 import { ref, onMounted } from "vue";
 import { usePage } from '@inertiajs/vue3';
 const props = defineProps({
-    messages: {
-        type: Array,
-        required: true
-    },
     chats: {
         type: Array,
         required: true
@@ -37,6 +33,7 @@ const props = defineProps({
 });
 const user = usePage().props.auth.user;
 const value = ref('');
+const Page = ref(1);
 async function SendMessage() {
     if (value.value != '') {
         let response = await axios.post('/api/messages/', {
@@ -45,9 +42,9 @@ async function SendMessage() {
             creator: props.creator
         });
         scrollToBottom();
-        // console.log(response.data);
     }
 }
+const Messages = ref([]);
 const Seen = ref(false);
 async function MarkAsSeen() {
     try {
@@ -60,13 +57,28 @@ async function MarkAsSeen() {
         console.log(error);
     }
 }
-const Messages = ref(props.messages);
+const LastPage = ref(0);
+async function HandleLoadMore() {
+    try {
+
+        let response = await axios.get(`/api/chats/${props.chat.id}/messages?page=${Page.value}`);
+        response.data.data.forEach(message => {
+            Messages.value.push(message);
+        });
+        console.log(response.data);
+        LastPage.value = response.data.last_page;
+        Page.value = Page.value + 1;
+    } catch (error) {
+        console.log(error);
+    }
+}
+import ProgressSpinner from 'primevue/progressspinner';
 import Chats from "./Chats.vue";
 import InputText from 'primevue/inputtext';
 import Button from "primevue/button";
 const chatId = props.chat.id;
 echo.channel(`chats.${chatId}`).listen('MessageSend', (e) => {
-    Messages.value.push(e.message);
+    Messages.value.unshift(e.message);
     value.value = '';
 });
 echo.channel(`chats.${chatId}`).listen('ChatSeen', (e) => {
@@ -87,18 +99,20 @@ const UnseenNotSeen = ref(true);
 </script>
 <template>
     <Chats :chats="props.chats" :opened="true">
-        <div ref="chatContainer" class="h-full p-5 w-full flex gap-1 flex-col overflow-y-scroll   items-stretch ">
+        <div ref="chatContainer"
+            class="h-full p-5 w-full flex gap-1 flex-col-reverse overflow-y-scroll   items-stretch ">
             <div class=" w-full   flex" v-for="message in Messages" :key="message.id"
                 :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'justify-end' : 'justify-start'">
                 <div :class="message.book_id != 0 ? ' border rounded-lg' : ''">
-                    <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2" v-if="message.book_id == 0"
+                    <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2" v-if="message.book == null"
                         :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'bg-gray-200' : 'bg-white'">
                         <p class="text-gray-700">{{ message.message }}</p>
-                        
+
                     </div>
 
                     <div v-else class="m-2 p-4  h-full  w-full  ">
-                        <Link :href="route('books.show', { id: message.book.id })"  class=" h-full flex flex-col items-center justify-between w-full" >
+                        <Link :href="route('books.show', { id: message.book_id })"
+                            class=" h-full flex flex-col items-center justify-between w-full">
 
 
 
@@ -114,11 +128,18 @@ const UnseenNotSeen = ref(true);
                                 message.book.price }}
                             </p>
                         </div>
-                        
+
                         </Link>
                     </div>
-                    <p v-show="UnseenNotSeen" v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id)  )">unseen</p>
+                    <p v-show="UnseenNotSeen"
+                        v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id))">
+                        unseen</p>
                 </div>
+            </div>
+            <div  class="w-full flex justify-center items-center" v-if="LastPage + 1 != Page || LastPage == 0" >
+                <ProgressSpinner style="width: 40px; height: 40px" strokeWidth="8" fill="transparent"
+                    animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+                <InfiniteLoading style="height: 0px; width: 0px;" @infinite="HandleLoadMore" />
             </div>
 
         </div>

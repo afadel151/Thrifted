@@ -27,15 +27,18 @@ class ChatController extends Controller
         return Inertia::render('Chats', ['chats' => $chats]);
 
     }
-    
+    public function messages($id)
+    {
+        $messages = Message::with('chat','book')->where('chat_id', $id)->orderByDesc('created_at')->paginate(15);
+        return response()->json($messages);
+    }
     public function show($id)
     {
         $user = Auth::user();
-        $messages = Message::with('chat','book')->where('chat_id', $id)->get();
         $chat = Chat::with('creator','target')->find($id);
         $chats = Chat::with('creator', 'target','unseen_messages')->where('creator_id', $user->id)->orWhere('target_id', $user->id)->get();
         $Creator = Chat::find($id)->creator_id == $user->id ? true : false;
-        return Inertia::render('Chat', ['messages' => $messages, 'chats' => $chats, 'creator' => $Creator, 'chat' => $chat]);
+        return Inertia::render('Chat', [ 'chats' => $chats, 'creator' => $Creator, 'chat' => $chat]);
 
     }
     public function destroy($id)

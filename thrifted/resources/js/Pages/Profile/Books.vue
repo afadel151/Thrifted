@@ -1,13 +1,7 @@
 <script setup>
-const props = defineProps({
-    books: {
-        type: Object,
-        required: true,
-    }
-});
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Tag from 'primevue/tag';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -15,6 +9,7 @@ import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import Slider from 'primevue/slider';
 import axios from 'axios';
+import InfiniteLoading from "v3-infinite-loading";
 import { computed, ref } from 'vue';
 const getSeverity = (status) => {
     if (status == true) {
@@ -23,6 +18,12 @@ const getSeverity = (status) => {
         return 'danger';
     }
 };
+const props = defineProps({
+    user_id:{
+        type: Number,
+        required: true
+    }
+})
 const conditions = ref([
     { name: 'All', code: 'All' },
     { name: 'Good', code: 'Good' },
@@ -52,18 +53,19 @@ const available = ref([
     { name: 'Available', code: 1 },
     { name: 'Sold', code: 0 },
 ]);
-const value = ref([20, 80]);
+const value = ref([0, 50]);
 const SearchInput = ref('');
 const ConditionInput = ref('All');
 const FormatInput = ref('All');
 const StateInput = ref(-1);
 const OriginalInput = ref(-1);
 const AvailableInput = ref(-1);
+const Books = ref([]);
+const Page = ref(1);
 function GetPriceRange(percentage) {
     return percentage * 50000 / 100;
 }
 
-const Books = ref(props.books.data);
 const ComputedBooks = computed(() => {
     let books = Books.value;
     if (SearchInput.value != '') {
@@ -95,6 +97,20 @@ const ComputedBooks = computed(() => {
     });
     return books;
 });
+
+async function HandleLoadMore()
+{
+    try {
+        let response = await axios.get(`/profile/${props.user_id}/books_pagination?page=${Page.value}`);
+        response.data.data.forEach((book) =>{
+            Books.value.push(book);
+        });
+        console.log('handle ' +Page.value);
+        Page.value = Page.value + 1;
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <template>
@@ -144,7 +160,7 @@ const ComputedBooks = computed(() => {
             </div>
 
         </div>
-        <div class="w-full  px-32 py-16 grid grid-cols-1">
+        <div class="w-full  px-32 py-16 grid grid-cols-6">
             <div v-for="book in ComputedBooks">
                 <div class="m-2 p-2 border rounded">
                     <Tag :severity="getSeverity(book.available)" :value="book.available == 1 ? 'available' : 'sold'"
@@ -173,7 +189,7 @@ const ComputedBooks = computed(() => {
                 </div>
             </div>
         </div>
-
+        <InfiniteLoading @infinite="HandleLoadMore" />
     </AuthenticatedLayout>
 
 </template>

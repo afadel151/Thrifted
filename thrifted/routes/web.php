@@ -30,9 +30,11 @@ Route::prefix('/api')->group(function () {
         Route::post('/',[MessageController::class, 'store']);
     });
     Route::prefix('chats')->group(function(){
+        Route::get('/{id}/messages',[ChatController::class,'messages'])->name('chats.messages');
         Route::post('/mark_seen',[ChatController::class,'mark_seen']);
         Route::post('/get_last_message',[ChatController::class,'get_last_message']);
         Route::post('/get_unseen_messages',[ChatController::class,'get_unseen_messages']);
+        
     });
     Route::prefix('users')->group(function(){
         Route::post('/unseen_messages',[UserController::class, 'get_unseen_messages']);
