@@ -61,7 +61,8 @@ class Book extends Model
     }
     public function searchableUsing(): Engine
     {
-        return app(EngineManager::class)->engine('algolia');
+        return app(EngineManager::class)->engine('typesense');
     }
+   
 
 }

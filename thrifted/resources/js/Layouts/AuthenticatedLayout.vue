@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 const SearchInput = ref('');
 const UnseenMessages = ref('');
 import { Inertia } from '@inertiajs/inertia';
-onBeforeMount(()=>{
+onBeforeMount(() => {
     axios.post('/api/users/unseen_messages')
         .then(response => {
             UnseenMessages.value = response.data;
@@ -37,23 +37,43 @@ const echo = new Echo({
 });
 const userId = usePage().props.auth.user.id;
 echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
-    if (! ('Notification' in window)) {
-              alert('Web Notification is not supported');
-              return;
-            }
+    if (!('Notification' in window)) {
+        alert('Web Notification is not supported');
+        return;
+    }
 
-            Notification.requestPermission( permission => {
-              let notification = new Notification('ThriftedBooksDz', {
-                body: e.sender.name + ':' + e.message.message,
-                // icon: "https://pusher.com/static_logos/320x320.png" // optional image url
-              });
+    Notification.requestPermission(permission => {
+        let notification = new Notification('ThriftedBooksDz', {
+            body: e.sender.name + ':' + e.message.message,
+            // icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+        });
 
-              // link to page on clicking the notification
-              notification.onclick = () => {
-                    Inertia.visit('/chats/' + e.message.chat_id);
-              };
-            });
+        // link to page on clicking the notification
+        notification.onclick = () => {
+            Inertia.visit('/chats/' + e.message.chat_id);
+        };
+    });
 });
+import DataView from 'primevue/dataview';
+const SearchResults = ref([]);
+import { watch } from 'vue';
+function Search(search) {
+    console.log(SearchInput.value);
+    axios.post('/api/books/search', {
+        search: search
+    })
+    .then(response => SearchResults.value = response.data)
+    .catch(error => console.log(error));
+}
+watch(SearchInput,async (NewSearch, OldSearch)=>{
+    if(NewSearch.length != 0)
+    {
+        Search(NewSearch);
+    }else{
+        SearchResults.value = [];
+    }
+})
+const visible = ref(false);
 </script>
 
 <template>
@@ -75,17 +95,19 @@ echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
                                 </NavLink>
                                 <NavLink :href="route('chats.index')"
                                     :active="route().current('chats.index') || route().current('chats.show')">
-                                    <Button label="Chats"  :badge="UnseenMessages + ''" badgeSeverity="contrast" icon="pi pi-comments" plain text />
+                                    <Button label="Chats" :badge="UnseenMessages + ''" badgeSeverity="contrast"
+                                        icon="pi pi-comments" plain text />
                                 </NavLink>
                                 <Button label="Card" icon="pi pi-shopping-cart" plain text />
                             </div>
                         </div>
                         <div class="flex justify-start items-center">
-                            <div >
+                            <div class="" >
                                 <InputGroup>
                                     <Button icon="pi pi-search" size="small" severity="contrast" raised />
-                                    <InputText v-model="SearchInput" placeholder="Search" />
+                                    <InputText v-model="SearchInput"  placeholder="Search" />
                                 </InputGroup>
+                                
                             </div>
                             <div class="sm:flex sm:items-center hidden">
                                 <!-- Settings Dropdown -->
@@ -112,7 +134,8 @@ echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
                                         </template>
 
                                         <template #content>
-                                            <DropdownLink :href="route('profile.show',{id:userId})"> View Profile </DropdownLink>
+                                            <DropdownLink :href="route('profile.show', { id: userId })"> View Profile
+                                            </DropdownLink>
                                             <DropdownLink :href="route('profile.edit')"> Edit Profile </DropdownLink>
                                             <DropdownLink :href="route('logout')" method="post" as="button">
                                                 Log Out

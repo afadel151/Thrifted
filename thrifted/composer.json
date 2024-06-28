@@ -18,6 +18,7 @@
         "pnlinh/laravel-infobip-sms": "^1.0",
         "tightenco/ziggy": "^2.0",
         "twilio/sdk": "^7.16",
+        "typesense/typesense-php": "^4.9",
         "worksome/verify-by-phone": "^0.5.1"
     },
     "require-dev": {
