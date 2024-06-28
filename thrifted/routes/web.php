@@ -25,6 +25,7 @@ Route::prefix('/api')->group(function () {
         Route::post('create', [BookController::class, 'create'])->name('books.create');
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
+        Route::get('search', [BookController::class, 'search']);
     });
     Route::prefix('messages')->group(function(){
         Route::post('/',[MessageController::class, 'store']);

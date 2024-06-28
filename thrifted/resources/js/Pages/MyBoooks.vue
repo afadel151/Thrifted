@@ -81,17 +81,17 @@ const responsiveOptions = ref([
             <h2 class="font-semibold text-gray-800 text-xl leading-tight">My books </h2>
         </template>
 
-        <div class="py-12 w-full bg-slate-100 overflow-y-scroll " style="height: calc(100vh - 64px);">
-            <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl ">
-                <div class="bg-white shadow-sm  p-5 sm:rounded-lg overflow-hidden">
+        <div class="bg-slate-100 py-12 w-full overflow-y-scroll" style="height: calc(100vh - 64px);">
+            <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                <div class="bg-white shadow-sm p-5 sm:rounded-lg overflow-hidden">
                     <div class="flex justify-between items-center">
-                        <div class="p-6 text-gray-900 text-4xl">📚 Here are your books!</div>
+                        <div class="p-6 text-4xl text-gray-900">📚 Here are your books!</div>
                         <BookAdd :user="props.user" :categories="props.categories" :tags="props.tags"
                             @add-book="AddNewBook" />
                     </div>
                     <!-- <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"> -->
                         <Carousel :value="MyBooks" :numVisible="4" :numScroll="1"
-                            :responsiveOptions="responsiveOptions">
+                            :responsiveOptions="responsiveOptions" :class="props.books.length < 4 ? 'w-'+props.books.length+'/4' : ''">
                             <template #item="slotProps">
                                 <div class="border-2 m-2 p-4 rounded">
                                     <Link :href="route('books.show', { id: slotProps.data.id })">
@@ -120,9 +120,9 @@ const responsiveOptions = ref([
 
 
                 </div>
-                <div class="bg-white mt-2 shadow-sm p- p-5 sm:rounded-lg overflow-hidden">
+                <div class="bg-white shadow-sm mt-2 p- p-5 sm:rounded-lg overflow-hidden">
                     <div class="flex justify-between items-center">
-                        <div class="p-6 text-gray-900 text-5xl">📦 Your sold books!</div>
+                        <div class="p-6 text-5xl text-gray-900">📦 Your sold books!</div>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div v-for="book in SoldBooks">
@@ -157,9 +157,9 @@ const responsiveOptions = ref([
 
 
                 </div>
-                <div class="bg-white mt-2 shadow-sm p- p-5 sm:rounded-lg overflow-hidden">
+                <div class="bg-white shadow-sm mt-2 p- p-5 sm:rounded-lg overflow-hidden">
                     <div class="flex justify-between items-center">
-                        <div class="p-6 text-gray-900 text-5xl">💸 Books with no price</div>
+                        <div class="p-6 text-5xl text-gray-900">💸 Books with no price</div>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div v-for="book in BooksWithNoPrice">

@@ -59,11 +59,11 @@ echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
 <template>
     <div>
         <div class="h-screen font-[Mulish]">
-            <nav class="border-gray-100 bg-white h-[64px]  border-b">
+            <nav class="border-gray-100 bg-white border-b h-[64px]">
                 <!-- Primary Navigation Menu -->
-                <div class="px-10  ">
-                    <div class="flex items-stretch justify-between h-16">
-                        <div class="flex ">
+                <div class="px-10">
+                    <div class="flex justify-between items-stretch h-16">
+                        <div class="flex">
 
                             <div class="sm:flex space-x-8 hidden sm:-my-px sm:ms-10">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -80,16 +80,16 @@ echo.channel(`user.messages.${userId}`).listen('MessageNotification', (e) => {
                                 <Button label="Card" icon="pi pi-shopping-cart" plain text />
                             </div>
                         </div>
-                        <div class=" flex justify-start items-center">
-                            <div class="px-20 ">
+                        <div class="flex justify-start items-center">
+                            <div >
                                 <InputGroup>
                                     <Button icon="pi pi-search" size="small" severity="contrast" raised />
                                     <InputText v-model="SearchInput" placeholder="Search" />
                                 </InputGroup>
                             </div>
-                            <div class="sm:flex sm:items-center hidden ">
+                            <div class="sm:flex sm:items-center hidden">
                                 <!-- Settings Dropdown -->
-                                <div class="relative ">
+                                <div class="relative">
 
                                     <Dropdown align="right" width="48">
                                         <template #trigger>

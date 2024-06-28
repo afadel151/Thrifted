@@ -102,7 +102,14 @@ class BookController extends Controller
 
 
     }
-
+    public function search()
+    {
+        // $search = $request->input('query');
+        $search = 'crim';
+        $books = Book::search($search)->get();
+        $books->load(['user','tags','category']);
+        return response()->json($books);
+    }
     public function show($id)
     {
         $book = Book::with('category', 'tags', 'user', 'pictures')->find($id);
