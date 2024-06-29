@@ -35,6 +35,10 @@ class BookController extends Controller
             }
         }
     }
+    public function ist()
+    {
+        
+    }
     public function edit($id)
     {
         $book = Book::with('category', 'pictures', 'tags')->find($id);
