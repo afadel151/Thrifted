@@ -20,6 +20,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/search', function () {
+    // return Inertia::render('Search');
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::prefix('/api')->group(function () {
     Route::prefix('books')->group(function () {
         Route::post('create', [BookController::class, 'create'])->name('books.create');
@@ -35,7 +38,6 @@ Route::prefix('/api')->group(function () {
         Route::post('/mark_seen',[ChatController::class,'mark_seen']);
         Route::post('/get_last_message',[ChatController::class,'get_last_message']);
         Route::post('/get_unseen_messages',[ChatController::class,'get_unseen_messages']);
-        
     });
     Route::prefix('users')->group(function(){
         Route::post('/unseen_messages',[UserController::class, 'get_unseen_messages']);
