@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -56,6 +57,20 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
+    public function UpdateProfilePicture(Request $request)
+    {
+        dd('Cbn');
+        // $user = Auth::user();
+        // if ($request->hasFile('picture')) {
+        //     $request_file = $request->file('picture');
+        //     $path = '/public/users/';
+        //     $NewPath = Storage::disk('local')->putFile($path, $request_file);
+        //     $user->update([
+        //         'picture' => $NewPath
+        //     ]);
+        // }
+        // return response()->json($NewPath);
+    }
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         \Log::info($request->validated());

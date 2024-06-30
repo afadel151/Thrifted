@@ -25,7 +25,8 @@ class User extends Authenticatable
         'adress',
         'phone',
         'delivery',
-        'payment_on_hand'
+        'payment_on_hand',
+        'picture'
     ];
 
     /**

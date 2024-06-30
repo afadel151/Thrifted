@@ -21,7 +21,7 @@ class ProfileUpdateRequest extends FormRequest
             'adress' => ['string','max:255'],
             'phone' => ['numeric','max:255'],
             'delivery' => ['boolean'],
-            'payment_on_hand' => ['boolean']
+            'payment_on_hand' => ['boolean'],
         ];
     }
 }
