@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 Route::get('/search', function () {
     // return Inertia::render('Search');
+    // return Inertia::render('Search');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::prefix('/api')->group(function () {
     Route::prefix('books')->group(function () {
