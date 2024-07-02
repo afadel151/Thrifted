@@ -43,6 +43,7 @@ Route::prefix('/api')->group(function () {
     Route::prefix('users')->group(function(){
         Route::post('/unseen_messages',[UserController::class, 'get_unseen_messages']);
         Route::post('/update_picture',[ProfileController::class, 'UpdateProfilePicture']);
+Route::post('/search',[ProfileController::class, 'search');
     });
     
 });
