@@ -84,7 +84,6 @@ async function AddPicture(){
 }
 
 async function UpdateBook() {
-
     let formData = new FormData();
     formData.append('book_id', props.book.id);//
     formData.append('title', InputTitle.value);//
