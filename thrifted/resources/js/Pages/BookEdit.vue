@@ -125,6 +125,7 @@ async function UpdateBook() {
                 </div>
             </div>
         <!-- </template> -->
+         <p></p>
         <div class="flex justify-center items-stretch gap-4 mt-2 px-96">
             <!-- <img :src="props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit"> -->
             <!-- <Select v-model="selectedCategory" :options="props.categories"  optionLabel="name" optionValue="id" placeholder="Change Category" class="w-full md:w-56" /> -->
