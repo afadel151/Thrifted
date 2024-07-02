@@ -157,6 +157,7 @@ class BookController extends Controller
                 'format' => $request->input('format'),
                 'new' => $request->input('state') === 'New' ? true : false,
                 'original' => $request->input('original') === 'Original' ? true : false,
+                'available' => $request->input('available') === 'Available' ? true : false,
             ]);
             return response()->json($book);
         }

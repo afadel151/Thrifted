@@ -38,9 +38,11 @@ const InputOriginal = ref(props.book.original == true ? 'Original' : 'Copied');
 const InputFormat = ref(props.book.format);
 const ConditionOptions = ref(['Low', 'Acceptable', 'Normal', 'Good ', 'High']);
 const StateOptions = ref(['New', 'Used']);
+const AvailableOptions = ref(['Available', 'Sold']);
 const InputState = ref(props.book.new == true ? 'New' : 'Used');
 const InputCategory = ref(props.book.category_id);
 const InputCondition = ref(props.book.condition);
+const InputAvailable = ref(props.book.available == true ? 'Available' : 'Sold');
 const op = ref();
 const user = computed(() => { return page.props.auth.user; })
 const images = computed(() => {
@@ -96,6 +98,7 @@ async function UpdateBook() {
     formData.append('state', InputState.value);//
     formData.append('condition', InputCondition.value);//
     formData.append('category_id', InputCategory.value);//
+    formData.append('available', InputAvailable.value);//
     try {
         let response = await axios.post('/api/books/update', formData);
         if (response.status == 200) {
@@ -165,6 +168,11 @@ async function UpdateBook() {
                 <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
                     <label for="ssn" class="w-24 font-semibold">State</label>
                     <SelectButton v-model="InputState" :options="StateOptions" aria-labelledby="basic"
+                        class="flex-auto" />
+                </div>
+                <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+                    <label for="ssn" class="w-24 font-semibold">Available ?</label>
+                    <SelectButton v-model="InputAvailable" :options="AvailableOptions" aria-labelledby="basic"
                         class="flex-auto" />
                 </div>
                 <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
