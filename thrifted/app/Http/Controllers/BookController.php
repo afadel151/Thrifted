@@ -93,6 +93,7 @@ class BookController extends Controller
         $book->price = $request->input('price');
         $book->original = $request->input('original') === 'Original' ? true : false;
         $book->save();
+        $book->searchable();
         $tags = $request->input('tags', []);
         foreach ($tags as $tag) {
             DB::table('book_tags')->insert(
@@ -108,12 +109,8 @@ class BookController extends Controller
     }
     public function search(Request $request)
     {
-        $search = '%'. $request->input('search') .'%';
-        $books = Book::where(function ($query) use ($search){
-            $query->where('title', 'like',$search)
-                    ->orWhere('author', 'like',$search)
-                    ->orWhere('edition', 'like',$search);
-        })->get();
+        $search = $request->input('search');
+        $books = Book::search($search)->get();
         $books->load(['user','tags','category']);
         return response()->json($books);
     }

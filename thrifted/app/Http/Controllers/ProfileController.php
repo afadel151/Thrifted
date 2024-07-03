@@ -142,4 +142,12 @@ class ProfileController extends Controller
         $books = Book::with('user','category','tags')->where('user_id',$id)->orderBy('available')->paginate(12);
         return response()->json($books);
     }
+    public function rate(Request $rquest )
+    {
+        $rater_id = Auth::user()->id;
+        $rated_id = $rquest->input('rated_id');
+        $rating = $rquest->input('rating');
+        dd($rating);
+    }
+
 }

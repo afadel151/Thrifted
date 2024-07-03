@@ -135,8 +135,8 @@ const BookImages = computed(() => {
                     <p>ISBN : {{ props.book.isbn == null ? 'No isbn provided' : props.book.isbn }}</p>
                     <hr>
                     <div>Tags:
-                        <template v-for="tag in props.book.tags">
-                            <Badge :value="tag.name" severity="secondary" class="mr-2"></Badge>
+                        <template v-for="tag in props.book.tags" :key="tag.id">
+                            <Badge :value="tag.name"  severity="secondary" class="mr-2"></Badge>
                         </template>
                     </div>
                     <hr>
