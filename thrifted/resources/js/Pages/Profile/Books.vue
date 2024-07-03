@@ -161,7 +161,7 @@ async function HandleLoadMore()
 
         </div>
         <div class="w-full  px-32 py-16 grid grid-cols-6">
-            <div v-for="book in ComputedBooks">
+            <div v-for="book in ComputedBooks" :key="book.id">
                 <div class="m-2 p-2 border rounded">
                     <Tag :severity="getSeverity(book.available)" :value="book.available == 1 ? 'available' : 'sold'"
                         rounded></Tag>
