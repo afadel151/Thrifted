@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookPicture;
+use App\Models\CardBook;
 use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Message;
@@ -118,6 +119,7 @@ class BookController extends Controller
     {
         $book = Book::with('category', 'tags', 'user', 'pictures')->find($id);
         $cards = Auth::user()->cards;
+        $cards->load('books');
         $tagsIds = $book->tags->pluck('id')->toArray();
         $relatedcategory = Book::where('books.id', '!=', $book->id)
             ->where('category_id', $book->category_id)
@@ -130,11 +132,15 @@ class BookController extends Controller
             ->orWhereIn('id', $relatedtags)
             ->take(10)
             ->get();
+        
+        $belong_to_card = CardBook::where('book_id',$book->id)->whereIn('card_id',$cards->pluck('id')->toArray())->exists();
+        
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,
             'book' => $book,
-            'cards' => $cards
-        ]);
+            'cards' => $cards,
+            'belongs_to_card' => $belong_to_card
+        ]); 
     }
     public function update(Request $request)
     {

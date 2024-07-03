@@ -47,6 +47,7 @@ Route::prefix('/api')->group(function () {
     });
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);
+        Route::post('/add_book',[CardController::class, 'add_book']);
     });
 
 });

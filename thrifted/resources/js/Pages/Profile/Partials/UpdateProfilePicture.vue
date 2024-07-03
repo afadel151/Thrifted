@@ -33,7 +33,6 @@ async function submitFile() {
       console.log("FAILURE!!");
     });
 }
-console.log($refs);
 </script>
 
 <template>

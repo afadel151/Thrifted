@@ -9,11 +9,12 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
-
+import ProgressSpinner from 'primevue/progressspinner';
 import axios from "axios";
 import Dialog from "primevue/dialog";
 const showingNavigationDropdown = ref(false);
 const SearchInput = ref("");
+const Searching = ref(false);
 const UnseenMessages = ref("");
 import { Inertia } from "@inertiajs/inertia";
 onBeforeMount(() => {
@@ -60,6 +61,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 const SearchResults = ref([]);
 import { watch } from "vue";
 function Search(search) {
+  Searching.value = true;
   console.log(SearchInput.value);
   axios
     .post("/api/books/search", {
@@ -67,6 +69,7 @@ function Search(search) {
     })
     .then((response) => {
       SearchResults.value = response.data;
+      Searching.value = false;
       console.log(response.data);
     })
     .catch((error) => console.log(error));
@@ -79,6 +82,7 @@ watch(SearchInput, async (NewSearch, OldSearch) => {
   }
 });
 const visible = ref(false);
+
 const position = ref("center");
 const openPosition = (pos) => {
   position.value = pos;
@@ -171,6 +175,7 @@ const clearResults = () => {
                   <div
                     class="flex items-center flex-col justify-center gap-4 mb-8 px-6"
                   >
+                  <ProgressSpinner v-show="Searching" style="width: 50px; height: 50px" />
                     <div
                       v-for="book in SearchResults"
                       :key="book.id"

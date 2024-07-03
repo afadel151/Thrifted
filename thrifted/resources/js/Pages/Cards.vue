@@ -6,10 +6,8 @@ import axios from "axios";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
-import DataView from "primevue/dataview";
-import ConfirmDialog from 'primevue/confirmdialog';
-import { useConfirm } from "primevue/useconfirm";
-const confirm = useConfirm();
+import NavLink from "@/Components/NavLink.vue";
+import ConfirmDialog from "primevue/confirmdialog";
 const props = defineProps({
   cards: {
     type: Array,
@@ -37,43 +35,26 @@ async function Addcard() {
     console.log(error.message);
   }
 }
-const confirm1 = () => {
-    confirm.require({
-        message: 'Are you sure you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        rejectProps: {
-            label: 'Cancel',
-            severity: 'secondary',
-            outlined: true
-        },
-        acceptProps: {
-            label: 'Save'
-        },
-        accept: () => {
-            alert('deleted');
-        },
-        reject: () => {
-            alert('rejected');
-        }
-    });
-};
+function GetTotalPrice(card) {
+  let total = 0;
+  card.books.forEach((book) => {
+    total = total + book.price;
+  });
+  return total;
+}
 </script>
 <template>
   <AuthenticatedLayout>
-    <ConfirmDialog></ConfirmDialog>
-    <div class="h-24 flex px-96 items-center justify-end">
-        <Button label="Add" @click="visible = true" />
+    <div class="h-24  flex px-20 items-center justify-start">
+      <Button label="New card" severity="contrast" @click="visible = true" />
     </div>
     <Dialog
       v-model:visible="visible"
       modal
-      header="Edit Profile"
+      header="New Card"
       :style="{ width: '25rem' }"
     >
-      <span class="text-surface-500 dark:text-surface-400 block mb-8"
-        >Update your information.</span
-      >
+      
       <div class="flex items-center gap-4 mb-4">
         <label for="username" class="font-semibold w-24">Name</label>
         <InputText
@@ -90,62 +71,32 @@ const confirm1 = () => {
           severity="secondary"
           @click="visible = false"
         ></Button>
-        <Button type="button" label="Save" @click="Addcard"></Button>
+        <Button type="button" severity="contrast" label="Save" @click="Addcard"></Button>
       </div>
     </Dialog>
-    <div class="flex flex-col justify-center items-stretch gap-4 mt-2 px-96">
-      <DataView :value="MyCards">
-        <template #list="slotProps">
-          <div class="flex border flex-col">
-            <div v-for="(item, index) in slotProps.items" :key="index">
-              <div
-                class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
-                :class="{
-                  'border-t border-surface-200 dark:border-surface-700':
-                    index !== 0,
-                }"
-              >
-                <div
-                  class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
-                >
-                  <div
-                    class="flex flex-row md:flex-col justify-between items-start gap-2"
-                  >
-                    <div>
-                      <div class="text-lg font-medium mt-2">
-                        {{ item.name }}
-                      </div>
-                    </div>
-                    <div class="bg-surface-100 p-1" style="border-radius: 30px">
-                      <div
-                        class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
-                        style="
-                          border-radius: 30px;
-                          box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
-                            0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-                        "
-                      >
-                        <i class="pi pi-star-fill text-yellow-500"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-col md:items-end gap-8">
-                    <div class="flex flex-row-reverse md:flex-row gap-2">
-                      <Button icon="pi pi-trash" @click="confirm1" outlined severity="danger"></Button>
-                      <Button
-                        icon="pi pi-eye"
-                        label="View"
-                        :disabled="item.inventoryStatus === 'OUTOFSTOCK'"
-                        class="flex-auto md:flex-initial whitespace-nowrap"
-                      ></Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </DataView>
+    <div class="flex w-screen px-20   gap-4 mt-2">
+      <div class="w-1/4 flex flex-col gap-2">
+        <div
+          v-for="card in MyCards"
+          :key="card.id"
+          class="border"
+        >
+          <NavLink
+          :href="route('cards.show',{id: card.id})"
+          :active="route().current('cards.show',{id: card.id})"
+          class="flex p-6 justify-between items-start h-full w-full">
+            <p class="text-3xl p-4 font-bold text-gray-950">{{ card.name }}</p>
+            <p class="text-gray-900 text-lg">
+              total : {{ card.books.length }} books ({{
+                GetTotalPrice(card)
+              }}DA)
+            </p>
+          </NavLink>
+        </div>
+      </div>
+      <div class="w-3/4 h-fit ">
+        <slot />
+      </div>
     </div>
   </AuthenticatedLayout>
 </template>
