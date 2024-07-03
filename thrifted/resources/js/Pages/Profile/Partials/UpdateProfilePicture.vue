@@ -1,16 +1,8 @@
 <script setup>
-import { Link, useForm, usePage } from "@inertiajs/vue3";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import FileUpload from "primevue/fileupload";
+import { usePage } from "@inertiajs/vue3";
 import Button from "primevue/button";
 import axios from "axios";
 import { ref } from "vue";
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-});
 const file = ref(null);
 const uploadPercentage = ref(0);
 const user = usePage().props.auth.user;
@@ -39,6 +31,9 @@ async function submitFile() {
       console.log("FAILURE!!");
     });
 }
+function onChange(e) {
+  file.value = e.target.files[0];
+}
 </script>
 
 <template>
@@ -55,12 +50,15 @@ async function submitFile() {
         :src="user.picture.replace('public/', '/storage/')"
         alt=""
       />
-      <div v-else class="flex flex-col justify-center items-center w-64 h-6w-64">
+      <div v-else class="flex flex-col justify-center space-y-2 items-center w-72">
         <img src="/default-avatar.jpg" alt="" />
 
-        <Button label="Change" severity="contrast" />
+        <input type="file" @change="onChange" >
+        <Button label="Change" severity="contrast" v-show="file != null" />
       </div>
     </div>
   </section>
 </template>
+
+
 

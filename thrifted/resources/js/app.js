@@ -8,6 +8,8 @@ import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
+import VueGoogleMaps from '@fawmi/vue-google-maps'
+import { equal } from 'fast-deep-equal';
 import 'primeicons/primeicons.css'
 import "v3-infinite-loading/lib/style.css";
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -26,6 +28,12 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(ToastService)
             .use(ConfirmationService)
+            .use(VueGoogleMaps, {
+                load: {
+                    key: 'AIzaSyBgA77bv_e7K89tXzPP87pGukI01wELqPM',
+                },
+                autobindAllEvents: true,
+            })
             .mount(el);
     },
     progress: {
@@ -33,3 +41,5 @@ createInertiaApp({
     },
 });
 
+
+// 

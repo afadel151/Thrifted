@@ -146,11 +146,11 @@ async function UpdateBook() {
     </div>
     <!-- </template> -->
     <p></p>
-    <div class="">
+    <div class="px-32 ">
       <!-- <img :src="props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit"> -->
       <!-- <Select v-model="selectedCategory" :options="props.categories"  optionLabel="name" optionValue="id" placeholder="Change Category" class="w-full md:w-56" /> -->
-      <div class="flex flex-col justify-start gap-2 md:w-full">
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+      <div class="flex flex-col justify-start gap-2 md:w-full px-20">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="author" class="w-24 font-semibold">Category</label>
           <Select
             v-model="InputCategory"
@@ -161,7 +161,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="author" class="w-24 font-semibold">Title</label>
           <InputText
             v-model="InputTitle"
@@ -170,7 +170,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="author" class="w-24 font-semibold">Author</label>
           <InputText
             v-model="InputAuthor"
@@ -179,7 +179,7 @@ async function UpdateBook() {
             autocomplete="off"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="edition" class="w-24 font-semibold">Edition</label>
           <InputText
             v-model="InputEdition"
@@ -188,7 +188,7 @@ async function UpdateBook() {
             autocomplete="off"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">Price</label>
           <InputNumber
             v-model="InputPrice"
@@ -196,7 +196,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">Format</label>
           <SelectButton
             v-model="InputFormat"
@@ -205,7 +205,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">Original</label>
           <SelectButton
             v-model="InputOriginal"
@@ -214,7 +214,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">Condition</label>
           <SelectButton
             v-model="InputCondition"
@@ -223,7 +223,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">State</label>
           <SelectButton
             v-model="InputState"
@@ -232,7 +232,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">Available ?</label>
           <SelectButton
             v-model="InputAvailable"
@@ -241,7 +241,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="ssn" class="w-24 font-semibold">ISBN</label>
           <InputNumber
             v-model="InputIsbn"
@@ -249,7 +249,7 @@ async function UpdateBook() {
             class="flex-auto"
           />
         </div>
-        <div class="flex md:flex-row sm:flex-col items-center gap-4 mb-2">
+        <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label class="w-24 font-semibold">Description</label>
           <Textarea
             v-model="InputDescription"
@@ -259,7 +259,7 @@ async function UpdateBook() {
           />
         </div>
         <div
-          class="flex md:flex-row sm:flex-col justify-between items-center gap-4 mb-2"
+          class="flex md:flex-row flex-col justify-between items-center gap-4 mb-2"
         >
           <p class="font-bold text-3xl">Book pictures</p>
           <div v-if="images.length < 3" class="flex justify-center card">

@@ -7,7 +7,6 @@ import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import NavLink from "@/Components/NavLink.vue";
-import ConfirmDialog from "primevue/confirmdialog";
 const props = defineProps({
   cards: {
     type: Array,
@@ -42,6 +41,7 @@ function GetTotalPrice(card) {
   });
   return total;
 }
+
 </script>
 <template>
   <AuthenticatedLayout>
@@ -98,5 +98,6 @@ function GetTotalPrice(card) {
         <slot />
       </div>
     </div>
+    
   </AuthenticatedLayout>
 </template>

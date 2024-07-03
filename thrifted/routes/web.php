@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
@@ -61,6 +62,7 @@ Route::get('chat', function () {
     return view('chat');
 });
 // 
+Route::get('/map', [MapController::class, 'index']);
 Route::prefix('/cards')->group(function () {
     Route::get('/', [CardController::class, 'index'])->name('cards.index');
     Route::get('/{id}', [CardController::class, 'show'])->name('cards.show');
