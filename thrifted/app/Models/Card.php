@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'book_id',
+        'user_id',
+        'name'
+    ];
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

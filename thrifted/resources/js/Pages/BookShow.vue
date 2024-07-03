@@ -17,6 +17,10 @@ const props = defineProps({
     related_books: {
         type: Array,
         required: true,
+    },
+    cards:{
+        type: Array,
+        required: true,
     }
 });
 const getSeverity = (status) => {
@@ -67,6 +71,7 @@ const BookImages = computed(() => {
 
     <!-- <Head title="Book view" />
     <NavBar /> -->
+    
     <AuthenticatedLayout class="px-20">
         <template #header>
             <div class="flex justify-between items-center">

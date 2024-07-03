@@ -51,6 +51,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function cards(): HasMany {
+        return $this->hasMany(Card::class);
+    }
     public function socials(): HasMany {
         return $this->hasMany(Social::class);
     }

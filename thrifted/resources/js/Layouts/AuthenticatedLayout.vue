@@ -98,7 +98,12 @@ const visible = ref(false);
                                     <Button label="Chats" :badge="UnseenMessages + ''" badgeSeverity="contrast"
                                         icon="pi pi-comments" plain text />
                                 </NavLink>
-                                <Button label="Card" icon="pi pi-shopping-cart" plain text />
+                               
+                                <NavLink :href="route( 'cards.index')"
+                                    :active="route().current( 'cards.index')">
+                                    <Button label="Card" icon="pi pi-shopping-cart" plain text />
+                                </NavLink>
+                                
                             </div>
                         </div>
                         <div class="flex justify-start items-center">

@@ -120,6 +120,7 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::with('category', 'tags', 'user', 'pictures')->find($id);
+        $cards = Auth::user()->cards;
         $tagsIds = $book->tags->pluck('id')->toArray();
         $relatedcategory = Book::where('books.id', '!=', $book->id)
             ->where('category_id', $book->category_id)
@@ -135,6 +136,7 @@ class BookController extends Controller
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,
             'book' => $book,
+            'cards' => $cards
         ]);
     }
     public function update(Request $request)
