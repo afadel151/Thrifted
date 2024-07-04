@@ -9,7 +9,7 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
-import ProgressSpinner from 'primevue/progressspinner';
+import ProgressSpinner from "primevue/progressspinner";
 import axios from "axios";
 import Dialog from "primevue/dialog";
 const showingNavigationDropdown = ref(false);
@@ -89,8 +89,8 @@ const openPosition = (pos) => {
   visible.value = true;
 };
 const clearResults = () => {
-    SearchResults.value = [];
-}
+  SearchResults.value = [];
+};
 </script>
 
 <template>
@@ -142,15 +142,11 @@ const clearResults = () => {
             </div>
             <div class="flex justify-start items-center">
               <div class="">
-                <InputGroup @click="openPosition('top')">
-                  <Button
-                    icon="pi pi-search"
-                    size="small"
-                    severity="contrast"
-                    raised
-                  />
+                <IconField  @click="openPosition('top')">
+                  <InputIcon  class="pi pi-search" />
                   <InputText v-model="SearchInput" placeholder="Search" />
-                </InputGroup>
+                </IconField>
+               
                 <Dialog
                   v-model:visible="visible"
                   header="Search"
@@ -160,22 +156,34 @@ const clearResults = () => {
                   :draggable="false"
                 >
                   <div class="flex items-center gap-1 mb-4 px-6">
-                    <IconField class="flex-auto  w-full">
+                    <IconField class="flex-auto w-full">
                       <InputIcon class="pi pi-search flex-auto" />
                       <InputText
                         v-model="SearchInput"
                         placeholder="Search"
                         class="flex-auto w-full"
                       />
-                      
                     </IconField>
-                    <Button icon="pi pi-search" label="Search" class="mx-1" v-show="SearchInput.length > 0" severity="contrast" />
-                    <Button icon="pi pi-times " severity="contrast" @click="clearResults"/>
+                    <Button
+                      icon="pi pi-search"
+                      label="Search"
+                      class="mx-1"
+                      v-show="SearchInput.length > 0"
+                      severity="contrast"
+                    />
+                    <Button
+                      icon="pi pi-times "
+                      severity="contrast"
+                      @click="clearResults"
+                    />
                   </div>
                   <div
                     class="flex items-center flex-col justify-center gap-4 mb-8 px-6"
                   >
-                  <ProgressSpinner v-show="Searching" style="width: 50px; height: 50px" />
+                    <ProgressSpinner
+                      v-show="Searching"
+                      style="width: 50px; height: 50px"
+                    />
                     <div
                       v-for="book in SearchResults"
                       :key="book.id"
@@ -196,12 +204,13 @@ const clearResults = () => {
                         <p class="text-xl ml-2">
                           {{ book.edition }}
                         </p>
-                        <p class="ml-2 text-green-400" v-if="book.available == 1">
-                            Available
+                        <p
+                          class="ml-2 text-green-400"
+                          v-if="book.available == 1"
+                        >
+                          Available
                         </p>
-                        <p v-else class="ml-2 text-red-500">
-                            Sold
-                        </p>
+                        <p v-else class="ml-2 text-red-500">Sold</p>
                       </div>
                     </div>
                   </div>

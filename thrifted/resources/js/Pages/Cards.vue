@@ -6,6 +6,10 @@ import axios from "axios";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
+
+import Divider from 'primevue/divider';
+
+const center = { lat: 40.689247, lng: -74.044502 }
 import NavLink from "@/Components/NavLink.vue";
 const props = defineProps({
   cards: {
@@ -94,10 +98,11 @@ function GetTotalPrice(card) {
           </NavLink>
         </div>
       </div>
+      <Divider layout="vertical" />
       <div class="w-3/4 h-fit ">
         <slot />
       </div>
     </div>
-    
+   
   </AuthenticatedLayout>
 </template>
