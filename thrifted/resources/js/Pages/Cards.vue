@@ -103,6 +103,7 @@ function GetTotalPrice(card) {
         <slot />
       </div>
     </div>
-   
+    
   </AuthenticatedLayout>
 </template>
+

@@ -60,7 +60,8 @@ const getSeverity = (status) => {
         <div class="font-[Mulish] pt-10 bg-slate-100">
             <div class="mx-auto bg-white max-w-7xl flex h-full  shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10">
                 <div class="w-[40%] flex p-20  justify-center items-center h-full ">
-                    <img src="/blank-profile-picture.webp" alt="" class="w-full rounded-full">
+                    <img v-if="props.user.picture != null" :src="props.user.picture.replace('public/', '/storage/')" alt="" class="w-full rounded-full">
+                    <img v-else src="/default-avatar.jpg" class="w-full rounded-full" alt="">
                 </div>
                 <div class=" flex flex-col text-xl   items-start justify-around w-full ml-20 ">
                     <p ><span class="font-bold">Name :</span> {{ props.user.name }}</p>

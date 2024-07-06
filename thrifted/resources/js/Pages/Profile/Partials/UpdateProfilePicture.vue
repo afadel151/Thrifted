@@ -13,23 +13,12 @@ async function submitFile() {
   let fd = new FormData();
   fd.append("file", file.value);
   fd.append("user_id", user.id);
-  axios
-    .post("/api/users/update_picture", fd, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress: function (progressEvent) {
-        uploadPercentage.value = parseInt(
-          Math.round((progressEvent.loaded / progressEvent.total) * 100)
-        );
-      }.bind(this),
-    })
-    .then(function () {
-      console.log("SUCCESS!!");
-    })
-    .catch(function () {
-      console.log("FAILURE!!");
-    });
+  try {
+    let response = await axios.post("/api/users/update_picture", fd);
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
 }
 function onChange(e) {
   file.value = e.target.files[0];
@@ -45,17 +34,22 @@ function onChange(e) {
       </p>
     </header>
     <div class="mt-6 space-y-6">
-      <img
-        v-if="user.picture != null"
-        :src="user.picture.replace('public/', '/storage/')"
-        alt=""
-      />
-      <div v-else class="flex flex-col justify-center space-y-2 items-center w-72">
-        <img src="/default-avatar.jpg" alt="" />
+      <div v-if="user.picture" :class="`h-[182px] rounded-full bg-cover bg-center w-[182px]`" :style="{ backgroundImage: `url('${user.picture.replace('public/', '/storage/')}')` }">
+</div>
 
-        <input type="file" @change="onChange" >
-        <Button label="Change" severity="contrast" v-show="file != null" />
+      <div
+        v-else
+        class="flex flex-col justify-center space-y-2 items-center w-72"
+      >
+        <img src="/default-avatar.jpg" alt="" />
       </div>
+      <input type="file" @change="onChange" />
+      <Button
+        label="Change"
+        @click="submitFile"
+        severity="contrast"
+        v-show="file != null"
+      />
     </div>
   </section>
 </template>
