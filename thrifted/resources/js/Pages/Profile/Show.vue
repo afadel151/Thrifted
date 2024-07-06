@@ -58,12 +58,13 @@ const getSeverity = (status) => {
 <template>
     <AuthenticatedLayout>
         <div class="font-[Mulish] pt-10 bg-slate-100">
-            <div class="mx-auto bg-white max-w-7xl flex h-full  shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10">
-                <div class="w-[40%] flex p-20  justify-center items-center h-full ">
-                    <img v-if="props.user.picture != null" :src="props.user.picture.replace('public/', '/storage/')" alt="" class="w-full rounded-full">
-                    <img v-else src="/default-avatar.jpg" class="w-full rounded-full" alt="">
+            <div class="mx-auto bg-white max-w-7xl flex h-full  shadow-lg sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10 ">
+                <div v-if="props.user.picture" class="w-[300px] h-[300px] rounded-full  flex p-20   bg-cover bg-center " :style="{ backgroundImage: `url('${user.picture.replace('public/', '/storage/')}')` }">
                 </div>
-                <div class=" flex flex-col text-xl   items-start justify-around w-full ml-20 ">
+                <div v-else class="w-[300px] h-[300px] rounded-full  flex p-20   bg-cover bg-center " style=" background-image: url('/default-avatar.jpg')">
+
+                </div>
+                <div class=" flex flex-col text-xl   items-start justify-around w-3/5 ml-20 ">
                     <p ><span class="font-bold">Name :</span> {{ props.user.name }}</p>
                     <p><span class="font-bold">Email :</span>{{ props.user.email }}</p>
                     <p><span class="font-bold">Adress :</span> {{ props.user.adress }}</p>
