@@ -83,5 +83,4 @@ class User extends Authenticatable
     // books selled 
     // book readers tracking with reviews and comments 
     // suggestions 
-    
 }

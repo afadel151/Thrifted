@@ -131,9 +131,9 @@ const UnseenNotSeen = ref(true);
 
                         </Link>
                     </div>
-                    <p v-show="UnseenNotSeen"
+                    <!-- <p v-show="UnseenNotSeen"
                         v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id))">
-                        unseen</p>
+                        unseen</p> -->
                 </div>
             </div>
             <div  class="w-full flex justify-center items-center" v-if="LastPage + 1 != Page || LastPage == 0" >

@@ -1,151 +1,312 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Carousel from 'primevue/carousel';
-import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
-import Tag from 'primevue/tag';
-import Button from 'primevue/button';
-import Rating from 'primevue/rating';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Carousel from "primevue/carousel";
+import { ref } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import InputText from "primevue/inputtext";
+import Tag from "primevue/tag";
+import Button from "primevue/button";
+import Rating from "primevue/rating";
+import Inplace from "primevue/inplace";
+import Popover from "primevue/popover";
+import axios from "axios";
+import { comment } from "postcss";
+const op = ref();
 const props = defineProps({
-    user: {
-        type: Object,
-        required: true,
-    },
-    books: {
-        type: Array,
-        required: true,
-    },
-    soldbooks: {
-        type: Array,
-        required: true,
-    },
-    rating:{
-        type: Number,
-        required: true,
-    }
+  user: {
+    type: Object,
+    required: true,
+  },
+  books: {
+    type: Array,
+    required: true,
+  },
+  soldbooks: {
+    type: Array,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+  },
+  ratings:{
+    type:Array,
+    required: true
+  }
 });
 const responsiveOptions = ref([
-    {
-        breakpoint: '1400px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '1199px',
-        numVisible: 3,
-        numScroll: 1
-    },
-    {
-        breakpoint: '767px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '575px',
-        numVisible: 1,
-        numScroll: 1
-    }
+  {
+    breakpoint: "1400px",
+    numVisible: 2,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "1199px",
+    numVisible: 3,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "767px",
+    numVisible: 2,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "575px",
+    numVisible: 1,
+    numScroll: 1,
+  },
 ]);
 const getSeverity = (status) => {
-    if (status == true) {
-        return 'success';
-    } else {
-        return 'danger';
-    }
+  if (status == true) {
+    return "success";
+  } else {
+    return "danger";
+  }
 };
+const Ratings = ref(props.ratings);
+const toggle = (event) => {
+  op.value.toggle(event);
+};
+const CommentValue = ref('');
+const NewRating = ref(0);
+async function AddRating(){
+    try {
+        let response = await axios.post('/api/users/rate',
+            {
+                user_id : usePage().props.auth.user.id,
+                rated_user_id : props.user.id,
+                rating : NewRating.value,
+                comment : CommentValue.value 
+            }
+        );
+        console.log(response.data);
+        Ratings.value.push(response.data);
+        toggle();
+    } catch (error) {   
+        console.log(error);
+    }
+}
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <div class="font-[Mulish] pt-10 bg-slate-100">
-            <div class="mx-auto bg-white max-w-7xl flex h-full  shadow-lg sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10 ">
-                <div v-if="props.user.picture" class="w-[300px] h-[300px] rounded-full  flex p-20   bg-cover bg-center " :style="{ backgroundImage: `url('${user.picture.replace('public/', '/storage/')}')` }">
-                </div>
-                <div v-else class="w-[300px] h-[300px] rounded-full  flex p-20   bg-cover bg-center " style=" background-image: url('/default-avatar.jpg')">
-
-                </div>
-                <div class=" flex flex-col text-xl   items-start justify-around w-3/5 ml-20 ">
-                    <p ><span class="font-bold">Name :</span> {{ props.user.name }}</p>
-                    <p><span class="font-bold">Email :</span>{{ props.user.email }}</p>
-                    <p><span class="font-bold">Adress :</span> {{ props.user.adress }}</p>
-                    <p v-if="props.user.phone != null"><span class="font-bold">Phone :</span> {{ props.user.phone }}</p>
-                    <p><span class="font-bold">Delivery ? :</span> {{ props.user.delivery == 1 ? 'Included' : 'No delivery options' }}</p>
-                    <p><span class="font-bold">Payment :</span> {{ props.user.payment_on_hand == 1 ? 'Hand to hand' : 'On delivery' }}</p>
-                    <div class="flex justify-start ">
-                        <p class="font-bold mr-10"> Rating : </p>
-                        <Rating v-model="props.rating" severity="contrast" readonly />
-                        <p>({{ props.user.ratings.length }})</p>
-                    </div>
-                    <p><span class="font-bold">Available books :</span> {{ props.books.filter(book=> {return book.available == 1}).length }}</p>
-                    <p><span class="font-bold">Sold books :</span> {{ props.soldbooks.length }}</p>
-                </div>
+  <AuthenticatedLayout>
+    <div class="flex justify-around w-screen pt-10 bg-slate-200 px-16">
+      <div class="font-[Mulish] w-3/4">
+        <div
+          class="bg-white max-w-7xl flex h-[400px] shadow-lg sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10"
+        >
+          <div
+            v-if="props.user.picture"
+            class="w-[300px] h-[300px] rounded-full flex p-20 bg-cover bg-center"
+            :style="{
+              backgroundImage: `url('${user.picture.replace(
+                'public/',
+                '/storage/'
+              )}')`,
+            }"
+          ></div>
+          <div
+            v-else
+            class="w-[300px] h-[300px] rounded-full flex p-20 bg-cover bg-center"
+            style="background-image: url('/default-avatar.jpg')"
+          ></div>
+          <div
+            class="flex flex-col text-xl items-start justify-around w-3/5 ml-20"
+          >
+            <p><span class="font-bold">Name :</span> {{ props.user.name }}</p>
+            <p><span class="font-bold">Email :</span>{{ props.user.email }}</p>
+            <p>
+              <span class="font-bold">Adress :</span> {{ props.user.adress }}
+            </p>
+            <p v-if="props.user.phone != null">
+              <span class="font-bold">Phone :</span> {{ props.user.phone }}
+            </p>
+            <p>
+              <span class="font-bold">Delivery ? :</span>
+              {{
+                props.user.delivery == 1 ? "Included" : "No delivery options"
+              }}
+            </p>
+            <p>
+              <span class="font-bold">Payment :</span>
+              {{
+                props.user.payment_on_hand == 1 ? "Hand to hand" : "On delivery"
+              }}
+            </p>
+            <div class="flex justify-start">
+              <p class="font-bold mr-10">Rating :</p>
+              <Rating v-model="props.rating" severity="contrast" readonly />
+              <p>({{ props.user.ratings.length }})</p>
             </div>
-            <div class="mx-auto mt-6 flex flex-col items-stretch bg-white max-w-7xl  h-full  shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10">
-                <div class="w-full flex justify-between items-center">  
-                    <div class="p-6 text-gray-900 text-4xl">📚 {{ props.user.name }}'s books!</div>
-                    <Link :href="route('profile.books',{id:props.user.id})">
-                        <Button label="View All" severity="contrast" outlined raised />
-                    </Link>
-                </div>
-                <Carousel :value="props.books" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions">
-                    <template #item="slotProps">
-                        <div class="border-2 m-2 p-4 rounded">
-                            <Link :href="route('books.show', { id: slotProps.data.id })">
-                            <div class="mb-4">
-                                <div class="relative flex justify-center mx-auto">
-                                    <img :src="slotProps.data.cover == null ? '/cover-not-available.jpg' : slotProps.data.cover.replace('public/', '/storage/')"
-                                        :alt="slotProps.data.name" class="rounded h-52" />
-                                    <Tag :value="slotProps.data.available == 1 ? 'available' : 'sold'"
-                                        :severity="getSeverity(slotProps.data.available)" class="absolute"
-                                        style="left:5px; top: 5px" />
-                                </div>
-                            </div>
-                            </Link>
-                            <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
-                            
-                            <div class="flex justify-between items-center">
-                                <div class="mt-0 font-semibold text-xl">{{ slotProps.data.price }} DA</div>
-                                <span>
-                                    <Button icon="pi pi-heart" severity="secondary" outlined />
-                                    <Button icon="pi pi-shopping-cart" class="ml-2" />
-                                </span>
-                            </div>
-                        </div>
-                    </template>
-                </Carousel>
-            </div>
-            <div class="mx-auto mt-6 flex flex-col items-stretch bg-white max-w-7xl  h-full  shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10">
-                <div class="w-full flex justify-between items-center">  
-                    <div class="p-6 text-gray-900 text-4xl">📚 {{ props.user.name }}'s sold books!</div>
-                    <Button label="View All" severity="contrast" outlined raised />
-                </div>
-                <Carousel :value="props.soldbooks" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions">
-                    <template #item="slotProps">
-                        <div class="border-2 m-2 p-4 rounded">
-                            <Link :href="route('books.show', { id: slotProps.data.id })">
-                            <div class="mb-4">
-                                <div class="relative flex justify-center mx-auto">
-                                    <img :src="slotProps.data.cover == null ? '/cover-not-available.jpg' : slotProps.data.cover.replace('public/', '/storage/')"
-                                        :alt="slotProps.data.name" class="rounded h-52" />
-                                    <Tag :value="slotProps.data.available == 1 ? 'available' : 'sold'"
-                                        :severity="getSeverity(slotProps.data.available)" class="absolute"
-                                        style="left:5px; top: 5px" />
-                                </div>
-                            </div>
-                            </Link>
-                            <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
-                            
-                            <div class="flex justify-between items-center">
-                                <div class="mt-0 font-semibold text-xl">{{ slotProps.data.price }} DA</div>
-                                <span>
-                                    <Button icon="pi pi-heart" severity="secondary" outlined />
-                                    <Button icon="pi pi-shopping-cart" class="ml-2" />
-                                </span>
-                            </div>
-                        </div>
-                    </template>
-                </Carousel>
-            </div>
+            <p>
+              <span class="font-bold">Available books :</span>
+              {{
+                props.books.filter((book) => {
+                  return book.available == 1;
+                }).length
+              }}
+            </p>
+            <p>
+              <span class="font-bold">Sold books :</span>
+              {{ props.soldbooks.length }}
+            </p>
+          </div>
         </div>
-    </AuthenticatedLayout>
+        <div
+          class="mt-6 flex flex-col items-stretch bg-white max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
+        >
+          <div class="w-full flex justify-between items-center">
+            <div class="p-6 text-gray-900 text-4xl">
+              📚 {{ props.user.name }}'s books!
+            </div>
+            <Link :href="route('profile.books', { id: props.user.id })">
+              <Button label="View All" severity="contrast" outlined raised />
+            </Link>
+          </div>
+          <Carousel
+            :value="props.books"
+            :numVisible="4"
+            :numScroll="1"
+            :responsiveOptions="responsiveOptions"
+          >
+            <template #item="slotProps">
+              <div class="border-2 m-2 p-4 rounded">
+                <Link :href="route('books.show', { id: slotProps.data.id })">
+                  <div class="mb-4">
+                    <div class="relative flex justify-center mx-auto">
+                      <img
+                        :src="
+                          slotProps.data.cover == null
+                            ? '/cover-not-available.jpg'
+                            : slotProps.data.cover.replace(
+                                'public/',
+                                '/storage/'
+                              )
+                        "
+                        :alt="slotProps.data.name"
+                        class="rounded h-52"
+                      />
+                      <Tag
+                        :value="
+                          slotProps.data.available == 1 ? 'available' : 'sold'
+                        "
+                        :severity="getSeverity(slotProps.data.available)"
+                        class="absolute"
+                        style="left: 5px; top: 5px"
+                      />
+                    </div>
+                  </div>
+                </Link>
+                <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
+
+                <div class="flex justify-between items-center">
+                  <div class="mt-0 font-semibold text-xl">
+                    {{ slotProps.data.price }} DA
+                  </div>
+                  <span>
+                    <Button icon="pi pi-heart" severity="secondary" outlined />
+                    <Button icon="pi pi-shopping-cart" class="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </template>
+          </Carousel>
+        </div>
+        <div
+          class="mt-6 flex flex-col items-stretch bg-white max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
+        >
+          <div class="w-full flex justify-between items-center">
+            <div class="p-6 text-gray-900 text-4xl">
+              📚 {{ props.user.name }}'s sold books!
+            </div>
+            <Button label="View All" severity="contrast" outlined raised />
+          </div>
+          <Carousel
+            :value="props.soldbooks"
+            :numVisible="4"
+            :numScroll="1"
+            :responsiveOptions="responsiveOptions"
+          >
+            <template #item="slotProps">
+              <div class="border-2 m-2 p-4 rounded">
+                <Link :href="route('books.show', { id: slotProps.data.id })">
+                  <div class="mb-4">
+                    <div class="relative flex justify-center mx-auto">
+                      <img
+                        :src="
+                          slotProps.data.cover == null
+                            ? '/cover-not-available.jpg'
+                            : slotProps.data.cover.replace(
+                                'public/',
+                                '/storage/'
+                              )
+                        "
+                        :alt="slotProps.data.name"
+                        class="rounded h-52"
+                      />
+                      <Tag
+                        :value="
+                          slotProps.data.available == 1 ? 'available' : 'sold'
+                        "
+                        :severity="getSeverity(slotProps.data.available)"
+                        class="absolute"
+                        style="left: 5px; top: 5px"
+                      />
+                    </div>
+                  </div>
+                </Link>
+                <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
+
+                <div class="flex justify-between items-center">
+                  <div class="mt-0 font-semibold text-xl">
+                    {{ slotProps.data.price }} DA
+                  </div>
+                  <span>
+                    <Button icon="pi pi-heart" severity="secondary" outlined />
+                    <Button icon="pi pi-shopping-cart" class="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </template>
+          </Carousel>
+        </div>
+      </div>
+      <div class="w-1/4 bg-white rounded-lg p-10">
+        <div class="w-full flex justify-between">
+          <p class="w-full font-bold text-5xl">Ratings</p>
+          <Button
+            type="button"
+            label="Add"
+            @click="toggle"
+            v-show="props.user.id != usePage().props.auth.user.id"
+          />
+
+          <Popover ref="op" >
+            <div class="flex flex-col gap-4 w-[25rem]" v-show="props.user.id != usePage().props.auth.user.id">
+                <p class="text-2xl">Add your rating</p>
+                <Rating v-model="NewRating" />
+                <p class="text-xl">Tell us something about {{props.user.name}} (optional) :</p>
+                <InputText maxlength="100" placeholder="Add comment" id="username" v-model="CommentValue" />
+                <Button @click="AddRating"  label="Add" />
+              
+            </div>
+          </Popover>
+        </div>
+        <div
+          class="flex flex-col mt-10 rounded-lg items-center gap-2 justify-start"
+        >
+          <div class="w-full border-2 p-3 rounded-xl" v-for="rating in Ratings" :key="rating.id">
+            <p class="text-2xl font-semibold">{{rating.user.name}}</p>
+            <Rating v-model="rating.rating" readonly />
+            
+                <p class="m-0" v-if="rating.comment != null">
+                  {{rating.comment}}
+                </p>
+           
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>

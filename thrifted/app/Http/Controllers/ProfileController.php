@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -39,19 +40,28 @@ class ProfileController extends Controller
 
         return Inertia::render('VerifyCode', ['phone' => $parsePhone]);
     }
-    public function verifyCode(Request $request, PhoneVerificationService $verificationService)
+    public function rate(Request $request)
     {
-
-        //Verify the verification code for the given phone number
-        // $valid = $verificationService->verify(
-        //     new PhoneNumber($request->input('phone')),
-        //     $request->input('code')
-        // );
-
-        // if ($valid) {
-        //     // Mark your user as valid
-        //     dd('user_valid');
-        // }
+        try {
+            if ($request->input('comment') != '') {
+                $rating = Rating::create([
+                    'user_id' => $request->input('user_id'),
+                    'rated_user_id' => $request->input('rated_user_id'),
+                    'rating' => $request->input('rating'),
+                    'comment' => $request->input('comment')
+                ]);
+            }else {
+                $rating = Rating::create([
+                    'user_id' => $request->input('user_id'),
+                    'rated_user_id' => $request->input('rated_user_id'),
+                    'rating' => $request->input('rating'),
+                ]);
+            }
+            $rating->load('user');
+            return response()->json($rating);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 
     }
     /**
@@ -91,6 +101,7 @@ class ProfileController extends Controller
         $user = User::with('socials','ratings')->find($id);
         $books = Book::with('pictures', 'tags', 'category')->where('user_id', $user->id)->orderByDesc('created_at')->take(10)->get();
         $ratings = $user->ratings;
+        $ratings->load('user');
         $result = 0;
         for ($i = 0; $i < count($ratings); $i++) {
             $result = $result + $ratings[$i]->rating;
@@ -106,7 +117,8 @@ class ProfileController extends Controller
             'user' => $user,
             'books' => $books,
             'soldbooks' => $soldbooks,
-            'rating' => $result
+            'rating' => $result,
+            'ratings' => $ratings
         ]);
 
     }
@@ -144,12 +156,12 @@ class ProfileController extends Controller
         $books = Book::with('user','category','tags')->where('user_id',$id)->orderBy('available')->paginate(12);
         return response()->json($books);
     }
-    public function rate(Request $rquest )
-    {
-        $rater_id = Auth::user()->id;
-        $rated_id = $rquest->input('rated_id');
-        $rating = $rquest->input('rating');
-        dd($rating);
-    }
+    // public function rate(Request $rquest )
+    // {
+    //     $rater_id = Auth::user()->id;
+    //     $rated_id = $rquest->input('rated_id');
+    //     $rating = $rquest->input('rating');
+    //     dd($rating);
+    // }
 
 }

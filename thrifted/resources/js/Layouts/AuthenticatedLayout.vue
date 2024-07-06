@@ -138,6 +138,14 @@ const clearResults = () => {
                 >
                   <Button label="Card" icon="pi pi-shopping-cart" plain text />
                 </NavLink>
+                
+                <NavLink
+                  :href="route('cards.index')"
+                  :active="route().current('cards.index')"
+                >
+                  <Button label="Likes" icon="pi pi-heart" plain text />
+                </NavLink>
+                <!--  -->
               </div>
             </div>
             <div class="flex justify-start items-center">
