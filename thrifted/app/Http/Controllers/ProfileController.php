@@ -30,12 +30,32 @@ class ProfileController extends Controller
             'status' => session('status'),
         ]);
     }
-
+    public function add_social_links(Request $request)
+    {
+        \Log::info($request);
+        $user = User::find($request->user_id);
+        if ($request->facebook_url) {
+            $user->update(['facebook_url' => $request->facebook_url]);
+            \Log::info('face');
+        }
+        if ($request->instagram_url) {
+            $user->update(['instagram_url' => $request->instagram_url]);
+            \Log::info('insta');
+        }
+        if ($request->twitter_url) {
+            $user->update(['twitter_url' => $request->twitter_url]);
+            \Log::info('t');
+        }
+        if ($request->goodreads_url) {
+            $user->update(['goodreads_url' => $request->goodreads_url]);
+            \Log::info('ggo');
+        }
+        return response()->json('success');
+    }
     public function sendVerificationCode(Request $request, PhoneVerificationService $verificationService)
     {
         $parsePhone = '+213' . preg_replace('/^./', '', $request->input('phone'));
 
-        // Send a verification code to the given number
         $verificationService->send(new PhoneNumber($parsePhone));
 
         return Inertia::render('VerifyCode', ['phone' => $parsePhone]);

@@ -46,6 +46,8 @@ Route::prefix('/api')->group(function () {
         Route::post('/update_picture', [ProfileController::class, 'update_picture']);
         Route::post('/search', [ProfileController::class, 'search']);
         Route::post('/rate', [ProfileController::class, 'rate']);
+        Route::post('/add_social_links', [ProfileController::class, 'add_social_links']);
+
     });
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);

@@ -96,9 +96,23 @@ onMounted(() => {
     scrollToBottom();
 });
 const UnseenNotSeen = ref(true);
+const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? 'default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
+
 </script>
 <template>
     <Chats :chats="props.chats" :opened="true">
+        <div class=" h-20 p-3 flex items-center  justify-start border-2 rounded-2xl">
+            <div
+            class="w-[65px] h-[65px] rounded-full bg-cover bg-center"
+            :style="{
+              backgroundImage: `url(${profileImage})`,
+            }"
+          ></div> 
+          <div class="flex flex-col items-start ml-5">
+            <p class="text-3xl font-bold ">{{ props.chat.target_id == user.id ? props.chat.creator.name : props.chat.target.name }}</p>
+            <!-- <p class="text-xl"> {{ props.chat.target_id == user.id ? props.chat.creator.email : props.chat.target.email }}</p> -->
+          </div>
+        </div>
         <div ref="chatContainer"
             class="h-full p-5 w-full flex gap-1 flex-col-reverse overflow-y-scroll   items-stretch ">
             <div class=" w-full   flex" v-for="message in Messages" :key="message.id"
@@ -131,9 +145,6 @@ const UnseenNotSeen = ref(true);
 
                         </Link>
                     </div>
-                    <!-- <p v-show="UnseenNotSeen"
-                        v-if="message.seen == false && ((message.creator == true && props.chat.creator_id == user.id) || (message.creator == false && props.chat.target_id == user.id))">
-                        unseen</p> -->
                 </div>
             </div>
             <div  class="w-full flex justify-center items-center" v-if="LastPage + 1 != Page || LastPage == 0" >

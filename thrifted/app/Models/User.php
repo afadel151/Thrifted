@@ -26,7 +26,11 @@ class User extends Authenticatable
         'phone',
         'delivery',
         'payment_on_hand',
-        'picture'
+        'picture',
+        'facebook_url',
+        'instagram_url',
+        'twitter_url',
+        'goodreads_url',
     ];
 
     /**

@@ -5,7 +5,7 @@ import axios from 'axios';
 import NavLink from './NavLink.vue';
 import Button from 'primevue/button';
 import Badge from 'primevue/badge';
-
+import{ Link} from '@inertiajs/vue3';
 const props = defineProps({
     chat: {
         type: Object,
@@ -44,14 +44,20 @@ onBeforeMount(()=>{
         });
 
 });
+const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? 'default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
 </script>
 <template>
-    <div class="flex    items-center cursor-pointer hover:bg-gray-100 rounded-md">
-        <NavLink class="w-full flex flex-col items-stretch  justify-between px-2"
-            :href="route('chats.show', { id: chat.id })" :active="route().current('chats.show', { id: chat.id })">
+    <Link :href="route('chats.show', { id: chat.id })" class="flex  p-2  items-center cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-xl ">
+        <div
+            class="w-[80px] h-[80px] rounded-full bg-cover bg-center"
+            :style="{
+              backgroundImage: `url(${profileImage})`,
+            }"
+          ></div> 
+        <div class=" flex flex-col items-stretch  justify-between "
+            >
             <div class="w-full flex justify-between px-2 items-center">
-                <Button :label="props.chat.target_id == user.id ? props.chat.creator.name : props.chat.target.name"
-                    icon="pi pi-shop" text plain />
+                <p class="text-xl m-2"> {{ props.chat.target_id == user.id ? props.chat.creator.name : props.chat.target.name }}</p>
                    
                 <Badge :value="UnseenMessagesCount"  v-if="UnseenMessagesCount > 0  " v-show="!props.opened"
 
@@ -61,7 +67,7 @@ onBeforeMount(()=>{
                 {{ LastMessage?.creator == 1 && props.chat.creator_id == user.id ? 'Vous: ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
                 {{ LastMessage?.creator == 0 && props.chat.creator_id == user.id ? props.chat.target.name + ' : ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
                 {{ LastMessage?.creator == 1 && props.chat.target_id == user.id ? props.chat.target.name + ' : ' + (LastMessage?.book_id == 0 ? LastMessage?.message : LastMessage?.book.title) : '' }} 
-        </NavLink>
+        </div>
 
-    </div>
+    </Link>
 </template>

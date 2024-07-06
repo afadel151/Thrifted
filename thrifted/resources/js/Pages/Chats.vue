@@ -11,15 +11,15 @@ const props = defineProps({
 <template>
     <AuthenticatedLayout>
         <div style="height: calc(100vh - 64px);" class=" bg-slate-100">
-            <div class=" p-20 h-full w-full">
-                <div class="bg-white h-full shadow-sm p-5 sm:rounded-lg">
-                    <div class="flex h-full w-full rounded-lg border-2">
-                        <div class="w-1/6 bg-white flex flex-col justify-start overflow-y-scroll border-r h-full border-gray-300">
+            <div class=" p-10 h-full w-full">
+                <div class=" h-full shadow-sm p-2 sm:rounded-lg">
+                    <div class="flex gap-5 h-full  w-full rounded-lg ">
+                        <div class="w-2/6 border-b-2 rounded-2xl p-2  bg-white flex flex-col  gap-4 justify-start overflow-y-scroll  h-full ">
                             <div v-for="chat in props.chats" :key="chat.id">
                                     <ChatBlock :chat="chat" />
                             </div>
                         </div>
-                        <div class="h-full flex flex-col  w-full ">
+                        <div class="h-full bg-white rounded-2xl flex flex-col  w-full ">
                             <slot />
                         </div>
                     </div>
