@@ -33,10 +33,9 @@ function handleImageError() {
             <span class="text-black">ThriftedBooks</span> <span class="text-purple-600">Dz</span>
         </div>
         <nav class="space-x-4">
-            <a href="#" class="text-gray-600">Illustrations</a>
+            <a href="#" class="text-gray-600">Overview</a>
             <a href="#" class="text-gray-600">Supporters</a>
-            <a href="#" class="text-gray-600">Twitter</a>
-            <Button label="For photoshop" outlined severity="help" />
+            <a href="#" class="text-gray-600">About</a>
             <Button label="Browse now" severity="help" />
         </nav>
 
@@ -73,12 +72,12 @@ function handleImageError() {
         </nav>
 
         <p class="mt-4">
-            Or download the <a href="#" class="text-blue-600 underline">Adobe XD version</a>
+            Or download the <a href="#" class="text-blue-600 underline">Mobile app version</a>
         </p>
     </main>
 
     <footer class="mt-20 z-10 text-center text-gray-600">
-        <p class="font-bold text-xl">Beautiful artwork anywhere, as easy as it should be</p>
+        <p class="font-bold text-xl">Buy your next read, as easy as it should be</p>
     </footer>
 
 
