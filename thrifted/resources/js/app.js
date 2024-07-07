@@ -8,6 +8,8 @@ import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
+import Tooltip from 'primevue/tooltip';
+
 
 
 import 'primeicons/primeicons.css'
@@ -28,7 +30,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(ToastService)
             .use(ConfirmationService)
-            
+            .directive('tooltip', Tooltip)
             .mount(el);
     },
     progress: {

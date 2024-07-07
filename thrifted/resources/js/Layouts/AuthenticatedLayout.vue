@@ -95,7 +95,7 @@ const clearResults = () => {
 
 <template>
   <div>
-    <div class="h-screen font-[Mulish]">
+    <div class="h-screen font-[Mulish] ">
       <nav class="border-gray-100 bg-white border-b h-[64px]">
         <!-- Primary Navigation Menu -->
         <div class="px-10">
@@ -378,12 +378,24 @@ const clearResults = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
+        
+      </nav>
+
+      <!-- Page Heading -->
+      <!-- <header class="bg-white shadow" v-if="$slots.header">
+                <div class="mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
+                    <slot name="header" />
+                </div>
+            </header> -->
+
+      <!-- Page Content -->
+      <main>
         <div
           :class="{
             block: showingNavigationDropdown,
             hidden: !showingNavigationDropdown,
           }"
-          class="sm:hidden"
+          class="sm:hidden z-10"
         >
           <div class="space-y-1 pt-2 pb-3">
             <ResponsiveNavLink
@@ -391,6 +403,12 @@ const clearResults = () => {
               :active="route().current('dashboard')"
             >
               Dashboard
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('books.my_books')"
+              :active="route().current('books.my_books')"
+            >
+              My Books
             </ResponsiveNavLink>
           </div>
 
@@ -407,7 +425,10 @@ const clearResults = () => {
 
             <div class="space-y-1 mt-3">
               <ResponsiveNavLink :href="route('profile.edit')">
-                Profile
+                Edit Profile
+              </ResponsiveNavLink>
+              <ResponsiveNavLink :href="route('profile.show',{id:$page.props.auth.user.id})">
+                Show Profile
               </ResponsiveNavLink>
               <ResponsiveNavLink
                 :href="route('logout')"
@@ -419,17 +440,6 @@ const clearResults = () => {
             </div>
           </div>
         </div>
-      </nav>
-
-      <!-- Page Heading -->
-      <!-- <header class="bg-white shadow" v-if="$slots.header">
-                <div class="mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
-                    <slot name="header" />
-                </div>
-            </header> -->
-
-      <!-- Page Content -->
-      <main>
         <slot />
       </main>
     </div>
