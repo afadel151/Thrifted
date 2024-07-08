@@ -102,34 +102,12 @@ async function AddBookToCard()
 </script>
 
 <template>
-    {{ props.belngs_to_card }}
-  <AuthenticatedLayout class="px-20">
-    <template #header>
-      <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-gray-800 text-xl leading-tight">
-          Book view
-        </h2>
-        <Link
-          v-if="props.book.user_id == user.id"
-          :href="route('books.edit', { id: props.book.id })"
-        >
-          <Button
-            icon="pi pi-pencil"
-            label="Update"
-            severity="contrast"
-            raised
-            outlined
-            size="small"
-          />
-        </Link>
-      </div>
-    </template>
+  <AuthenticatedLayout >
+   
     <div
       class="flex md:flex-row min-[200px]:flex-col sm:flex-col justify-center items-stretch gap-4 mt-2 2xl:px-96 w-full 2xl:h-[500px]"
     >
-      <!-- <img :src="props.book.cover == null ? '/cover-not-available.jpg' : props.book.cover.replace('public/', '/storage/')"
-
-                alt="" class="w-fit"> -->
+    
       <Carousel
         :value="BookImages"
         :numVisible="1"
@@ -151,7 +129,7 @@ async function AddBookToCard()
         </template>
       </Carousel>
 
-      <div class="flex flex-col justify-start gap-2 w-full">
+      <div class="flex flex-col justify-start gap-2 md:px-0 px-10 w-full">
         <p class="font-semibold text-2xl text-gray-500">
           Category : {{ props.book.category.name }}
         </p>
@@ -244,8 +222,9 @@ async function AddBookToCard()
           <hr />
           <div>
             Tags:
-            <template v-for="tag in props.book.tags" :key="tag.id">
+            <template v-for="tag in props.book.tags"  :key="tag.id">
               <Badge
+             
                 :value="tag.name"
                 severity="secondary"
                 class="mr-2"
@@ -258,11 +237,12 @@ async function AddBookToCard()
       </div>
     </div>
     <Divider />
-    <p class="ml-10 font-black text-4xl">See Also</p>
+ <div class="2xl:px-80">
+  <p class="ml-10 font-black text-4xl">See Also</p>
     <Carousel
       :value="props.related_books"
       :numVisible="
-        props.related_books.length < 4 ? 4 : props.related_books.length
+        props.related_books.length > 4 ? 4 : props.related_books.length
       "
       :numScroll="1"
       :responsiveOptions="responsiveOptions"
@@ -303,5 +283,6 @@ async function AddBookToCard()
         </div>
       </template>
     </Carousel>
+ </div>
   </AuthenticatedLayout>
 </template>

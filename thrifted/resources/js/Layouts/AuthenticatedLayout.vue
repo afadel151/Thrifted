@@ -95,7 +95,7 @@ const clearResults = () => {
 
 <template>
   <div>
-    <div class="h-screen font-[Mulish] ">
+    <div class="h-screen font-[Mulish]">
       <nav class="border-gray-100 bg-white border-b h-[64px]">
         <!-- Primary Navigation Menu -->
         <div class="px-10">
@@ -138,7 +138,7 @@ const clearResults = () => {
                 >
                   <Button label="Card" icon="pi pi-shopping-cart" plain text />
                 </NavLink>
-                
+
                 <NavLink
                   :href="route('cards.index')"
                   :active="route().current('cards.index')"
@@ -150,11 +150,11 @@ const clearResults = () => {
             </div>
             <div class="flex justify-start items-center">
               <div class="">
-                <IconField  @click="openPosition('top')">
-                  <InputIcon  class="pi pi-search" />
+                <IconField @click="openPosition('top')">
+                  <InputIcon class="pi pi-search" />
                   <InputText v-model="SearchInput" placeholder="Search" />
                 </IconField>
-               
+
                 <Dialog
                   v-model:visible="visible"
                   header="Search"
@@ -286,9 +286,20 @@ const clearResults = () => {
                       <span class="inline-flex rounded-md">
                         <button
                           type="button"
-                          class="inline-flex items-center bg-white px-3 py-2 border border-transparent rounded-md font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out"
+                          class="inline-flex  items-center bg-white px-3 py-2 border border-transparent rounded-md font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out"
                         >
+                          <div
+                            v-if="$page.props.auth.user.picture"
+                            class="w-[30px] mr-2 h-[30px] rounded-full flex bg-cover bg-center"
+                            :style="{
+                              backgroundImage: `url('${$page.props.auth.user.picture.replace(
+                                'public/',
+                                '/storage/'
+                              )}')`,
+                            }"
+                          ></div>
                           <img
+                            v-else
                             :src="
                               $page.props.auth.user.socials[0]
                                 ? $page.props.auth.user.socials[0]
@@ -296,7 +307,7 @@ const clearResults = () => {
                                 : ''
                             "
                             width="30"
-                            class="mr-1 rounded-full"
+                            class="mr-2 rounded-full"
                             alt=""
                           />
                           {{ $page.props.auth.user.name }}
@@ -378,7 +389,6 @@ const clearResults = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
-        
       </nav>
 
       <!-- Page Heading -->
@@ -427,7 +437,9 @@ const clearResults = () => {
               <ResponsiveNavLink :href="route('profile.edit')">
                 Edit Profile
               </ResponsiveNavLink>
-              <ResponsiveNavLink :href="route('profile.show',{id:$page.props.auth.user.id})">
+              <ResponsiveNavLink
+                :href="route('profile.show', { id: $page.props.auth.user.id })"
+              >
                 Show Profile
               </ResponsiveNavLink>
               <ResponsiveNavLink

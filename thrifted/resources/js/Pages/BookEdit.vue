@@ -111,15 +111,14 @@ async function UpdateBook() {
 }
 </script>
 <template>
-  <Head title="Book view" />
-  <NavBar />
+  
   <AuthenticatedLayout>
     <!-- <template #header> -->
-    <div class="flex justify-between px-32 my-10 items-center">
-      <h2 class="font-semibold text-gray-800 text-xl leading-tight">
+    <div class="flex max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-2 justify-between px-32 my-10 items-center">
+      <h2 class="font-semibold text-gray-800 text-3xl leading-tight">
         Book Edit
       </h2>
-      <div class="space-x-4">
+      <div class="space-x-4 flex max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-2">
         <Link
           v-if="props.book.user_id == user.id"
           :href="route('books.show', { id: props.book.id })"
@@ -133,15 +132,7 @@ async function UpdateBook() {
             size="small"
           />
         </Link>
-        <Button
-          icon="pi pi-save"
-          label="Save changes"
-          @click="UpdateBook"
-          severity="contrast"
-          raised
-          outlined
-          size="small"
-        />
+        
       </div>
     </div>
     <!-- </template> -->
@@ -149,7 +140,7 @@ async function UpdateBook() {
     <div class="px-32 ">
       <!-- <img :src="props.book.cover.replace('public/', '/storage/')" alt="" class="w-fit"> -->
       <!-- <Select v-model="selectedCategory" :options="props.categories"  optionLabel="name" optionValue="id" placeholder="Change Category" class="w-full md:w-56" /> -->
-      <div class="flex flex-col justify-start gap-2 md:w-full px-20">
+      <div class="flex flex-col justify-start gap-2  md:w-full md:px-32">
         <div class="flex md:flex-row flex-col items-center gap-4 mb-2">
           <label for="author" class="w-24 font-semibold">Category</label>
           <Select
@@ -257,12 +248,21 @@ async function UpdateBook() {
             cols="30"
             class="flex-auto"
           />
+         
         </div>
+        <Button
+          icon="pi pi-save"
+          label="Save changes"
+          @click="UpdateBook"
+          severity="contrast"
+          raised
+          class="md:mx-96 my-10"
+        />
         <div
           class="flex md:flex-row flex-col justify-between items-center gap-4 mb-2"
         >
           <p class="font-bold text-3xl">Book pictures</p>
-          <div v-if="images.length < 3" class="flex justify-center card">
+          <div v-if="images.length < 3" >
             <Button
               type="button"
               icon="pi pi-plus-circle"
@@ -271,7 +271,7 @@ async function UpdateBook() {
             />
 
             <Popover ref="op">
-              <div class="flex items-center gap-6">
+              <div class="flex items-center justify-start max-[600px]:px-20 gap-2d max-[600px]:w-[400px]">
                 <label for="Cover" class="font-semibold">Add a picture</label>
                 <input
                   name="file"
@@ -289,12 +289,12 @@ async function UpdateBook() {
             </Popover>
           </div>
         </div>
-        <div class="md:card sm:flex sm:justify-center sm:w-[768px]">
+        <div class="md:card sm:flex sm:justify-center max-[600px]:w-full">
           <Galleria
             :value="images"
             :responsiveOptions="responsiveOptions"
             :numVisible="5"
-            containerStyle="max-width: 640px"
+            containerStyle="max-width: 1000px"
           >
             <template #item="slotProps">
               <img

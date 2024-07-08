@@ -302,7 +302,24 @@ async function AddRating(){
           class="flex flex-col mt-10 rounded-lg items-center gap-2 justify-start"
         >
           <div class="w-full border-2 p-3 rounded-xl" v-for="rating in Ratings" :key="rating.id">
-            <p class="text-2xl font-semibold">{{rating.user.name}}</p>
+            <div class="flex items-center">
+              <div
+            v-if="props.user.picture"
+            class="w-[30px] h-[30px] rounded-full flex  bg-cover bg-center"
+            :style="{
+              backgroundImage: `url('${user.picture.replace(
+                'public/',
+                '/storage/'
+              )}')`,
+            }"
+          ></div>
+          <div
+            v-else
+            class="w-[30px] h-[30px] rounded-full flex  bg-cover bg-center"
+            style="background-image: url('/default-avatar.jpg')"
+          ></div>
+              <p class="text-2xl font-semibold">{{rating.user.name}}</p>
+            </div>
             <Rating v-model="rating.rating" readonly />
             
                 <p class="m-0" v-if="rating.comment != null">
@@ -315,4 +332,6 @@ async function AddRating(){
       </div>
     </div>
   </AuthenticatedLayout>
+ 
+
 </template>
