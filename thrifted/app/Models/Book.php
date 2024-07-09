@@ -63,6 +63,9 @@ class Book extends Model
     {
         return app(EngineManager::class)->engine('algolia');
     }
-   
+    public function wishlist()
+    {
+        return $this->hasMany(WishList::class);
+    }
 
 }

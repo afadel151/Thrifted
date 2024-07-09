@@ -31,6 +31,7 @@ Route::prefix('/api')->group(function () {
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
         Route::post('search', [BookController::class, 'search']);
+        Route::post('/add_to_wishlist', [BookController::class, 'add_to_wishlist']);
     });
     Route::prefix('messages')->group(function () {
         Route::post('/', [MessageController::class, 'store']);
@@ -53,7 +54,6 @@ Route::prefix('/api')->group(function () {
         Route::post('/create',[CardController::class, 'create']);
         Route::post('/add_book',[CardController::class, 'add_book']);
     });
-
 });
 Route::get('/dashboard', function () {
     $newbooks = Book::with('user')->orderBy('created_at', 'desc')->take(10)->get();

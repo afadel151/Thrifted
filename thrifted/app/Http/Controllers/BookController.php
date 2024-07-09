@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Tag;
+use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,9 +37,15 @@ class BookController extends Controller
             }
         }
     }
-    public function ist()
+    public function add_to_wishlist(Request $request)
     {
-        
+        $user_id = Auth::user()->id;
+        $book_id = $request->input('book_id');
+        WishList::create([
+            'user_id' => $user_id,
+            'book_id' => $book_id
+        ]);
+        return response('success',200);
     }
     public function edit($id)
     {

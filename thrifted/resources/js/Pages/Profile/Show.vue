@@ -1,6 +1,5 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Carousel from "primevue/carousel";
+import AuthenticatedLayout from '@/Layouts/NewLayout/AuthenticatedLayout.vue';import Carousel from "primevue/carousel";
 import { ref } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import InputText from "primevue/inputtext";
@@ -90,14 +89,14 @@ async function AddRating(){
 
 <template>
   <AuthenticatedLayout>
-    <div class="max-[600px]:flex-col max-[600px]:items-center  flex  justify-around space-x-10 max-[600px]:space-x-0 max-[600px]:space-y-5 w-screen pt-10 bg-slate-200 max-[600px]:px-3 px-16">
-      <div class="font-[Mulish] w-3/4 max-[600px]:w-full">
+    <div class="max-[1170px]:flex-col max-[1170px]:items-center  flex  justify-around space-x-10 max-[1170px]:space-x-0 max-[1170px]:space-y-5 w-screen pt-10 bg-slate-200 max-[1170px]:px-3 px-16">
+      <div class="font-[Mulish] w-3/4  max-[1170px]:w-full">
         <div
-          class="bg-white max-w-7xl flex max-[600px]:flex-col max-[600px]:items-center max-[600px]:space-y-4 max-[600px]:h-[600px] h-[400px] shadow-lg  sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10"
+          class="bg-white max-w-7xl flex max-[1170px]:flex-col gap-4 max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10"
         >
           <div
             v-if="props.user.picture"
-            class="w-[300px] h-[300px] rounded-full flex p-20 bg-cover bg-center"
+            class="w-[300px] h-[300px] rounded-full  bg-cover bg-center"
             :style="{
               backgroundImage: `url('${user.picture.replace(
                 'public/',
@@ -107,11 +106,11 @@ async function AddRating(){
           ></div>
           <div
             v-else
-            class="w-[300px] h-[300px] rounded-full flex  p-20 bg-cover bg-center"
+            class="w-[300px] h-[300px] rounded-full   bg-cover bg-center"
             style="background-image: url('/default-avatar.jpg')"
           ></div>
           <div
-            class="flex flex-col text-xl items-start justify-around w-3/5 max-[600px]:w-full max-[600px]:ml-0 max-[600px]:items-center ml-20"
+            class="flex flex-col text-xl items-start justify-around  max-[1170px]:w-full max-[1170px]:ml-0 max-[1170px]:items-center "
           >
             <p><span class="font-bold">Name :</span> {{ props.user.name }}</p>
             <p><span class="font-bold">Email :</span>{{ props.user.email }}</p>
@@ -277,7 +276,7 @@ async function AddRating(){
           </Carousel>
         </div>
       </div>
-      <div class="w-1/4 max-[600px]:w-full bg-white rounded-lg p-10 ">
+      <div class="w-1/4 max-[1170px]:w-full bg-white rounded-lg p-10 ">
         <div class="w-full flex justify-between">
           <p class="w-full font-bold text-5xl">Ratings</p>
           <Button
