@@ -303,10 +303,10 @@ async function AddRating(){
           <div class="w-full border-2 p-3 rounded-xl" v-for="rating in Ratings" :key="rating.id">
             <div class="flex items-center">
               <div
-            v-if="props.user.picture"
+            v-if="rating.user.picture"
             class="w-[30px] h-[30px] rounded-full flex  bg-cover bg-center"
             :style="{
-              backgroundImage: `url('${user.picture.replace(
+              backgroundImage: `url('${rating.user.picture.replace(
                 'public/',
                 '/storage/'
               )}')`,

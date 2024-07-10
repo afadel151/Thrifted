@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +30,9 @@ Route::get('/search', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::prefix('/api')->group(function () {
     Route::prefix('books')->group(function () {
+        Route::get('/{id}/likes',[BookController::class, 'likes']);
+        Route::get('/{id}/liked',[BookController::class, 'liked']);
+        Route::get('/{id}/cards',[BookController::class, 'cards']);
         Route::post('create', [BookController::class, 'create'])->name('books.create');
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
@@ -60,13 +65,13 @@ Route::prefix('/api')->group(function () {
             return response()->json(Category::all());
         });
     });
+    Route::prefix('tags')->group(function (){
+        Route::get('/',function (){
+            return response()->json(Tag::all());
+        });
+    });
 });
-Route::get('/dashboard', function () {
-    $newbooks = Book::with('user')->orderBy('created_at', 'desc')->take(10)->get();
-    return Inertia::render('Dashboard', [
-        'newbooks' => $newbooks,
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('chat', function () {
     return view('chat');
 });

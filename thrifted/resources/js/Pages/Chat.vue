@@ -101,7 +101,7 @@ const profileImage = props.chat.target_id == user.id ? props.chat.creator.pictur
 </script>
 <template>
     <Chats :chats="props.chats" :opened="true">
-        <div class=" h-20 p-3 flex items-center  justify-start border-2 rounded-2xl">
+        <div class=" h-20  flex items-center  justify-start border-2 rounded-full">
             <div
             class="w-[65px] h-[65px] rounded-full bg-cover bg-center"
             :style="{

@@ -78,6 +78,10 @@ class ProfileController extends Controller
                 ]);
             }
             $rating->load('user');
+            
+            User::find($request->input('rated_user_id'))->update([
+                'rating' => Rating::where('rated_user_id',$request->input('rated_user_id'))->sum('rating') / Rating::where('rated_user_id', $request->input('rated_user_id'))->count()
+            ]);
             return response()->json($rating);
         } catch (\Throwable $th) {
             throw $th;

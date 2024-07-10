@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import ShopByGenre from "@/Components/ShopByGenre.vue";
+
 import Carousel from "primevue/carousel";
 import { ref } from "vue";
 import CarouselBook from "@/Components/CarouselBook.vue";
@@ -9,14 +10,16 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-});
-const getSeverity = (status) => {
-  if (status == true) {
-    return "success";
-  } else {
-    return "danger";
+  classics:{
+    type: Array,
+    required:true
+  },
+  literature:{
+    type: Array,
+    required: true
   }
-};
+});
+
 const responsiveOptions = ref([
   {
     breakpoint: "1400px",
@@ -62,9 +65,9 @@ const responsiveOptions = ref([
           </Carousel>
         </div>
         <div class="bg-white sm:px-6 lg:px-8 overflow-hidden">
-          <p class="mb-2 ml-10 font-bold text-4xl">BEST CLASSICS</p>
+          <p class="mb-2 ml-10 font-bold text-4xl">NEW CLASSICS</p>
           <Carousel
-            :value="props.newbooks"
+            :value="props.classics"
             :numVisible="4"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
@@ -88,9 +91,9 @@ const responsiveOptions = ref([
           </Carousel>
         </div>
         <div class="bg-white sm:px-6 lg:px-8 overflow-hidden">
-          <p class="mb-2 ml-10 font-bold text-4xl">BEST SELLERS</p>
+          <p class="mb-2 ml-10 font-bold text-4xl">BEST OF LITERATURE</p>
           <Carousel
-            :value="props.newbooks"
+            :value="props.literature"
             :numVisible="4"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
@@ -101,7 +104,8 @@ const responsiveOptions = ref([
           </Carousel>
         </div>
       </div>
-      <div class="w-1/5 bg-slate-500"></div>
+      <div class="w-1/5 ">
+      </div>
     </div>
   </AuthenticatedLayout>
 </template>

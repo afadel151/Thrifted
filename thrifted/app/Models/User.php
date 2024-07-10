@@ -31,6 +31,7 @@ class User extends Authenticatable
         'instagram_url',
         'twitter_url',
         'goodreads_url',
+        'rating'
     ];
 
     /**

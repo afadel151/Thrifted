@@ -6,7 +6,6 @@ const Categories = ref([]);
 onBeforeMount(()=>{
     axios.get('/api/categories').then((response)=>{
         Categories.value = response.data;
-        console.log(Categories.value);
     }).catch((error)=>{
         console.log(error);
     })

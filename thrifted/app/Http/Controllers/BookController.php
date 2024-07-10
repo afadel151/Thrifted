@@ -201,5 +201,21 @@ class BookController extends Controller
             return redirect()->route('chats.show',$chat->id);
         }
     }
+    public function likes($id)
+    {
+        return response()->json(WishList::where('book_id',$id)->count());
+    }
+    public function liked($id)
+    {
+        $user_id = Auth::user()->id;
+        return response()->json(WishList::where(function($query) use ($id,$user_id ){
+            $query->where('book_id',$id)
+                    ->where('user_id',$user_id);
+        })->exists());
+    }
+    public function cards($id)
+    {
+        return response()->json(CardBook::where('book_id',$id)->count());
+    }
 
 }

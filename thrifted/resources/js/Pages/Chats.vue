@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import ChatBlock from '@/Components/ChatBlock.vue';
 const props = defineProps({
     chats: {
@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 <template>
     <AuthenticatedLayout>
-        <div style="height: calc(100vh - 64px);" class=" bg-slate-100">
+        <div style="height: calc(100vh - 156px);" class=" bg-slate-100">
             <div class=" p-10 h-full w-full">
                 <div class=" h-full shadow-sm p-2 sm:rounded-lg">
                     <div class="flex gap-5 h-full  w-full rounded-lg ">
@@ -19,7 +19,7 @@ const props = defineProps({
                                     <ChatBlock :chat="chat" />
                             </div>
                         </div>
-                        <div class="h-full bg-white rounded-2xl flex flex-col  w-full ">
+                        <div class="h-full bg-white rounded-2xl border-2 rounded-t-[40px] flex flex-col  w-full ">
                             <slot />
                         </div>
                     </div>

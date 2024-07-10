@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import axios from "axios";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
