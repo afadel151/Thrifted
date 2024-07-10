@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +54,11 @@ Route::prefix('/api')->group(function () {
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);
         Route::post('/add_book',[CardController::class, 'add_book']);
+    });
+    Route::prefix('categories')->group(function (){
+        Route::get('/',function (){
+            return response()->json(Category::all());
+        });
     });
 });
 Route::get('/dashboard', function () {
