@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import ShopByGenre from "@/Components/ShopByGenre.vue";
-
 import Carousel from "primevue/carousel";
 import { ref } from "vue";
 import CarouselBook from "@/Components/CarouselBook.vue";
+import CarouselUser from "@/Components/CarouselUser.vue";
 const props = defineProps({
   newbooks: {
     type: Array,
@@ -16,6 +16,10 @@ const props = defineProps({
   },
   literature:{
     type: Array,
+    required: true
+  },
+  best_sellers:{
+    type:Array,
     required: true
   }
 });
@@ -42,6 +46,7 @@ const responsiveOptions = ref([
     numScroll: 1,
   },
 ]);
+import Footer from "@/Components/Footer.vue"
 </script>
 
 <template>
@@ -103,9 +108,23 @@ const responsiveOptions = ref([
             </template>
           </Carousel>
         </div>
+        <div class="bg-white sm:px-6 lg:px-8 overflow-hidden">
+          <p class="mb-2 ml-10 font-bold text-4xl">BEST SELLERS</p>
+          <Carousel
+            :value="props.best_sellers"
+            :numVisible="4"
+            :numScroll="1"
+            :responsiveOptions="responsiveOptions"
+          >
+            <template #item="slotProps">
+              <CarouselUser :user="slotProps.data" />
+            </template>
+          </Carousel>
+        </div>
       </div>
       <div class="w-1/5 ">
       </div>
     </div>
+    <Footer />
   </AuthenticatedLayout>
 </template>

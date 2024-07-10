@@ -106,7 +106,7 @@ function onChange(e) {
 </script>
 <template >
   <div>
-    <Button icon="pi pi-plus-circle" @click="visible = true" />
+    <Button icon="pi pi-plus-circle" label="Add a book" @click="visible = true" />
   <Dialog
     v-model:visible="visible"
     modal

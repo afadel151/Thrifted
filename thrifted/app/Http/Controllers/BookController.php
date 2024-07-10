@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookPicture;
+use App\Models\Card;
 use App\Models\CardBook;
 use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +47,7 @@ class BookController extends Controller
             'user_id' => $user_id,
             'book_id' => $book_id
         ]);
-        return response('success',200);
+        return response('success', 200);
     }
     public function edit($id)
     {
@@ -119,7 +121,7 @@ class BookController extends Controller
     {
         $search = $request->input('search');
         $books = Book::search($search)->get();
-        $books->load(['user','tags','category']);
+        $books->load(['user', 'tags', 'category']);
         return response()->json($books);
     }
     public function show($id)
@@ -139,15 +141,15 @@ class BookController extends Controller
             ->orWhereIn('id', $relatedtags)
             ->take(10)
             ->get();
-        
-        $belong_to_card = CardBook::where('book_id',$book->id)->whereIn('card_id',$cards->pluck('id')->toArray())->exists();
-        
+
+        $belong_to_card = CardBook::where('book_id', $book->id)->whereIn('card_id', $cards->pluck('id')->toArray())->exists();
+
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,
             'book' => $book,
             'cards' => $cards,
             'belongs_to_card' => $belong_to_card
-        ]); 
+        ]);
     }
     public function update(Request $request)
     {
@@ -178,44 +180,54 @@ class BookController extends Controller
     {
         $seller_id = Book::find($id)->user_id;
         $user_id = Auth::user()->id;
-        $chat = Chat::where(function ($query) use ($seller_id,$user_id){
+        $chat = Chat::where(function ($query) use ($seller_id, $user_id) {
             $query->where('creator_id', $user_id)
-                    ->where('target_id',$seller_id);
-        })->orWhere(function ($query) use ($seller_id, $user_id){
-                $query->where('creator_id', $seller_id)
-                    ->where('target_id',$user_id);
+                ->where('target_id', $seller_id);
+        })->orWhere(function ($query) use ($seller_id, $user_id) {
+            $query->where('creator_id', $seller_id)
+                ->where('target_id', $user_id);
         })->first();
         if ($chat) {
-            return redirect()->route('chats.show',$chat->id);
-        }else {
+            return redirect()->route('chats.show', $chat->id);
+        } else {
             $chat = Chat::create([
                 'creator_id' => $user_id,
                 'target_id' => $seller_id
             ]);
             Message::create([
-                'chat_id'=> $chat->id,
-                'creator'=>true,
-                'message'=>'',
-                'book_id'=>$id
+                'chat_id' => $chat->id,
+                'creator' => true,
+                'message' => '',
+                'book_id' => $id
             ]);
-            return redirect()->route('chats.show',$chat->id);
+            return redirect()->route('chats.show', $chat->id);
         }
     }
     public function likes($id)
     {
-        return response()->json(WishList::where('book_id',$id)->count());
+        return response()->json(WishList::where('book_id', $id)->count());
     }
     public function liked($id)
     {
         $user_id = Auth::user()->id;
-        return response()->json(WishList::where(function($query) use ($id,$user_id ){
-            $query->where('book_id',$id)
-                    ->where('user_id',$user_id);
+        return response()->json(WishList::where(function ($query) use ($id, $user_id) {
+            $query->where('book_id', $id)
+                ->where('user_id', $user_id);
         })->exists());
     }
     public function cards($id)
     {
-        return response()->json(CardBook::where('book_id',$id)->count());
+        return response()->json(CardBook::where('book_id', $id)->count());
+    }
+    public function added_to_card($id)
+    {
+        $user_id = Auth::user()->id;
+        $cards = Card::where('user_id', $user_id)->pluck('id')->toArray();
+        return response()->json(CardBook::where(function ($query) use ($id, $cards) {
+                                                    $query->where('book_id', $id)
+                                                        ->whereIn('card_id', $cards);
+                                                    }
+                                                )->exists());
     }
 
 }

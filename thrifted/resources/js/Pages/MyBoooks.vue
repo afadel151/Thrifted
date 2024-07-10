@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Carousel from 'primevue/carousel';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref } from "vue";
@@ -75,7 +75,7 @@ const responsiveOptions = ref([
 
 <template>
 
-    <Head title="My Books" />
+
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-gray-800 text-xl leading-tight">My books </h2>
@@ -117,7 +117,10 @@ const responsiveOptions = ref([
                             </template>
                         </Carousel>
                     <!-- </div> -->
-
+                     <Link  class="float-right" :href="route('profile.books',{id:props.user.id})">
+                        <Button label="View all" />
+                    </Link>
+                        
 
                 </div>
                 <div class="bg-white shadow-sm mt-2 p- p-5 sm:rounded-lg overflow-hidden">
@@ -125,7 +128,7 @@ const responsiveOptions = ref([
                         <div class="p-6 text-5xl text-gray-900">📦 Your sold books!</div>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <div v-for="book in SoldBooks">
+                        <div v-for="book in SoldBooks" :key="book.id">
                             <div class="m-2 p-2 border rounded">
                                 <Tag :severity="getSeverity(book.available)"
                                     :value="book.available == 1 ? 'available' : 'sold'" rounded></Tag>
@@ -162,7 +165,7 @@ const responsiveOptions = ref([
                         <div class="p-6 text-5xl text-gray-900">💸 Books with no price</div>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <div v-for="book in BooksWithNoPrice">
+                        <div v-for="book in BooksWithNoPrice" :key="book.id">
                             <div class="m-2 p-2 border rounded">
                                 <Tag :severity="getSeverity(book.available)"
                                     :value="book.available == 1 ? 'available' : 'sold'" rounded></Tag>

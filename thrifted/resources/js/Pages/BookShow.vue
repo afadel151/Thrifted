@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Divider from "primevue/divider";
 import Button from "primevue/button";
 import { computed, popScopeId, ref } from "vue";
@@ -83,6 +83,7 @@ const SelectedCardId = ref(0);
 function SelectCard(id){
     SelectedCardId.value = id;
 }
+const RequestModel = ref(false);
 const BelongsToCard = ref(props.belongs_to_card);
 const AddtoCardVisible = ref(false);
 async function AddBookToCard()
@@ -105,7 +106,7 @@ async function AddBookToCard()
   <AuthenticatedLayout >
    
     <div
-      class="flex md:flex-row min-[200px]:flex-col sm:flex-col justify-center items-stretch gap-4 mt-2 2xl:px-96 w-full 2xl:h-[500px]"
+      class="flex pt-10 md:flex-row min-[200px]:flex-col sm:flex-col justify-center items-stretch gap-4 mt-2 2xl:px-96 w-full 2xl:h-[500px]"
     >
     
       <Carousel
@@ -165,17 +166,23 @@ async function AddBookToCard()
         >
           <Link :href="route('books.chat_with_seller', { id: props.book.id })">
             <Button
-              label="Request"
-              icon="pi pi-credit-card"
-              size="small"
+              label="Chat with seller"
+              icon="pi pi-comments"
+              severity="secondary"
+              
               raised
             />
           </Link>
+          <Button
+              label="Send request"
+              icon="pi pi-credit-card"
+              raised
+              @click="RequestModel = true"
+            />
           <Button v-show="!BelongsToCard"
             label="Add to card"
             icon="pi pi-shopping-cart"
             @click="AddtoCardVisible = true"
-            size="small"
             severity="contrast"
             raised
           />
@@ -233,6 +240,8 @@ async function AddBookToCard()
           </div>
           <hr />
           <p>Author : {{ props.book.author }}</p>
+          <hr />
+          <p>Edition : {{ props.book.edition }}</p>
         </div>
       </div>
     </div>

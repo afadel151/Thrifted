@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -23,10 +24,12 @@ class DashboardController extends Controller
         $literature_id = Category::where('name','Literature & Fiction')->first()->id;
         $classics_id = Tag::where('name','Classics')->first()->id; 
         $liteartures = Book::with('user')->where('category_id',$literature_id)->get();
+        $bestsellers = User::orderByDesc('rating')->take(10)->get();
         return Inertia::render('Dashboard', [
             'newbooks' => $newbooks,
             'classics' => $classics,
-            'literature' => $liteartures
+            'literature' => $liteartures,
+            'best_sellers' => $bestsellers
         ]);
     }
 

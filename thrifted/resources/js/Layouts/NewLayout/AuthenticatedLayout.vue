@@ -12,6 +12,7 @@ const showingNavigationDropdown = ref(false);
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 const UnseenMessages = ref("");
 import { Inertia } from "@inertiajs/inertia";
+
 onBeforeMount(() => {
   axios
     .post("/api/users/unseen_messages")
@@ -57,7 +58,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 
 <template>
   <div>
-    <div class="h-screen font-[Mulish]">
+    <div class="w-screen">
       <nav
         class="border-gray-100 bg-white mt-4 mb-4"
       >
@@ -217,14 +218,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
         </div>
         <!-- Responsive Navigation Menu -->
       </nav>
-      <!-- Page Heading -->
-      <!-- <header class="bg-white shadow" v-if="$slots.header">
-                <div class="mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
-                    <slot name="header" />
-                </div>
-            </header> -->
-
-      <!-- Page Content -->
+     
       <main>
         <div
           :class="{

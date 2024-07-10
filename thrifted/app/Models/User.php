@@ -81,6 +81,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(WishList::class);
     }
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
     // Suggestions about futur read , recommondation based on previous reads purchases 
     // book's rating from reader or seller / owner 
     // table users_books 

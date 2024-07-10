@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
@@ -15,6 +16,7 @@ use App\Models\Tag;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Symfony\Component\VarDumper\Dumper\ContextProvider\RequestContextProvider;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -33,6 +35,7 @@ Route::prefix('/api')->group(function () {
         Route::get('/{id}/likes',[BookController::class, 'likes']);
         Route::get('/{id}/liked',[BookController::class, 'liked']);
         Route::get('/{id}/cards',[BookController::class, 'cards']);
+        Route::get('/{id}/added_to_card',[BookController::class, 'added_to_card']);
         Route::post('create', [BookController::class, 'create'])->name('books.create');
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
@@ -54,7 +57,7 @@ Route::prefix('/api')->group(function () {
         Route::post('/search', [ProfileController::class, 'search']);
         Route::post('/rate', [ProfileController::class, 'rate']);
         Route::post('/add_social_links', [ProfileController::class, 'add_social_links']);
-
+        Route::get('/{id}/carousel_details',[UserController::class, 'carousel_details']);
     });
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);
@@ -87,6 +90,9 @@ Route::prefix('/cards')->group(function () {
     Route::post('/request_all', [CardController::class, 'request_all'])->name('cards.request_all');
 })->middleware(['auth', 'verified']);
 // 
+Route::prefix('requests')->group(function (){
+    Route::get('/', [RequestController::class,'index'])->name('requests.index');
+});
 Route::prefix('/chats')->group(function () {
     Route::get('/', [ChatController::class, 'index'])->name('chats.index');
     Route::get('/sellings', [ChatController::class, 'selling_chats'])->name('chats.selling');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Message;
+use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,9 +57,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function carousel_details($id)
     {
-        //
+        $user = User::find($id);
+        $books = $user->books;
+        $details = new \stdClass;
+        $details->books = $books->count();
+        $details->sold = $books->where('available',0)->count();
+        $details->ratings = Rating::where('rated_user_id',$id)->count();
+        return response()->json($details);
     }
 
     /**

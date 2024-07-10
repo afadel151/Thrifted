@@ -1,16 +1,13 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Divider from "primevue/divider";
+import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Button from "primevue/button";
 import Select from "primevue/select";
 import SelectButton from "primevue/selectbutton";
 import axios from "axios";
 import InputText from "primevue/inputtext";
-import MultiSelect from "primevue/multiselect";
 import Textarea from "primevue/textarea";
 import InputNumber from "primevue/inputnumber";
 import Popover from "primevue/popover";
-import FileUpload from "primevue/fileupload";
 import { computed, ref } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import Galleria from "primevue/galleria";
