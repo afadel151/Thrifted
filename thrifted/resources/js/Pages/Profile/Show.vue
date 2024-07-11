@@ -90,7 +90,7 @@ async function AddRating(){
 <template>
   <AuthenticatedLayout>
     <div class="max-[1170px]:flex-col max-[1170px]:items-center  flex  justify-around space-x-10 max-[1170px]:space-x-0 max-[1170px]:space-y-5 w-screen pt-10 bg-slate-200 max-[1170px]:px-3 px-16">
-      <div class="font-[Mulish] w-3/4  max-[1170px]:w-full">
+      <div class="w-3/4  max-[1170px]:w-full">
         <div
           class="bg-white max-w-7xl flex max-[1170px]:flex-col gap-4 max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10"
         >

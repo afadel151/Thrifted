@@ -95,7 +95,7 @@ const clearResults = () => {
 
 <template>
   <div>
-    <div class="h-screen font-[Mulish]">
+    <div class="h-screen ">
       <nav class="border-gray-100 bg-white border-b h-[64px]">
         <!-- Primary Navigation Menu -->
         <div class="px-10">

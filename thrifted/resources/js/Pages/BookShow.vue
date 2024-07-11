@@ -257,7 +257,7 @@ async function AddBookToCard()
       :responsiveOptions="responsiveOptions"
     >
       <template #item="slotProps">
-        <div class="border-2 m-2 p-4 rounded">
+        <div class="border-2 m-2 p-4 rounded-xl bg-white">
           <Link :href="route('books.show', { id: slotProps.data.id })">
             <div class="mb-4">
               <div class="relative flex justify-center mx-auto">

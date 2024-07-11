@@ -29,7 +29,7 @@ function handleImageError() {
 <template>
 
     <header class="flex bg-slate-50 justify-between items-center p-4 px-14 border-b border-gray-300">
-        <div class="text-2xl  text-gray-800 font-bold  font-[Mulish]">
+        <div class="text-2xl  text-gray-800 font-bold  ">
             <span class="text-black">ThriftedBooks</span> <span class="text-purple-600">Dz</span>
         </div>
         <nav class="space-x-4">
@@ -40,7 +40,7 @@ function handleImageError() {
         </nav>
 
     </header>
-    <main class="flex z-10 flex-col font-[Mulish] items-center  justify-center text-center mt-36">
+    <main class="flex z-10 flex-col  items-center  justify-center text-center mt-36">
         <h1 class="text-4xl relative md:text-8xl font-bold text-gray-800 mb-4 w-[70%]">
             Sell & buy books in Algeria
             <img src="/svgs/undraw_note.svg" alt="" class="absolute fill-cyan-500  scale-150 -bottom-20 right-10">

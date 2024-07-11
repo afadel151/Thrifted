@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 const UnseenMessages = ref("");
 import { Inertia } from "@inertiajs/inertia";
-
+import {Link} from "@inertiajs/vue3";
 onBeforeMount(() => {
   axios
     .post("/api/users/unseen_messages")
@@ -57,10 +57,11 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 </script>
 
 <template>
-  <div style="background-color: var(--p-violet-100);">
-    <div class="w-screen">
+  <div >
+    
+    <div class="w-screen ">
       <nav
-        class="border-gray-100  mb-4"
+        class="border-gray-100 backdrop-blur-sm bg-white/30  pt-4 pb-4"
       >
         <div class="px-10 ">
           <div class="flex  justify-center items-center gap-10 h-16">
@@ -69,19 +70,17 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 
             <div class="sm:flex hidden">
               <div class="sm:flex hidden sm:-my-px">
-                <NavLink
+                <Link
                   :href="route('cards.index')"
-                  :active="route().current('cards.index')"
                 >
-                  <Button label="Card" icon="pi pi-shopping-cart" plain text />
-                </NavLink>
+                  <Button label="Card" icon="pi pi-shopping-cart"  text />
+                </Link>
                 <Divider layout="vertical" />
-                <NavLink
+                <Link
                   :href="route('cards.index')"
-                  :active="route().current('cards.index')"
                 >
-                  <Button label="Wishlist" icon="pi pi-heart" plain text />
-                </NavLink>
+                  <Button label="Wishlist" icon="pi pi-heart"  text />
+                </Link>
                 <!--  -->
                 <Divider layout="vertical" />
               </div>
@@ -92,14 +91,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
                     <Dropdown align="right" width="48">
                       <template #trigger>
                         <span class="inline-flex rounded-md">
-                          <button
-                            type="button"
-                            class="inline-flex items-center justify-center  font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out"
-                          >
-                            <i class="pi pi-user"></i>
-                            <!-- {{ $page.props.auth.user.name }} -->
-                            <p class="ml-2 text-lg">Account</p>
-                          </button>
+                          <Button icon="pi pi-user" label="Account"  />
                         </span>
                       </template>
 
@@ -166,25 +158,21 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
         </div>
 
         <div class="w-full sm:flex hidden   justify-center mt-2">
-          <NavLink
+          <Link
             :href="route('dashboard')"
-            :active="route().current('dashboard')"
           >
             <Button label="Home" icon="pi pi-home " text plain />
-          </NavLink>
+          </Link>
           <Divider layout="vertical" />
-          <NavLink
+          <Link
             :href="route('books.my_books')"
-            :active="route().current('books.my_books')"
           >
             <Button label="My Books" icon="pi pi-book" text plain />
-          </NavLink>
+          </Link>
           <Divider layout="vertical" />
-          <NavLink
+          <Link
             :href="route('chats.index')"
-            :active="
-              route().current('chats.index') || route().current('chats.show')
-            "
+            
           >
             <Button
               label="Chats"
@@ -194,9 +182,9 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
               plain
               text
             />
-          </NavLink>
+          </Link>
           <Divider layout="vertical" />
-          <NavLink>
+          <Link>
             <Button
               label="About"
               badgeSeverity="contrast"
@@ -204,8 +192,8 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
               plain
               text
             />
-          </NavLink>
-          <NavLink :href="route('requests.index')">
+          </Link>
+          <Link :href="route('requests.index')">
             <Button
               label="Requests"
               badge="14"
@@ -214,7 +202,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
               plain
               text
             />
-          </NavLink>
+          </Link>
         </div>
         <!-- Responsive Navigation Menu -->
       </nav>
@@ -276,6 +264,15 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
         <slot />
       </main>
     </div>
+    <div
+      class="blob w-[1000px] h-[1000px] rounded-[999px] fixed bottom-0 left-0 -z-10 blur-3xl bg-opacity-60 bg-gradient-to-r from-red-200 via-gray-100 to-blue-100"
+    ></div>
+    <div
+        class="blob w-[800px] h-[800px] rounded-[999px] fixed top-0 right-0 -z-10 blur-[300px]  bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200">
+    </div>
+    <div
+      class="blob w-[600px] h-[600px] rounded-[999px] fixed bottom-0 left-0 -z-10 blur-3xl bg-opacity-60 bg-gradient-to-r from-slate-100 via-teal-100 to-blue-100"
+    ></div>
   </div>
 </template>
 <style>

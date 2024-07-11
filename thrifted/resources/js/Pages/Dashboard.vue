@@ -51,12 +51,12 @@ import Footer from "@/Components/Footer.vue"
 
 <template>
   <AuthenticatedLayout>
-    <div class="font-[Mulish] flex pt-10">
+    <div class=" flex pt-10">
       <div class="h-20 w-1/5">
         <ShopByGenre />
       </div>
       <div class="w-3/5  flex-col gap-4  flex" >
-        <div style="background-color :var(--p-violet-50);" class=" pt-10 rounded-2xl sm:px-6 lg:px-8 overflow-hidden">
+        <div  class="bg-white border-2 pt-10 rounded-2xl sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">🕜 NEW BOOKS</p>
           <Carousel
             :value="props.newbooks"
@@ -69,7 +69,7 @@ import Footer from "@/Components/Footer.vue"
             </template>
           </Carousel>
         </div>
-        <div style="background-color :var(--p-violet-50);" class=" sm:px-6 pt-10 rounded-2xl lg:px-8 overflow-hidden">
+        <div  class="bg-white border-2 sm:px-6 pt-10 rounded-2xl lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl"> NEW CLASSICS</p>
           <Carousel
             :value="props.classics"
@@ -82,7 +82,7 @@ import Footer from "@/Components/Footer.vue"
             </template>
           </Carousel>
         </div>
-        <div style="background-color :var(--p-violet-50);" class=" rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
+        <div  class="bg-white border-2 rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">RELIGION BOOKS</p>
           <Carousel
             :value="props.newbooks"
@@ -95,7 +95,7 @@ import Footer from "@/Components/Footer.vue"
             </template>
           </Carousel>
         </div>
-        <div style="background-color :var(--p-violet-50);" class=" rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
+        <div  class="bg-white border-2 rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">BEST OF LITERATURE</p>
           <Carousel
             :value="props.literature"
@@ -108,7 +108,7 @@ import Footer from "@/Components/Footer.vue"
             </template>
           </Carousel>
         </div>
-        <div style="background-color :var(--p-violet-50);" class="rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
+        <div  class="bg-white border-2rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">BEST SELLERS</p>
           <Carousel
             :value="props.best_sellers"
