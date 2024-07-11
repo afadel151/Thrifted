@@ -40,8 +40,12 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'facebook_url' => '',
+            'instagram_url' => '',
+            'twitter_url' => '',
+            'goodreads_url' => '',
         ]);
-
+        $user->searchable();
         event(new Registered($user));
 
         Auth::login($user);

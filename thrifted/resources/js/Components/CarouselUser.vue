@@ -27,7 +27,7 @@ onBeforeMount(() => {
 
 
 <template>
-  <div class="border-2 m-2 p-4 rounded">
+  <div class="border-2 m-2 p-4 rounded-xl bg-white">
     <Link :href="route('profile.show',{id: props.user.id})">
       <div class="mb-4 flex items-center justify-center">
       <div

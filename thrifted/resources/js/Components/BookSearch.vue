@@ -13,19 +13,20 @@ const openPosition = (pos) => {
 };
 const clearResults = () => {
   SearchResults.value = [];
+  UsersResults.value = [];
 };
 const SearchResults = ref([]);
+const UsersResults = ref([]);
 function Search(search) {
   Searching.value = true;
-  console.log(SearchInput.value);
   axios
     .post("/api/books/search", {
       search: search,
     })
     .then((response) => {
-      SearchResults.value = response.data;
+      SearchResults.value = response.data.books;
+      UsersResults.value = response.data.users;
       Searching.value = false;
-      console.log(response.data);
     })
     .catch((error) => console.log(error));
 }
@@ -34,11 +35,11 @@ watch(SearchInput, async (NewSearch, OldSearch) => {
     Search(NewSearch);
   } else {
     SearchResults.value = [];
+    UsersResults.value = [];
   }
 });
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
-import InputGroup from "primevue/inputgroup";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 </script>
@@ -78,10 +79,11 @@ import Button from "primevue/button";
       </div>
       <div class="flex items-center flex-col justify-center gap-4 mb-8 px-6">
         <ProgressSpinner v-show="Searching" style="width: 50px; height: 50px" />
+        <p v-if="!Searching">Books</p>
         <div
           v-for="book in SearchResults"
           :key="book.id"
-          class="w-full hover:bg-slate-100 font-bold flex items-center justify-start rounded-lg border"
+          class="w-full hover:bg-slate-800  hover:text-white font-bold flex items-center justify-start rounded-lg p-2 border"
         >
           <img
             :src="book.cover.replace('public/', '/storage/')"
@@ -102,6 +104,32 @@ import Button from "primevue/button";
             <p v-else class="ml-2 text-red-500">Sold</p>
           </div>
         </div>
+        <p v-if="!Searching">Users</p>
+        <div
+          v-for="user in UsersResults"
+          :key="user.id"
+          class="w-full hover:text-white p-2  font-bold flex items-center justify-start rounded-lg hover:bg-slate-800  border-2"
+        >
+        <div
+            v-if="user.picture"
+            class="w-[70px] h-[70px]   bg-cover bg-center"
+            :style="{
+              backgroundImage: `url('${user.picture.replace(
+                'public/',
+                '/storage/'
+              )}')`,
+            }"
+          ></div>
+          <div
+            v-else
+            class="w-[70px] h-[70px]    bg-cover bg-center"
+            style="background-image: url('/default-avatar.jpg')"
+          ></div>
+          <div class="pl-2 ">
+              <p>{{ user.name }}</p>
+              <p> {{ user.books.filter(book => book.available == 0).length }} sold books</p>
+          </div>
+      </div>
       </div>
       <div class="flex justify-end gap-2">
         Search by

@@ -54,7 +54,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="border-2 m-2 p-4 rounded">
+  <div class="border-2 m-2 p-4 rounded-xl bg-white ">
     <Link :href="route('books.show', { id: props.book.id })">
       <div class="mb-4">
         <div class="relative flex justify-center mx-auto">
@@ -78,7 +78,7 @@ onBeforeMount(() => {
     </Link>
     <div class="mb-4 font-medium">{{ props.book.title }}</div>
     <div class="mb-4 font-medium">
-      <i class="pi pi-map-marker" style="color: green"></i>
+      <i class="pi pi-map-marker" style="color: var(--p-violet-500)"></i>
       {{ props.book.user.adress }}
     </div>
     <div class="flex justify-between items-center">

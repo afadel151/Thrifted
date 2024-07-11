@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 <template>
     <AuthenticatedLayout>
-        <div style="height: calc(100vh - 156px);" class=" bg-slate-100">
+        <div style="height: calc(100vh - 156px);" >
             <div class=" p-10 h-full w-full">
                 <div class=" h-full shadow-sm p-2 sm:rounded-lg">
                     <div class="flex gap-5 h-full  w-full rounded-lg ">

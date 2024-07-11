@@ -57,10 +57,10 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 </script>
 
 <template>
-  <div>
+  <div style="background-color: var(--p-violet-100);">
     <div class="w-screen">
       <nav
-        class="border-gray-100 bg-white mt-4 mb-4"
+        class="border-gray-100  mb-4"
       >
         <div class="px-10 ">
           <div class="flex  justify-center items-center gap-10 h-16">
@@ -94,7 +94,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
                         <span class="inline-flex rounded-md">
                           <button
                             type="button"
-                            class="inline-flex items-center justify-center bg-white font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out"
+                            class="inline-flex items-center justify-center  font-medium text-gray-500 text-sm hover:text-gray-700 leading-4 focus:outline-none transition duration-150 ease-in-out"
                           >
                             <i class="pi pi-user"></i>
                             <!-- {{ $page.props.auth.user.name }} -->
@@ -205,7 +205,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
               text
             />
           </NavLink>
-          <NavLink>
+          <NavLink :href="route('requests.index')">
             <Button
               label="Requests"
               badge="14"

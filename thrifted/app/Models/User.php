@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\Collection;
+use Laravel\Scout\EngineManager;
+use Laravel\Scout\Engines\Engine;
+use Laravel\Scout\Searchable;
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable,Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -96,4 +99,21 @@ class User extends Authenticatable
     // books selled 
     // book readers tracking with reviews and comments 
     // suggestions 
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+        ];
+    }
+    // public function makeSearchableUsing(Collection $models): Collection
+    // {
+    //     return $models->load('wilaya');
+    // }
+    public function searchableUsing(): Engine
+    {
+        return app(EngineManager::class)->engine('algolia');
+    }
+   
 }

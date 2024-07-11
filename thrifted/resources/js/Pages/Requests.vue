@@ -1,11 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
-import Button from "primevue/button";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import ColumnGroup from "primevue/columngroup";
-import Row from "primevue/row";
-import Tag from "primevue/tag";
+
+
+import { Link } from "@inertiajs/vue3";
 import RequestStatusPopover from "@/Components/RequestStatusPopover.vue";
 const props = defineProps({
   requests: {
@@ -17,26 +16,24 @@ const props = defineProps({
 
 <template>
   <AuthenticatedLayout>
-    <div class="px-20">
+    <div class="px-20 mt-20">
       <DataTable
         :value="props.requests"
         paginator
         :rows="10"
         dataKey="id"
-        tableStyle="min-width: 40rem"
+        tableStyle="min-width: 40rem;"
+         :rowsPerPageOptions="[5, 10, 20, 50]"
       >
         <template #header>
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xl font-bold">Book Requests</span>
-            <Button icon="pi pi-refresh" rounded raised />
-          </div>
+            <span class="text-3xl font-bold">Book Requests</span>
         </template>
         <Column>
           <template #header>
             <p class="text-center text-xl w-full">User</p>
           </template>
           <template #body="slotProps">
-            <div
+            <Link :href="route('profile.show', {id: slotProps.data.user.id})"
               class="h-full  flex text-2xl font-bold justify-center  gap-2 items-center"
             >
               <div
@@ -55,7 +52,7 @@ const props = defineProps({
                 style="background-image: url('/default-avatar.jpg')"
               ></div>
               <p >{{ slotProps.data.user.name }}</p>
-            </div>
+              </Link>
           </template>
         </Column>
         <Column>
@@ -63,7 +60,9 @@ const props = defineProps({
             <p class="text-center text-xl w-full">Book</p>
           </template>
           <template #body="slotProps">
-            <div class="flex justify-center items-center">
+            <Link class="flex justify-center items-center"
+                  :href="route('books.show', {id: slotProps.data.book.id})"
+            >
               <img
                 :src="slotProps.data.book.cover.replace('public/', '/storage/')"
                 class="w-12"
@@ -75,7 +74,7 @@ const props = defineProps({
                   {{ slotProps.data.book.author }}
                 </p>
               </div>
-            </div>
+            </Link>
           </template>
         </Column>
         <Column>

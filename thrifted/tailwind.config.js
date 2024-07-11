@@ -34,7 +34,6 @@ export default {
                 'primary-800': 'rgb(var(--primary-800))',
                 'primary-900': 'rgb(var(--primary-900))',
                 'primary-950': 'rgb(var(--primary-950))',
-
                 'surface-0': 'rgb(var(--surface-0))',
                 'surface-50': 'rgb(var(--surface-50))',
                 'surface-100': 'rgb(var(--surface-100))',
@@ -427,7 +426,7 @@ export default {
             }
         }
     },
-    // components: {
+    // // components: {
     //     accordion,
     //     // ... other components
     // }

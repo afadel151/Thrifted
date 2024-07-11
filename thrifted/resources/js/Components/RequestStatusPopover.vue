@@ -40,9 +40,10 @@ const CurrentStatus = ref(props.status);
     />
     <Popover ref="op"> 
         <div class="flex flex-col justify-center gap-2 items-stretch">
-            <Button icon="pi pi-ban" severity="danger"  label="Untreated" />
-            <Button icon="pi pi-hourglass" severity="info"  label="Untreated" />
-            <Button icon="pi pi-check" label="Untreated" />
+            <Button icon="pi pi-ban" severity="danger" outlined  label="Untreated" />
+            <Button icon="pi pi-hourglass" severity="info" outlined  label="In Progress" />
+            <Button icon="pi pi-check" outlined label="Finished" />
+            <Button icon="pi pi-times" outlined severity="secondary" label="Canceled" />
         </div>
     </Popover>
   </div>

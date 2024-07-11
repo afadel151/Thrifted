@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MapController;
@@ -115,9 +116,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/{id}/books', [ProfileController::class, 'books'])->name('profile.books');
     Route::get('/profile/{id}/books_pagination', [ProfileController::class, 'books_pagination'])->name('profile.books_pagination');
-
+    Route::get('/category/{id}/books_pagination', [CategoryController::class, 'books_pagination'])->name('category.books_pagination');
+    Route::get('/category/{id}/books', [CategoryController::class, 'books'])->name('category.show');
 });
 
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);
+
 require __DIR__ . '/auth.php';

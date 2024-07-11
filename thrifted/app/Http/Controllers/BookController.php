@@ -121,8 +121,13 @@ class BookController extends Controller
     {
         $search = $request->input('search');
         $books = Book::search($search)->get();
+        $users = User::search($search)->get();
+        $users->load('books');
         $books->load(['user', 'tags', 'category']);
-        return response()->json($books);
+        return response()->json([
+            'books' => $books,
+            'users' => $users
+        ]);
     }
     public function show($id)
     {

@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Carousel from 'primevue/carousel';
 import { Head } from '@inertiajs/vue3';
+import CarouselBook from "@/Components/CarouselBook.vue";
 import { computed, ref } from "vue";
 import { Link } from '@inertiajs/vue3';
 import Button from "primevue/button";
@@ -77,11 +78,8 @@ const responsiveOptions = ref([
 
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-gray-800 text-xl leading-tight">My books </h2>
-        </template>
-
-        <div class="bg-slate-100 py-12 w-full overflow-y-scroll" style="height: calc(100vh - 64px);">
+        
+        <div class=" py-12 w-full overflow-y-scroll" style="height: calc(100vh - 64px);">
             <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl">
                 <div class="bg-white shadow-sm p-5 sm:rounded-lg overflow-hidden">
                     <div class="flex justify-between items-center">

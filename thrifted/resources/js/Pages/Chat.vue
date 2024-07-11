@@ -118,8 +118,8 @@ const profileImage = props.chat.target_id == user.id ? props.chat.creator.pictur
             <div class=" w-full   flex" v-for="message in Messages" :key="message.id"
                 :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'justify-end' : 'justify-start'">
                 <div :class="message.book_id != 0 ? ' border rounded-lg' : ''">
-                    <div class="flex max-w-96 rounded-lg p-3 gap-3 border-2" v-if="message.book == null"
-                        :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'bg-gray-200' : 'bg-white'">
+                    <div class="flex max-w-96 rounded-lg p-3 gap-3 " v-if="message.book == null"
+                        :class="(message.creator == 1 && props.chat.creator_id == user.id) || (message.creator == 0 && props.chat.target_id == user.id) ? 'bg-[var(--p-violet-300)]' : 'border-2'">
                         <p class="text-gray-700">{{ message.message }}</p>
 
                     </div>
