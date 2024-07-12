@@ -1,6 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import Button from "primevue/button";
+import { onMounted } from "vue";
 defineProps({
   canLogin: {
     type: Boolean,
@@ -28,7 +29,9 @@ function handleImageError() {
 
 <template>
   <div>
-    <header class="flex justify-between items-center backdrop-blur-sm bg-white/30 border-b p-4 px-14">
+    <header
+      class="flex justify-between px-64 items-center backdrop-blur-sm bg-white/30 border-b p-4"
+    >
       <div class="text-2xl text-gray-800 font-bold">
         <span class="text-black">ThriftedBooks</span>
         <span class="text-purple-600">Dz</span>
@@ -41,7 +44,16 @@ function handleImageError() {
       </nav>
     </header>
     <div class="w-full flex px-52 py-40">
-      <div class="w-1/2 flex flex-col items-start justify-start p-10">
+      <div
+        v-motion
+        :initial="{ opacity: 0, x: -100 }"
+        :enter="{ opacity: 1, x: 0, scale: 1 }"
+        :variants="{ custom: { scale: 2 } }"
+        :hovered="{ scale: 1 }"
+        :delay="100"
+        :duration="300"
+        class="w-1/2 flex flex-col items-start justify-start p-12"
+      >
         <p class="text-7xl font-black">Sell & buy books in Algeria</p>
         <p class="text-gray-600 text-xl mt-20 mb-16">
           Connecting book lovers across Algeria. Discover a wide range of books,
@@ -79,24 +91,28 @@ function handleImageError() {
           </template>
         </nav>
       </div>
-      <div class="w-1/2">
-        <img src="/booksimage.jpg" class="rounded-xl" alt="" />
+      <div class="w-1/2 p-4">
+        <img
+          src="/booksimage.jpg"
+          v-motion
+          :initial="{ opacity: 0, x: 100 }"
+          :enter="{ opacity: 1, x: 0, scale: 1 }"
+          :variants="{ custom: { scale: 2 } }"
+          :hovered="{ scale: 1 }"
+          :delay="100"
+          :duration="300"
+          class="rounded-xl"
+          alt=""
+        />
       </div>
     </div>
     <div class="px-52 mt-20">
-        <p class=" text-center text-6xl ">Features</p>
-        <div class="   grid grid-cols-3 mt-20 px-20 gap-32">
-            <div class="  bg-slate-400" >
-                Real Time Chat Between Users
-            </div>
-            <div class="  bg-slate-400" >
-                Request / Response Style
-            </div>
-            <div class="  bg-slate-400" >
-                Ai powered Searching
-            </div>
-            
-        </div>
+      <p class="text-center text-6xl">Features</p>
+      <div class="grid grid-cols-3 mt-20 px-20 gap-32">
+        <div class="bg-slate-400">Real Time Chat Between Users</div>
+        <div class="bg-slate-400">Request / Response Style</div>
+        <div class="bg-slate-400">Ai powered Searching</div>
+      </div>
     </div>
     <main
       class="flex z-10 flex-col items-center justify-center text-center mt-36"

@@ -229,14 +229,13 @@ async function AddBookToCard()
           <hr />
           <div>
             Tags:
-            <template v-for="tag in props.book.tags"  :key="tag.id">
               <Badge
-             
+                v-for="tag in props.book.tags"
+                :key="tag.id"
                 :value="tag.name"
                 severity="secondary"
                 class="mr-2"
               ></Badge>
-            </template>
           </div>
           <hr />
           <p>Author : {{ props.book.author }}</p>

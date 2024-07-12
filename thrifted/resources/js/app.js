@@ -10,6 +10,7 @@ import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
 import { definePreset } from '@primevue/themes';
+import { MotionPlugin } from '@vueuse/motion'
 
 const MyPreset = definePreset(Aura, {
     semantic: {
@@ -81,6 +82,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(ToastService)
             .use(ConfirmationService)
+            .use(MotionPlugin)
             .directive('tooltip', Tooltip)
             .mount(el);
     },
