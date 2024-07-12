@@ -4,11 +4,8 @@ import Button from "primevue/button";
 import axios from "axios";
 import { ref } from "vue";
 const file = ref(null);
-const uploadPercentage = ref(0);
 const user = usePage().props.auth.user;
-function handleFileUpload() {
-  file = this.$refs.file.files[0];
-}
+const Picture = ref(user.picture);
 async function submitFile() {
   let fd = new FormData();
   fd.append("file", file.value);
@@ -16,6 +13,7 @@ async function submitFile() {
   try {
     let response = await axios.post("/api/users/update_picture", fd);
     console.log(response.data);
+    Picture.value = response.data;
   } catch (error) {
     console.log(error);
   }
@@ -23,6 +21,7 @@ async function submitFile() {
 function onChange(e) {
   file.value = e.target.files[0];
 }
+
 </script>
 
 <template>
@@ -34,7 +33,7 @@ function onChange(e) {
       </p>
     </header>
     <div class="mt-6 space-y-6">
-      <div v-if="user.picture" :class="`h-[182px] rounded-full bg-cover bg-center w-[182px]`" :style="{ backgroundImage: `url('${user.picture.replace('public/', '/storage/')}')` }">
+      <div v-if="user.picture" :class="`h-[182px] rounded-full bg-cover bg-center w-[182px]`" :style="{ backgroundImage: `url('${Picture.replace('public/', '/storage/')}')` }">
 </div>
 
       <div

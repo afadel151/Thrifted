@@ -8,16 +8,25 @@ import BookSearch from "@/Components/BookSearch.vue";
 import Button from "primevue/button";
 import axios from "axios";
 import Divider from "primevue/divider";
-const showingNavigationDropdown = ref(false);
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 const UnseenMessages = ref("");
+const showingNavigationDropdown = ref(false);
 import { Inertia } from "@inertiajs/inertia";
 import {Link} from "@inertiajs/vue3";
+const Requests = ref(0);
 onBeforeMount(() => {
   axios
     .post("/api/users/unseen_messages")
     .then((response) => {
       UnseenMessages.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    axios
+    .get(`/api/users/${usePage().props.auth.user.id}/untreated_requests`)
+    .then((response) => {
+      Requests.value = response.data;
     })
     .catch((error) => {
       console.log(error);
@@ -184,19 +193,10 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
             />
           </Link>
           <Divider layout="vertical" />
-          <Link>
-            <Button
-              label="About"
-              badgeSeverity="contrast"
-              icon="pi pi-info"
-              plain
-              text
-            />
-          </Link>
           <Link :href="route('requests.index')">
             <Button
               label="Requests"
-              badge="14"
+              :badge="Requests"
               badgeSeverity="danger"
               icon="pi pi-question"
               plain

@@ -109,7 +109,7 @@ const profileImage = props.chat.target_id == user.id ? props.chat.creator.pictur
             }"
           ></div> 
           <div class="flex flex-col items-start ml-5">
-            <p class="text-3xl font-bold ">{{ props.chat.target_id == user.id ? props.chat.creator.name : props.chat.target.name }}</p>
+            <Link :href="route('profile.show',{id:props.chat.target_id == user.id ? props.chat.creator.id : props.chat.target.id})" class="text-3xl hover:text-gray-800 font-bold ">{{ props.chat.target_id == user.id ? props.chat.creator.name : props.chat.target.name }}</Link>
             <!-- <p class="text-xl"> {{ props.chat.target_id == user.id ? props.chat.creator.email : props.chat.target.email }}</p> -->
           </div>
         </div>

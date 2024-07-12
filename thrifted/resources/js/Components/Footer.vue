@@ -3,7 +3,7 @@
 </script>
 
 <template>
-     <footer class="backdrop-blur-sm bg-white/40 dark:bg-gray-900">
+     <footer class="backdrop-blur-sm bg-white/40 mt-10 dark:bg-gray-900">
     <div class="container p-6 mx-auto">
         <div class="lg:flex">
             <div class="w-full -mx-6 lg:w-2/5">

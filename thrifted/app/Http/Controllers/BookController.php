@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookPicture;
+use App\Models\BookRequest;
 use App\Models\Card;
 use App\Models\CardBook;
 use App\Models\Category;
@@ -20,6 +21,17 @@ use Inertia\Inertia;
 
 class BookController extends Controller
 {
+    public function send_request(Request $request)
+    {
+        $bookRequest = BookRequest::create([
+            'user_id' => $request->input('user_id'),
+            'book_id' => $request->input('book_id'),
+            'phone_number' => $request->input('phone_number'),
+            'wilaya_id' => $request->input('wilaya_id'),
+            'status' => 'Untreated'
+        ]);
+        return response()->json($bookRequest);
+    }
     public function add_picture(Request $request)
     {
         $book = Book::find($request->input('book_id'));
@@ -198,12 +210,6 @@ class BookController extends Controller
             $chat = Chat::create([
                 'creator_id' => $user_id,
                 'target_id' => $seller_id
-            ]);
-            Message::create([
-                'chat_id' => $chat->id,
-                'creator' => true,
-                'message' => '',
-                'book_id' => $id
             ]);
             return redirect()->route('chats.show', $chat->id);
         }

@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Wilaya;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,8 @@ Route::prefix('/api')->group(function () {
         Route::post('update', [BookController::class, 'update']);
         Route::post('search', [BookController::class, 'search']);
         Route::post('/add_to_wishlist', [BookController::class, 'add_to_wishlist']);
+        Route::post('/send_request', [BookController::class, 'send_request']);
+
     });
     Route::prefix('messages')->group(function () {
         Route::post('/', [MessageController::class, 'store']);
@@ -59,6 +62,8 @@ Route::prefix('/api')->group(function () {
         Route::post('/rate', [ProfileController::class, 'rate']);
         Route::post('/add_social_links', [ProfileController::class, 'add_social_links']);
         Route::get('/{id}/carousel_details',[UserController::class, 'carousel_details']);
+        Route::get('/{id}/untreated_requests',[UserController::class, 'untreated_requests']);
+        Route::post('/chats', [UserController::class, 'chats']);
     });
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);
@@ -67,6 +72,11 @@ Route::prefix('/api')->group(function () {
     Route::prefix('categories')->group(function (){
         Route::get('/',function (){
             return response()->json(Category::all());
+        });
+    });
+    Route::prefix('wilayas')->group(function (){
+        Route::get('/',function (){
+            return response()->json(Wilaya::all());
         });
     });
     Route::prefix('tags')->group(function (){
@@ -122,7 +132,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/category/{id}/books_pagination', [CategoryController::class, 'books_pagination'])->name('category.books_pagination');
     Route::get('/category/{id}/books', [CategoryController::class, 'books'])->name('category.show');
 });
-
+Route::prefix('users')->group(function () {
+    Route::get('/contact_user/{id}', [UserController::class, 'contact_user'])->name('users.contact_user');
+});
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);
 

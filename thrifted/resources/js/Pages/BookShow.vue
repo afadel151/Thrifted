@@ -2,7 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Divider from "primevue/divider";
 import Button from "primevue/button";
-import { computed, popScopeId, ref } from "vue";
+import { computed, ref } from "vue";
+import ShareBook from "@/Components/ShareBook.vue"
 import { Link, usePage } from "@inertiajs/vue3";
 import NavLink from "@/Components/NavLink.vue";
 import Carousel from "primevue/carousel";
@@ -83,9 +84,11 @@ const SelectedCardId = ref(0);
 function SelectCard(id){
     SelectedCardId.value = id;
 }
+import SendRequest from "@/Components/SendRequest.vue"
 const RequestModel = ref(false);
 const BelongsToCard = ref(props.belongs_to_card);
 const AddtoCardVisible = ref(false);
+const ShareVisible = ref(false);
 async function AddBookToCard()
 {
     try {
@@ -99,7 +102,8 @@ async function AddBookToCard()
     } catch (error) {
         console.log(error);
     }
-}
+};
+
 </script>
 
 <template>
@@ -169,15 +173,13 @@ async function AddBookToCard()
               label="Chat with seller"
               icon="pi pi-comments"
               severity="secondary"
-              
               raised
             />
           </Link>
-          <Button
-              label="Send request"
-              icon="pi pi-credit-card"
-              raised
-              @click="RequestModel = true"
+          <ShareBook />
+          <SendRequest
+            v-if="props.book.available == 1"
+             :book_id="props.book.id"
             />
           <Button v-show="!BelongsToCard"
             label="Add to card"

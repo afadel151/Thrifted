@@ -1,7 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from '@/Layouts/NewLayout/AuthenticatedLayout.vue';
 import Tag from 'primevue/tag';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -162,7 +162,7 @@ async function HandleLoadMore()
         </div>
         <div class="w-full  px-32 py-16 grid grid-cols-6">
             <div v-for="book in ComputedBooks" :key="book.id">
-                <div class="m-2 p-2 border rounded">
+                <div class="m-2 p-2 border bg-white rounded-xl">
                     <Tag :severity="getSeverity(book.available)" :value="book.available == 1 ? 'available' : 'sold'"
                         rounded></Tag>
                     <Link :href="route('books.show', { id: book.id })">
@@ -180,10 +180,13 @@ async function HandleLoadMore()
                         <p class="mt-0 font-semibold text-xl">{{ book.price == 0 ? 'No price yet' :
                             book.price }}
                         </p>
-                        <span>
+                        <span v-if="book.user.id === props.user_id">
 
                             <Button icon="pi pi-trash" style="font-size: 0.5rem" severity="secondary" outlined />
                             <Button icon="pi pi-pencil" style="font-size: 0.5rem" class="ml-2" />
+                        </span>
+                        <span v-else>
+                            <Button icon="pi pi-heart" style="font-size: 0.5rem" severity="secondary" @click="this.setSeverity('danger')"  />
                         </span>
                     </div>
                 </div>
@@ -194,10 +197,3 @@ async function HandleLoadMore()
 
 </template>
 
-<!-- "first_page_url": "http://127.0.0.1:8000/profile/2/books?page=1", "from": 1, "last_page": 2, "last_page_url":
-"http://127.0.0.1:8000/profile/2/books?page=2", "links": [ { "url": null, "label": "&laquo; Previous", "active": false
-}, { "url": "http://127.0.0.1:8000/profile/2/books?page=1", "label": "1", "active": true }, { "url":
-"http://127.0.0.1:8000/profile/2/books?page=2", "label": "2", "active": false }, { "url":
-"http://127.0.0.1:8000/profile/2/books?page=2", "label": "Next &raquo;", "active": false } ], "next_page_url":
-"http://127.0.0.1:8000/profile/2/books?page=2", "path": "http://127.0.0.1:8000/profile/2/books", "per_page": 2,
-"prev_page_url": null, "to": 2, "total": 4 } -->

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\BookRequest;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Rating;
@@ -14,6 +16,37 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function untreated_requests($id)
+    {
+        $books = Book::where('user_id',$id)
+                        ->pluck('id')
+                        ->toArray();
+        $untreated = BookRequest::where(function ($query) use ($books) {
+            $query->whereIn('book_id',$books)
+                    ->where('status','Untreated');
+        })->count();
+        return response()->json($untreated);
+    }
+    public function contact_user($id)
+    {
+        $user_id = Auth::user()->id;
+        $chat = Chat::where(function ($query) use ( $id, $user_id) {
+            $query->where('creator_id', $user_id)
+                ->where('target_id', $id);
+        })->orWhere(function ($query) use ($id, $user_id) {
+            $query->where('creator_id', $id)
+                ->where('target_id', $user_id);
+        })->first();
+        if ($chat) {
+            return redirect()->route('chats.show', $chat->id);
+        } else {
+            $chat = Chat::create([
+                'creator_id' => $user_id,
+                'target_id' => $id
+            ]);
+            return redirect()->route('chats.show', $chat->id);
+        }
+    }
     public function get_unseen_messages(Request $request)
     {
         $user_id = Auth::user()->id;
@@ -49,9 +82,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function chats(Request $request)
     {
-        //
+        $chats = Chat::with(['creator','target'])->where(function ($query) use ($request) {
+            $query->where('creator_id',$request->input('user_id'))
+                ->orWhere('target_id',$request->input('user_id'));
+        })->get();
+        return response()->json($chats);
     }
 
     /**

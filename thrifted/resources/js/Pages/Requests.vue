@@ -66,10 +66,10 @@ function getDate(datetime){
         </Column>
         <Column>
           <template #header>
-            <p class="text-center text-xl w-full">Book</p>
+            <p class=" text-xl w-full">Book</p>
           </template>
           <template #body="slotProps">
-            <Link class="flex justify-center items-center"
+            <Link class="flex justify-start items-center"
                   :href="route('books.show', {id: slotProps.data.book.id})"
             >
               <img

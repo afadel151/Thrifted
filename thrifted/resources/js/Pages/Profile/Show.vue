@@ -155,6 +155,7 @@ async function AddRating(){
               <a v-tooltip.top="'Twitter account'"  v-show="props.user.twitter_url != ''" target="_blank" :href="props.user.twitter_url"><Button icon="pi pi-twitter" rounded  severity="contrast" /></a>
               <a v-tooltip.top="'Goodreads account'" v-show="props.user.goodreads_url != ''" target="_blank" :href="props.user.goodreads_url"><Button icon="pi pi-book" rounded  severity="contrast" /></a>
             </div>
+           <Link v-if="props.user.id !== usePage().props.auth.user.id" :href="route('users.contact_user',{id: props.user.id})"> <Button  label="Contact" class="mt-5" severity="secondary" outlined raised icon="pi pi-comments" /></Link>
           </div>
         </div>
         <div

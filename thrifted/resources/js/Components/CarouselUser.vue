@@ -23,6 +23,7 @@ onBeforeMount(() => {
       console.log(error);
     });
 });
+const UserRating = ref(props.user.rating);
 </script>
 
 
@@ -53,7 +54,7 @@ onBeforeMount(() => {
     </div>
     <div class="flex justify-between items-center">
       <div class="mt-0 font-semibold flex items-center gap-2">
-        <Rating v-model="props.user.rating" /> ({{ Ratings }})
+        <Rating v-model="UserRating" /> ({{ Ratings }})
       </div>
     </div>
     </Link>
