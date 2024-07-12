@@ -39,10 +39,8 @@ const submit = () => {
 
         <form @submit.prevent="submit">
 
-         <div class="w-full flex flex-col gap-2 justify-around items-center">
-            <a class="w-full bg-gray-700 text-white rounded-xl py-2 flex justify-center items-center space-x-2" href="/auth/github/redirect"> <i class="pi pi-github"></i> <p>Github</p></a>
-            <a class="w-full  text-gray-950 bg-gray-200  rounded-xl py-2 flex justify-center items-center text-xl space-x-2" href="/auth/google/redirect"> <i class="pi pi-google"></i>oogle</a>
-         </div>
+            <a href="/auth/github/redirect"><Button label="Github" class="w-full" severity="contrast" icon="pi pi-github" /></a>
+            <a href="/auth/google/redirect"><Button class="w-full mt-5" icon="pi pi-google" label="Google" outlined severity="secondary" /></a>
             <div>
                 <InputLabel for="email" value="Email" />
 

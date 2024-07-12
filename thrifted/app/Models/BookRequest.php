@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class BookRequest extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -15,6 +15,7 @@ class Request extends Model
         'status',
         'phone_number'
     ];
+    protected $table = 'requests';
     public function user()
     {
         return $this->belongsTo(User::class);

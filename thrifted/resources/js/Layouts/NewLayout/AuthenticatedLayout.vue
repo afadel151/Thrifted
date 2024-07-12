@@ -61,7 +61,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
     
     <div class="w-screen ">
       <nav
-        class="border-gray-100 backdrop-blur-sm bg-white/30  pt-4 pb-4"
+        class="border-gray-100 backdrop-blur-sm bg-white/40  pt-4 pb-4"
       >
         <div class="px-10 ">
           <div class="flex  justify-center items-center gap-10 h-16">
@@ -265,14 +265,14 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
       </main>
     </div>
     <div
-      class="blob w-[1000px] h-[1000px] rounded-[999px] fixed bottom-0 left-0 -z-10 blur-3xl bg-opacity-60 bg-gradient-to-r from-red-200 via-gray-100 to-blue-100"
+      class="blob w-[1000px] h-[1000px] rounded-[999px] fixed bottom-0 left-0 -z-10 blur-[300px] bg-opacity-30 bg-gradient-to-r from-red-200 via-gray-100 to-blue-100"
     ></div>
     <div
-        class="blob w-[800px] h-[800px] rounded-[999px] fixed top-0 right-0 -z-10 blur-[300px]  bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200">
+        class="blob w-[800px] h-[800px] rounded-[999px] fixed top-0 right-0 -z-10 blur-[400px]  bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200">
     </div>
-    <div
+    <!-- <div
       class="blob w-[600px] h-[600px] rounded-[999px] fixed bottom-0 left-0 -z-10 blur-3xl bg-opacity-60 bg-gradient-to-r from-slate-100 via-teal-100 to-blue-100"
-    ></div>
+    ></div> -->
   </div>
 </template>
 <style>

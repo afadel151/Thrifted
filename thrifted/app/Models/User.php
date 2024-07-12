@@ -86,7 +86,7 @@ class User extends Authenticatable
     }
     public function requests()
     {
-        return $this->hasMany(Request::class);
+        return $this->hasMany(BookRequest::class);
     }
     // Suggestions about futur read , recommondation based on previous reads purchases 
     // book's rating from reader or seller / owner 

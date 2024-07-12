@@ -74,6 +74,9 @@ Route::prefix('/api')->group(function () {
             return response()->json(Tag::all());
         });
     });
+    Route::prefix('requests')->group(function (){
+        Route::post('/{id}/change_status', [RequestController::class,'change_status'])->name('requests.change_status');
+    });
 });
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('chat', function () {

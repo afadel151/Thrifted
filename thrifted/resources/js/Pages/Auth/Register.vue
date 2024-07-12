@@ -5,7 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-
+import Button from 'primevue/button';
 const form = useForm({
     name: '',
     email: '',
@@ -25,6 +25,9 @@ const submit = () => {
         <Head title="Register" />
 
         <form @submit.prevent="submit">
+            <a href="/auth/github/redirect"><Button label="Github" class="w-full" severity="contrast" icon="pi pi-github" /></a>
+            <a href="/auth/google/redirect"><Button class="w-full mt-5" icon="pi pi-google" label="Google" outlined severity="secondary" /></a>
+        
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -98,8 +101,7 @@ const submit = () => {
                     Register
                 </PrimaryButton>
             </div>
-            <a href="/auth/github/redirect">Github</a>
-            <a href="/auth/google/redirect">Google</a>
+            
         </form>
     </GuestLayout>
 </template>

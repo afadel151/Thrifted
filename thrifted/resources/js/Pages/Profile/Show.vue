@@ -89,14 +89,14 @@ async function AddRating(){
 
 <template>
   <AuthenticatedLayout>
-    <div class="max-[1170px]:flex-col max-[1170px]:items-center  flex  justify-around space-x-10 max-[1170px]:space-x-0 max-[1170px]:space-y-5 w-screen pt-10 bg-slate-200 max-[1170px]:px-3 px-16">
+    <div class="max-[1170px]:flex-col max-[1170px]:items-center  flex  justify-around space-x-10 max-[1170px]:space-x-0 max-[1170px]:space-y-5 w-screen pt-10  max-[1170px]:px-3 px-16">
       <div class="w-3/4  max-[1170px]:w-full">
         <div
-          class="bg-white max-w-7xl flex max-[1170px]:flex-col gap-4 max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-lg overflow-hidden py-10"
+          class="backdrop-blur-sm bg-white/40 max-w-7xl flex gap-20 max-[1170px]:flex-col max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-xl overflow-hidden py-10"
         >
           <div
             v-if="props.user.picture"
-            class="w-[300px] h-[300px] rounded-full  bg-cover bg-center"
+            class="w-[250px] h-[250px] rounded-full  bg-cover bg-center"
             :style="{
               backgroundImage: `url('${user.picture.replace(
                 'public/',
@@ -106,7 +106,7 @@ async function AddRating(){
           ></div>
           <div
             v-else
-            class="w-[300px] h-[300px] rounded-full   bg-cover bg-center"
+            class="w-[250px] h-[250px] rounded-full   bg-cover bg-center"
             style="background-image: url('/default-avatar.jpg')"
           ></div>
           <div
@@ -158,14 +158,14 @@ async function AddRating(){
           </div>
         </div>
         <div
-          class="mt-6 flex flex-col items-stretch bg-white max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
+          class="mt-6 flex flex-col items-stretch backdrop-blur-sm bg-white/40 max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
         >
           <div class="w-full max-[600px]:px-2 flex justify-between  items-center">
             <div class="p-6 text-gray-900 text-4xl">
               📚 {{ props.user.name }}'s books!
             </div>
             <Link :href="route('profile.books', { id: props.user.id })">
-              <Button label="View All" severity="contrast" outlined raised />
+              <Button label="View All"   raised />
             </Link>
           </div>
           <Carousel
@@ -175,7 +175,7 @@ async function AddRating(){
             :responsiveOptions="responsiveOptions"
           >
             <template #item="slotProps">
-              <div class="border-2 m-2 p-4 rounded">
+              <div class="border-2 m-2 bg-white  p-4 rounded-xl">
                 <Link :href="route('books.show', { id: slotProps.data.id })">
                   <div class="mb-4">
                     <div class="relative flex justify-center mx-auto">
@@ -217,66 +217,9 @@ async function AddRating(){
             </template>
           </Carousel>
         </div>
-        <div
-          class="mt-6 flex flex-col items-stretch bg-white max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
-        >
-          <div class="w-full flex justify-between items-center">
-            <div class="p-6 text-gray-900 text-4xl">
-              📚 {{ props.user.name }}'s sold books!
-            </div>
-            <Button label="View All" severity="contrast" outlined raised />
-          </div>
-          <Carousel
-            :value="props.soldbooks"
-            :numVisible="4"
-            :numScroll="1"
-            :responsiveOptions="responsiveOptions"
-          >
-            <template #item="slotProps">
-              <div class="border-2 m-2 p-4 rounded">
-                <Link :href="route('books.show', { id: slotProps.data.id })">
-                  <div class="mb-4">
-                    <div class="relative flex justify-center mx-auto">
-                      <img
-                        :src="
-                          slotProps.data.cover == null
-                            ? '/cover-not-available.jpg'
-                            : slotProps.data.cover.replace(
-                                'public/',
-                                '/storage/'
-                              )
-                        "
-                        :alt="slotProps.data.name"
-                        class="rounded h-52"
-                      />
-                      <Tag
-                        :value="
-                          slotProps.data.available == 1 ? 'available' : 'sold'
-                        "
-                        :severity="getSeverity(slotProps.data.available)"
-                        class="absolute"
-                        style="left: 5px; top: 5px"
-                      />
-                    </div>
-                  </div>
-                </Link>
-                <div class="mb-4 font-medium">{{ slotProps.data.title }}</div>
-
-                <div class="flex justify-between items-center">
-                  <div class="mt-0 font-semibold text-xl">
-                    {{ slotProps.data.price }} DA
-                  </div>
-                  <span>
-                    <Button icon="pi pi-heart" severity="secondary" outlined />
-                    <Button icon="pi pi-shopping-cart" class="ml-2" />
-                  </span>
-                </div>
-              </div>
-            </template>
-          </Carousel>
-        </div>
+        
       </div>
-      <div class="w-1/4 max-[1170px]:w-full bg-white rounded-lg p-10 ">
+      <div class="w-1/4 max-[1170px]:w-full backdrop-blur-sm bg-white/40 rounded-lg p-10 ">
         <div class="w-full flex justify-between">
           <p class="w-full font-bold text-5xl">Ratings</p>
           <Button
@@ -300,7 +243,7 @@ async function AddRating(){
         <div
           class="flex flex-col mt-10 rounded-lg items-center gap-2 justify-start"
         >
-          <div class="w-full border-2 p-3 rounded-xl" v-for="rating in Ratings" :key="rating.id">
+          <div class="w-full bg-white border-2 p-3 rounded-xl" v-for="rating in Ratings" :key="rating.id">
             <div class="flex items-center">
               <div
             v-if="rating.user.picture"
@@ -317,7 +260,7 @@ async function AddRating(){
             class="w-[30px] h-[30px] rounded-full flex  bg-cover bg-center"
             style="background-image: url('/default-avatar.jpg')"
           ></div>
-              <p class="text-2xl font-semibold">{{rating.user.name}}</p>
+              <Link :href="route('profile.show',{id:rating.user.id})"><p class="text-2xl hover:text-gray-600 font-semibold">{{rating.user.name}}</p></Link>
             </div>
             <Rating v-model="rating.rating" readonly />
             
