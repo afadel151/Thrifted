@@ -9,6 +9,23 @@ const op = ref();
 const toggle = (event) => {
   op.value.toggle(event);
 };
+const DeleteFromWishlist = (wish) => {
+  try {
+          axios.post('/api/books/add_to_wishlist',{
+            book_id: wish.book.id,
+          }).then(response => {
+            if(response.status == 201){
+              Books.value = Books.value.filter(w => w.book.id != wish.book.id)
+            }else{
+              console.log('Error');
+            }
+          }).catch(error =>{
+            console.log(error);
+          })
+      } catch (error) {
+        console.log(error);
+      }
+}
 const Books = ref([]);
 onMounted(()=>{
     axios.get(`/api/users/${usePage().props.auth.user.id}/wishlist`)
@@ -40,14 +57,13 @@ onMounted(()=>{
             <p class="text-lg ml-2">
               {{ wish.book.author }}
             </p>
-           
             <p class="ml-2 text-green-400" v-if="wish.book.available == 1">
               Available
             </p>
             <p v-else class="ml-2 text-red-500">Sold</p>
           </div>
         </Link>
-        <Button icon="pi pi-trash" /> 
+        <Button icon="pi pi-trash" @click="DeleteFromWishlist(wish)" /> 
       </div>
       </div>
     </Popover>

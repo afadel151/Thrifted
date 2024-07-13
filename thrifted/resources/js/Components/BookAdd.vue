@@ -10,6 +10,7 @@ import MultiSelect from "primevue/multiselect";
 import InputNumber from "primevue/inputnumber";
 import SelectButton from "primevue/selectbutton";
 import Select from "primevue/select";
+import { usePage } from "@inertiajs/vue3";
 const emit = defineEmits(["addBook"]);
 const props = defineProps({
   user_id: {
@@ -93,8 +94,12 @@ async function SaveBook() {
     fd.append("original", InputOriginal.value);
     try {
       let response = await axios.post("/api/books/create", fd);
-      console.log(response.data);
+      if (response.status == 300) {
+          alert('Error while adding your book');
+      }else{
+        console.log(response.data);
       emit("addBook", response.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -103,11 +108,12 @@ async function SaveBook() {
 }
 function onChange(e) {
   file.value = e.target.files[0];
+  
 }
 </script>
 <template >
   <div>
-    <Button icon="pi pi-plus-circle"  @click="visible = true" />
+    <Button icon="pi pi-plus-circle" label="Add" v-if="props.user_id == usePage().props.auth.user.id"  @click="visible = true" />
   <Dialog
     v-model:visible="visible"
     modal

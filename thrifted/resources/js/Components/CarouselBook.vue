@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import Tag from "primevue/tag";
 import { onBeforeMount, onMounted, ref } from "vue";
 import axios from "axios";
@@ -27,15 +27,23 @@ const getSeverity = (status) => {
 };
 const Liked = ref(false);
 const AddToWishList = () => {
-  
-    if (!Liked.value) {
-      Likes.value = Likes.value + 1;
-      
-    }else{
-      Likes.value = Likes.value - 1;
-    }
-    Liked.value = !Liked.value;
- 
+      try {
+          axios.post('/api/books/add_to_wishlist',{
+            book_id: props.book.id,
+          }).then(response => {
+            if (response.status == 200) {
+              Liked.value = true;
+              Likes.value = Likes.value + 1;
+            }else if(response.status == 201){
+              Liked.value = false;
+              Likes.value = Likes.value - 1;
+            }
+          }).catch(error =>{
+            console.log(error);
+          })
+      } catch (error) {
+        console.log(error);
+      }
 };
 onBeforeMount(() => {
   axios
@@ -116,7 +124,7 @@ const IsDeleted = ref('');
             />
           </svg>
         </button>
-        <DeleteBookDialog @deleted="DeleteBook" :book_id="props.book.id" />
+        <DeleteBookDialog @deleted="DeleteBook" v-if="props.book.user.id == usePage().props.auth.user.id" :book_id="props.book.id" />
       </div>
     </div>
   </div>

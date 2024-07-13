@@ -55,11 +55,24 @@ class BookController extends Controller
     {
         $user_id = Auth::user()->id;
         $book_id = $request->input('book_id');
-        WishList::create([
-            'user_id' => $user_id,
-            'book_id' => $book_id
-        ]);
-        return response('success', 200);
+        $exists = WishList::where(function ($query) use ($request, $user_id) {
+            $query->where('book_id', $request->input('book_id'))
+                ->where('user_id', $user_id);
+        })->exists();
+        if (!$exists) {
+            WishList::create([
+                'user_id' => $user_id,
+                'book_id' => $book_id
+            ]);
+            return response('success', 200);
+        } else {
+            WishList::where(function ($query) use ($request, $user_id) {
+                $query->where('book_id', $request->input('book_id'))
+                    ->where('user_id', $user_id);
+            })->delete();
+            return response('success', 201);
+        }
+
     }
     public function edit($id)
     {
@@ -89,6 +102,7 @@ class BookController extends Controller
             'categories' => $categories
         ]);
     }
+    // .jpg, .jpeg, .jfif, .pjpeg, .pjp
     public function create(Request $request)
     {
         $book = new Book;
@@ -101,32 +115,39 @@ class BookController extends Controller
             $request_file = $request->file('file');
             $path = '/public/books/';
             $NewPath = Storage::disk('local')->putFile($path, $request_file);
-            $book->cover = $NewPath;
+            $extension = $request_file->getClientOriginalExtension();
+            if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png'|| $extension ==  'jfif' || $extension == 'pjpeg' || $extension == 'pjp') {
+                $book->cover = $NewPath;
+                if ($request->input('isbn') != 0) {
+                    $book->isbn = $request->input('isbn');
+                }
+                $book->edition = $request->input('edition');
+                $book->user_id = $request->input('user_id');
+                $book->format = $request->input('format');
+                $book->condition = $request->input('condition');
+                $book->new = $request->input('state') === 'New' ? true : false;
+                $book->category_id = $request->input('category_id');
+                $book->price = $request->input('price');
+                $book->original = $request->input('original') === 'Original' ? true : false;
+                $book->save();
+                $book->searchable();
+                $book->load('user');
+                $tags = $request->input('tags', []);
+                foreach ($tags as $tag) {
+                    DB::table('book_tags')->insert(
+                        [
+                            'book_id' => $book->id,
+                            'tag_id' => $tag,
+                        ]
+                    );
+                }
+                return response()->json($book);
+            }else{
+                return response(status: 300);
+            }
+            
         }
-        if ($request->input('isbn') != 0) {
-            $book->isbn = $request->input('isbn');
-        }
-        $book->edition = $request->input('edition');
-        $book->user_id = $request->input('user_id');
-        $book->format = $request->input('format');
-        $book->condition = $request->input('condition');
-        $book->new = $request->input('state') === 'New' ? true : false;
-        $book->category_id = $request->input('category_id');
-        $book->price = $request->input('price');
-        $book->original = $request->input('original') === 'Original' ? true : false;
-        $book->save();
-        $book->searchable();
-        $book->load('user');
-        $tags = $request->input('tags', []);
-        foreach ($tags as $tag) {
-            DB::table('book_tags')->insert(
-                [
-                    'book_id' => $book->id,
-                    'tag_id' => $tag,
-                ]
-            );
-        }
-        return response()->json($book);
+       
 
 
     }
@@ -244,11 +265,16 @@ class BookController extends Controller
     }
     public function delete(Request $request)
     {
-        if (Book::destroy($request->input('book_id'))) {
-            return response(status: 200);
-        } else {
+        if(Book::find($request->input('book_id'))->user->id == Auth::user()->id) {
+            if (Book::destroy($request->input('book_id'))) {
+                return response(status: 200);
+            } else {
+                return response(status: 201);
+            }
+        }else {
             return response(status: 201);
         }
+       
 
     }
 }

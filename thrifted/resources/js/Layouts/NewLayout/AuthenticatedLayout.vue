@@ -13,7 +13,7 @@ const UnseenMessages = ref("");
 const showingNavigationDropdown = ref(false);
 import { Inertia } from "@inertiajs/inertia";
 import {Link} from "@inertiajs/vue3";
-const Requests = ref(0);
+const Requests = ref('');
 onBeforeMount(() => {
   axios
     .post("/api/users/unseen_messages")
@@ -26,7 +26,7 @@ onBeforeMount(() => {
     axios
     .get(`/api/users/${usePage().props.auth.user.id}/untreated_requests`)
     .then((response) => {
-      Requests.value = response.data;
+      Requests.value = String(response.data);
     })
     .catch((error) => {
       console.log(error);

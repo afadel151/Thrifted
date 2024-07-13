@@ -121,7 +121,7 @@ function AddBook(book) {
 
 <template>
     <AuthenticatedLayout>
-        <div class="w-full flex justify-start h-24 items-center space-x-4 px-32 mt-16 ">
+        <div class="w-full flex justify-start h-24 items-center space-x-4 px-20 mt-16 ">
             <div class="mx-auto justify-self-start flex flex-col justify-start h-full items-start">
                 <p>Filter by search</p>
                 <IconField>
@@ -164,7 +164,7 @@ function AddBook(book) {
                 <Select v-model="AvailableInput" :options="available" optionLabel="name" optionValue="code"
                     placeholder="Filter By Availability" class="w-52" />
             </div>
-            <BookAdd :user_id="props.user_id" @addBook="AddBook" />
+            <BookAdd :user_id="props.user_id" @addBook="AddBook" class="mb-2" />
         </div>
         <div class="w-full  px-32 py-16 grid grid-cols-6">
             <div v-for="book in ComputedBooks" :key="book.id">
