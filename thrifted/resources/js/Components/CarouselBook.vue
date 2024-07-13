@@ -3,13 +3,19 @@ import { Link } from "@inertiajs/vue3";
 import Tag from "primevue/tag";
 import { onBeforeMount, onMounted, ref } from "vue";
 import axios from "axios";
+import Button from "primevue/button";
+
 const props = defineProps({
   book: {
     type: Object,
     required: true,
   },
+  my_books:{
+    type:Boolean,
+    default : false
+  }
 });
-
+import DeleteBookDialog from "@/Components/DeleteBookDialog.vue"
 const Likes = ref(0);
 const LikeButton = ref();
 const getSeverity = (status) => {
@@ -50,11 +56,16 @@ onBeforeMount(() => {
     });
   
 });
-
+function DeleteBook(id)
+{
+  console.log(id);
+  IsDeleted.value = 'hidden';
+}
+const IsDeleted = ref('');
 </script>
 
 <template>
-  <div class="border-2 m-2 p-4 rounded-xl bg-white ">
+  <div class="border-2 m-2 p-4 rounded-xl bg-white " :class="IsDeleted">
     <Link :href="route('books.show', { id: props.book.id })">
       <div class="mb-4">
         <div class="relative flex justify-center mx-auto">
@@ -83,7 +94,7 @@ onBeforeMount(() => {
     </div>
     <div class="flex justify-between items-center">
       <div class="mt-0 font-semibold text-xl">{{ props.book.price }} DA</div>
-      <div class="flex items-end  justify-center gap-4 ">
+      <div class="flex items-center  justify-center gap-4 ">
         <button @click="AddToWishList" ref="LikeButton" class="relative">
           <div v-if="Likes > 0 || Liked == true"
             class="absolute -right-2 text-black font-bold -top-2 text-xs bg-[#fe6e6e] border-2 border-white px-1 rounded-full"
@@ -105,6 +116,7 @@ onBeforeMount(() => {
             />
           </svg>
         </button>
+        <DeleteBookDialog @deleted="DeleteBook" :book_id="props.book.id" />
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 import axios from "axios";
 import Button from "primevue/button";
 import Textarea from "primevue/textarea";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import Avatar from "primevue/avatar";
@@ -12,19 +12,21 @@ import SelectButton from "primevue/selectbutton";
 import Select from "primevue/select";
 const emit = defineEmits(["addBook"]);
 const props = defineProps({
-  user: {
-    type: Object,
+  user_id: {
+    type: Number,
     required: true,
-  },
-  categories: {
-    type: Array,
-    required: true,
-  },
-  tags: {
-    type: Array,
-    required: true,
-  },
+  }
 });
+const Categories = ref([]);
+const Tags = ref([]);
+onMounted(()=>{
+  axios.get('/api/categories')
+        .then(response => Categories.value = response.data)
+        .catch(error => console.log(error));
+  axios.get('/api/tags')
+        .then(response => Tags.value = response.data)
+        .catch(error => console.log(error));
+})
 const file = ref(null);
 const InputTitle = ref("");
 const InputEdition = ref("");
@@ -82,14 +84,13 @@ async function SaveBook() {
     SelectedTags.value.forEach((tag) => {
       fd.append("tags[]", tag);
     });
-    fd.append("user_id", props.user.id);
+    fd.append("user_id", props.user_id);
     fd.append("format", InputFormat.value);
     fd.append("condition", InputCondition.value);
     fd.append("price", InputPrice.value);
     fd.append("state", InputState.value);
     fd.append("category_id", InputCategory.value);
     fd.append("original", InputOriginal.value);
-    // console.log(fd.get('tags'));
     try {
       let response = await axios.post("/api/books/create", fd);
       console.log(response.data);
@@ -106,11 +107,11 @@ function onChange(e) {
 </script>
 <template >
   <div>
-    <Button icon="pi pi-plus-circle" label="Add a book" @click="visible = true" />
+    <Button icon="pi pi-plus-circle"  @click="visible = true" />
   <Dialog
     v-model:visible="visible"
     modal
-    header="Edit Profile"
+    header="Add a book"
     :style="{ width: '40rem' }"
   >
     <template #header>
@@ -119,7 +120,6 @@ function onChange(e) {
           image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
           shape="circle"
         />
-        <span class="font-bold whitespace-nowrap">{{ props.user.name }}</span>
       </div>
     </template>
     <span class="block mb-8 text-surface-500 dark:text-surface-400"
@@ -156,7 +156,7 @@ function onChange(e) {
       <label for="author" class="w-24 font-semibold">Category</label>
       <Select
         v-model="InputCategory"
-        :options="props.categories"
+        :options="Categories"
         optionLabel="name"
         optionValue="id"
         placeholder="Select a Category"
@@ -185,7 +185,7 @@ function onChange(e) {
       <MultiSelect
         v-model="SelectedTags"
         display="chip"
-        :options="props.tags"
+        :options="Tags"
         optionLabel="name"
         optionValue="id"
         filter

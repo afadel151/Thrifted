@@ -41,6 +41,7 @@ Route::prefix('/api')->group(function () {
         Route::post('create', [BookController::class, 'create'])->name('books.create');
         Route::post('add_picture', [BookController::class, 'add_picture']);
         Route::post('update', [BookController::class, 'update']);
+        Route::post('delete', [BookController::class, 'delete']);
         Route::post('search', [BookController::class, 'search']);
         Route::post('/add_to_wishlist', [BookController::class, 'add_to_wishlist']);
         Route::post('/send_request', [BookController::class, 'send_request']);
@@ -64,6 +65,7 @@ Route::prefix('/api')->group(function () {
         Route::get('/{id}/carousel_details',[UserController::class, 'carousel_details']);
         Route::get('/{id}/untreated_requests',[UserController::class, 'untreated_requests']);
         Route::post('/chats', [UserController::class, 'chats']);
+        Route::get('/{id}/wishlist', [UserController::class, 'wishlist']);
     });
     Route::prefix('cards')->group(function (){
         Route::post('/create',[CardController::class, 'create']);
@@ -87,7 +89,7 @@ Route::prefix('/api')->group(function () {
     Route::prefix('requests')->group(function (){
         Route::post('/{id}/change_status', [RequestController::class,'change_status'])->name('requests.change_status');
     });
-});
+})->middleware(['auth', 'verified']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('chat', function () {
     return view('chat');

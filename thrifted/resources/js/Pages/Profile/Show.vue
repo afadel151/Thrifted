@@ -92,7 +92,7 @@ async function AddRating(){
     <div class="max-[1170px]:flex-col max-[1170px]:items-center  flex  justify-around space-x-10 max-[1170px]:space-x-0 max-[1170px]:space-y-5 w-screen pt-10  max-[1170px]:px-3 px-16">
       <div class="w-3/4  max-[1170px]:w-full">
         <div
-          class="backdrop-blur-sm bg-white/40 max-w-7xl flex gap-20 max-[1170px]:flex-col max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-xl overflow-hidden py-10"
+          class="bg-white max-w-7xl flex gap-20 max-[1170px]:flex-col max-[1170px]:items-center max-[1170px]:space-y-4 shadow-lg  sm:px-6 lg:px-10 sm:rounded-xl overflow-hidden py-10"
         >
           <div
             v-if="props.user.picture"
@@ -150,16 +150,16 @@ async function AddRating(){
               {{ props.soldbooks.length }}
             </p>
             <div class=" flex items-center space-x-2">
-              <a v-tooltip.top="'Facebook account'" v-show="props.user.facebook_url != ''" target="_blank" :href="props.user.facebook_url"><Button icon="pi pi-facebook" rounded  severity="contrast" /></a>
-              <a v-tooltip.top="'Instagram account'" v-show="props.user.instagram_url != ''" target="_blank" :href="props.user.instagram_url"><Button icon="pi pi-instagram" rounded  severity="contrast" /></a>
+              <a v-tooltip.top="'Facebook account'" v-show="props.user.facebook_url != ''" target="_blank" :href="props.user.facebook_url"><Button icon="pi pi-facebook" rounded  severity="info" /></a>
+              <a v-tooltip.top="'Instagram account'" v-show="props.user.instagram_url != ''" target="_blank" :href="props.user.instagram_url"><Button icon="pi pi-instagram" rounded  severity="danger" /></a>
               <a v-tooltip.top="'Twitter account'"  v-show="props.user.twitter_url != ''" target="_blank" :href="props.user.twitter_url"><Button icon="pi pi-twitter" rounded  severity="contrast" /></a>
-              <a v-tooltip.top="'Goodreads account'" v-show="props.user.goodreads_url != ''" target="_blank" :href="props.user.goodreads_url"><Button icon="pi pi-book" rounded  severity="contrast" /></a>
+              <a v-tooltip.top="'Goodreads account'" v-show="props.user.goodreads_url != ''" target="_blank" :href="props.user.goodreads_url"><Button icon="pi pi-book" rounded  severity="warn" /></a>
             </div>
            <Link v-if="props.user.id !== usePage().props.auth.user.id" :href="route('users.contact_user',{id: props.user.id})"> <Button  label="Contact" class="mt-5" severity="secondary" outlined raised icon="pi pi-comments" /></Link>
           </div>
         </div>
         <div
-          class="mt-6 flex flex-col items-stretch backdrop-blur-sm bg-white/40 max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
+          class="mt-6 flex mb-10 flex-col items-stretch bg-white rounded-xl max-w-7xl shadow-lg sm:px-6 lg:px-8 sm:rounded-lg overflow-hidden py-10"
         >
           <div class="w-full max-[600px]:px-2 flex justify-between  items-center">
             <div class="p-6 text-gray-900 text-4xl">
@@ -220,7 +220,7 @@ async function AddRating(){
         </div>
         
       </div>
-      <div class="w-1/4 max-[1170px]:w-full backdrop-blur-sm bg-white/40 rounded-lg p-10 ">
+      <div class="w-1/4 max-[1170px]:w-full bg-white border rounded-lg p-10 ">
         <div class="w-full flex justify-between">
           <p class="w-full font-bold text-5xl">Ratings</p>
           <Button

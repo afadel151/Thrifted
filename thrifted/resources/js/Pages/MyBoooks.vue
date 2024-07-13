@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
 import Carousel from 'primevue/carousel';
-import { Head } from '@inertiajs/vue3';
 import CarouselBook from "@/Components/CarouselBook.vue";
 import { computed, ref } from "vue";
 import { Link } from '@inertiajs/vue3';
@@ -91,7 +90,7 @@ const responsiveOptions = ref([
                         <Carousel :value="MyBooks" :numVisible="4" :numScroll="1"
                             :responsiveOptions="responsiveOptions" :class="props.books.length < 4 ? 'w-'+props.books.length+'/4' : ''">
                             <template #item="slotProps">
-                                <div class="border-2 m-2 p-4 rounded">
+                                <!-- <div class="border-2 m-2 p-4 rounded">
                                     <Link :href="route('books.show', { id: slotProps.data.id })">
                                     <div class="mb-4">
                                         <div class="relative flex justify-center mx-auto">
@@ -111,7 +110,8 @@ const responsiveOptions = ref([
                                             <Button icon="pi pi-shopping-cart" class="ml-2" />
                                         </span>
                                     </div>
-                                </div>
+                                </div> -->
+                                <CarouselBook :book="slotProps.data" />
                             </template>
                         </Carousel>
                     <!-- </div> -->

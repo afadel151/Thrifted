@@ -12,6 +12,7 @@ import ShopByGenre from "@/Components/ShopByGenre.vue";
 import InfiniteLoading from "v3-infinite-loading";
 import { computed, ref } from "vue";
 import { Link } from "@inertiajs/vue3";
+import CarouselBook from "@/Components/CarouselBook.vue";
 const getSeverity = (status) => {
   if (status == true) {
     return "success";
@@ -119,6 +120,7 @@ async function HandleLoadMore() {
     console.log(error);
   }
 }
+
 </script>
 
 <template>
@@ -202,46 +204,12 @@ async function HandleLoadMore() {
     </div>
     <div class="flex w-screen">
       <ShopByGenre class="w-[20%]" />
-      <div class="w-[80%] grid grid-cols-6">
-        <div v-for="book in ComputedBooks" :key="book.id">
-          <div class="m-2 p-2 bg-white border rounded-xl">
-            <Tag
-              :severity="getSeverity(book.available)"
-              :value="book.available == 1 ? 'available' : 'sold'"
-              rounded
-            ></Tag>
-            <Link :href="route('books.show', { id: book.id })">
-              <div class="mb-4">
-                <div class="relative flex justify-center mx-auto">
-                  <img
-                    :src="
-                      book.cover == null
-                        ? '/cover-not-available.jpg'
-                        : book.cover.replace('public/', '/storage/')
-                    "
-                    :alt="book.title"
-                    class="rounded h-40"
-                  />
-                </div>
-              </div>
-            </Link>
-            <div class="mb-1 font-medium text-xl">{{ book.title }}</div>
-            <div class="mb-4 font-medium text-sm">{{ book.author }}</div>
-            <div class="flex justify-between items-center">
-              <p class="mt-0 font-semibold text-xl">
-                {{ book.price == 0 ? "No price yet" : book.price }}
-              </p>
-              <span>
-                <Button
-                  icon="pi pi-heart"
-                  style="font-size: 0.5rem"
-                  severity="secondary"
-                  outlined
-                />
-              </span>
-            </div>
-          </div>
+      <div class="w-[80%] grid grid-cols-5 gap-5 px-5">
+        <div v-for="book in ComputedBooks" class="h-fit" :key="book.id">
+          
+          <CarouselBook :book="book" />
         </div>
+        
       </div>
     </div>
     <InfiniteLoading @infinite="HandleLoadMore" />

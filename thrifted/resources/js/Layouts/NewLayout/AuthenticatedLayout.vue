@@ -2,7 +2,7 @@
 import { onBeforeMount, ref } from "vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
-import NavLink from "@/Components/NavLink.vue";
+import WishlistPopover from "@/Components/WishlistPopover.vue"
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import BookSearch from "@/Components/BookSearch.vue";
 import Button from "primevue/button";
@@ -70,7 +70,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
     
     <div class="w-screen ">
       <nav
-        class="border-gray-100 backdrop-blur-sm bg-white/40  pt-4 pb-4"
+        class=" border-b shadow-md backdrop-blur-sm bg-white/70  pt-4 pb-4"
       >
         <div class="px-10 ">
           <div class="flex  justify-center items-center gap-10 h-16">
@@ -85,11 +85,12 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
                   <Button label="Card" icon="pi pi-shopping-cart"  text />
                 </Link>
                 <Divider layout="vertical" />
-                <Link
+                <!-- <Link
                   :href="route('cards.index')"
                 >
                   <Button label="Wishlist" icon="pi pi-heart"  text />
-                </Link>
+                </Link> -->
+                <WishlistPopover />
                 <!--  -->
                 <Divider layout="vertical" />
               </div>
@@ -174,7 +175,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
           </Link>
           <Divider layout="vertical" />
           <Link
-            :href="route('books.my_books')"
+            :href="route('profile.books',{id: usePage().props.auth.user.id})"
           >
             <Button label="My Books" icon="pi pi-book" text plain />
           </Link>

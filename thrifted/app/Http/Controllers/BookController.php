@@ -78,7 +78,7 @@ class BookController extends Controller
     }
     public function my_books()
     {
-        $books = auth()->user()->books;
+        $books = auth()->user()->books->load('user');
         $tags = Tag::all();
         $user = auth()->user();
         $categories = Category::all();
@@ -116,6 +116,7 @@ class BookController extends Controller
         $book->original = $request->input('original') === 'Original' ? true : false;
         $book->save();
         $book->searchable();
+        $book->load('user');
         $tags = $request->input('tags', []);
         foreach ($tags as $tag) {
             DB::table('book_tags')->insert(
@@ -234,11 +235,20 @@ class BookController extends Controller
     {
         $user_id = Auth::user()->id;
         $cards = Card::where('user_id', $user_id)->pluck('id')->toArray();
-        return response()->json(CardBook::where(function ($query) use ($id, $cards) {
-                                                    $query->where('book_id', $id)
-                                                        ->whereIn('card_id', $cards);
-                                                    }
-                                                )->exists());
+        return response()->json(CardBook::where(
+            function ($query) use ($id, $cards) {
+                $query->where('book_id', $id)
+                    ->whereIn('card_id', $cards);
+            }
+        )->exists());
     }
+    public function delete(Request $request)
+    {
+        if (Book::destroy($request->input('book_id'))) {
+            return response(status: 200);
+        } else {
+            return response(status: 201);
+        }
 
+    }
 }
