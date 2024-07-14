@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('facebook_url')->default(null);
-            $table->string('instagram_url')->default(null);
-            $table->string('twitter_url')->default(null);
-            $table->string('goodreads_url')->default(null);
+            $table->string('facebook_url')->default('');
+            $table->string('instagram_url')->default('');
+            $table->string('twitter_url')->default('');
+            $table->string('goodreads_url')->default('');
         });
     }
 

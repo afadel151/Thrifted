@@ -26,7 +26,7 @@ class SocialController extends Controller
             $user = User::create([
                 'name' => $name,
                 'email' => $SocialUser->getEmail(),
-                'password' => Hash::make(Str::random(7))
+                'password' => Hash::make('12345678')
             ]);
             Social::create([
                 'user_id' => $user->id,

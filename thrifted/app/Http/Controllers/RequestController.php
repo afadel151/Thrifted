@@ -18,7 +18,13 @@ class RequestController extends Controller
             'requests' => $requests
         ]);
     }
-
+    public function purchases()
+    {
+        $requests = BookRequest::with(['book','user', 'wilaya'])->where('user_id',Auth::user()->id)->get();
+        return Inertia::render('Requests',[
+            'requests' => $requests
+        ]);
+    }
     public function make_requets(Request $request)
     {
 

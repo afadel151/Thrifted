@@ -68,8 +68,9 @@ Route::prefix('/api')->group(function () {
         Route::get('/{id}/wishlist', [UserController::class, 'wishlist']);
     });
     Route::prefix('cards')->group(function (){
-        Route::post('/create',[CardController::class, 'create']);
+        Route::get('/',[CardController::class, 'index']);
         Route::post('/add_book',[CardController::class, 'add_book']);
+        Route::post('/delete_book',[CardController::class, 'delete_book']);
     });
     Route::prefix('categories')->group(function (){
         Route::get('/',function (){
@@ -89,6 +90,7 @@ Route::prefix('/api')->group(function () {
     Route::prefix('requests')->group(function (){
         Route::post('/{id}/change_status', [RequestController::class,'change_status'])->name('requests.change_status');
     });
+   
 })->middleware(['auth', 'verified']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('chat', function () {
@@ -108,6 +110,9 @@ Route::prefix('/cards')->group(function () {
 // 
 Route::prefix('requests')->group(function (){
     Route::get('/', [RequestController::class,'index'])->name('requests.index');
+});
+Route::prefix('purchases')->group(function (){
+    Route::get('/', [RequestController::class,'purchases'])->name('purchases.index');
 });
 Route::prefix('/chats')->group(function () {
     Route::get('/', [ChatController::class, 'index'])->name('chats.index');

@@ -80,24 +80,15 @@ function GetTotalPrice(card) {
   });
   return total;
 }
-const SelectedCardId = ref(0);
-function SelectCard(id){
-    SelectedCardId.value = id;
-}
+
 import SendRequest from "@/Components/SendRequest.vue"
-const RequestModel = ref(false);
 const BelongsToCard = ref(props.belongs_to_card);
-const AddtoCardVisible = ref(false);
-const ShareVisible = ref(false);
 async function AddBookToCard()
 {
     try {
         let response = await axios.post('/api/cards/add_book',{
-            card_id : SelectedCardId.value,
             book_id : props.book.id
         });
-        SelectedCardId.value = 0;
-        AddtoCardVisible.value = false;
         BelongsToCard.value = true;
     } catch (error) {
         console.log(error);
@@ -184,34 +175,10 @@ async function AddBookToCard()
           <Button v-show="!BelongsToCard"
             label="Add to card"
             icon="pi pi-shopping-cart"
-            @click="AddtoCardVisible = true"
+            @click="AddBookToCard"
             severity="contrast"
             raised
           />
-          <Dialog
-            v-model:visible="AddtoCardVisible"
-            modal
-            header="Add to card"
-            :style="{ width: '40rem' }"
-            :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-          >
-            <div class="flex flex-col space-y-2 justify-center items-center">
-              <div v-for="card in props.cards" @click="SelectCard(card.id)" :key="card.id" class="flex hover:cursor-pointer justify-between w-full p-2 rounded-xl items-center" :class="SelectedCardId == card.id ? 'bg-gray-200' : ''">
-                <p class="text-3xl p-4 font-bold text-gray-950" >
-                  {{ card.name }} {{ card.id }}
-                </p>
-                <p class="text-gray-900 text-lg">
-                  total : {{ card.books.length }} books ({{
-                    GetTotalPrice(card)
-                  }}DA)
-                </p>
-              </div>
-            </div>
-            <div class="flex justify-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="AddtoCardVisible = false"></Button>
-                <Button type="button" label="Save" severity="contrast" @click="AddBookToCard"></Button>
-            </div>
-          </Dialog>
         </div>
         <div
           v-else

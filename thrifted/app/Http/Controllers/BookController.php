@@ -167,7 +167,7 @@ class BookController extends Controller
     {
         $book = Book::with('category', 'tags', 'user', 'pictures')->find($id);
         $cards = Auth::user()->cards;
-        $cards->load('books');
+        $cards->load('book');
         $tagsIds = $book->tags->pluck('id')->toArray();
         $relatedcategory = Book::where('books.id', '!=', $book->id)
             ->where('category_id', $book->category_id)
@@ -181,7 +181,7 @@ class BookController extends Controller
             ->take(10)
             ->get();
 
-        $belong_to_card = CardBook::where('book_id', $book->id)->whereIn('card_id', $cards->pluck('id')->toArray())->exists();
+        $belong_to_card = Card::where('book_id', $book->id)->where('user_id',Auth::user()->id)->exists();
 
         return Inertia::render('BookShow', [
             'related_books' => $relatedbooks,

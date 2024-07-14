@@ -13,6 +13,7 @@ const UnseenMessages = ref("");
 const showingNavigationDropdown = ref(false);
 import { Inertia } from "@inertiajs/inertia";
 import {Link} from "@inertiajs/vue3";
+import Card from "@/Components/Card.vue"
 const Requests = ref('');
 onBeforeMount(() => {
   axios
@@ -79,11 +80,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
 
             <div class="sm:flex hidden">
               <div class="sm:flex hidden sm:-my-px">
-                <Link
-                  :href="route('cards.index')"
-                >
-                  <Button label="Card" icon="pi pi-shopping-cart"  text />
-                </Link>
+                <Card />
                 <Divider layout="vertical" />
                 <!-- <Link
                   :href="route('cards.index')"
