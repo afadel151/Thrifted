@@ -10,6 +10,7 @@ use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -116,8 +117,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function search($query)
     {
-        //
+        return Inertia::render('UserSearch',[
+            'query' => $query
+        ]);
+    }
+    public function search_pagination($query)
+    {
+        $users = User::search($query)->paginate(12);
+        return response()->json($users);
     }
 }

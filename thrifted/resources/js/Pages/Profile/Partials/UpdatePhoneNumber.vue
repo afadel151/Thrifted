@@ -8,7 +8,7 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     user_id: user.id,
-    phone: null
+    phone: ''
 });
 </script>
 <template>

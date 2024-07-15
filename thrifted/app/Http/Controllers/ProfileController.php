@@ -60,6 +60,15 @@ class ProfileController extends Controller
 
         return Inertia::render('VerifyCode', ['phone' => $parsePhone]);
     }
+    public function update_wilaya(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->update([
+            'wilaya_id' => $request->input('wilaya_id')
+        ]);
+        $user->load('wilaya');
+        return Redirect::route('profile.edit');
+    }
     public function rate(Request $request)
     {
         try {

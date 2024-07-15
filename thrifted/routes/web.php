@@ -43,6 +43,7 @@ Route::prefix('/api')->group(function () {
         Route::post('update', [BookController::class, 'update']);
         Route::post('delete', [BookController::class, 'delete']);
         Route::post('search', [BookController::class, 'search']);
+        Route::get('/{query}/search_pagination', [BookController::class, 'search_pagination']);
         Route::post('/add_to_wishlist', [BookController::class, 'add_to_wishlist']);
         Route::post('/send_request', [BookController::class, 'send_request']);
 
@@ -60,6 +61,7 @@ Route::prefix('/api')->group(function () {
         Route::post('/unseen_messages', [UserController::class, 'get_unseen_messages']);
         Route::post('/update_picture', [ProfileController::class, 'update_picture']);
         Route::post('/search', [ProfileController::class, 'search']);
+        Route::get('{query}/search_pagination', [UserController::class, 'search_pagination']);
         Route::post('/rate', [ProfileController::class, 'rate']);
         Route::post('/add_social_links', [ProfileController::class, 'add_social_links']);
         Route::get('/{id}/carousel_details',[UserController::class, 'carousel_details']);
@@ -126,6 +128,7 @@ Route::prefix('/books')->group(function () {
     Route::get('/{id}', [BookController::class, 'show'])->name('books.show');
     Route::get('/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
     Route::get('/{id}/chat_with_seller', [BookController::class, 'chat_with_seller'])->name('books.chat_with_seller');
+    Route::get('/search/{query}', [BookController::class, 'search_page'])->name('books.search');
 })->middleware(['auth', 'verified']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -133,6 +136,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/verify_code', [ProfileController::class, 'verifyCode'])->name('profile.verify_code');
     Route::post('/profile/send_code', [ProfileController::class, 'sendVerificationCode'])->name('profile.send_verification_code');
+    Route::post('/profile/update_wilaya', [ProfileController::class, 'update_wilaya'])->name('profile.update_wilaya');
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/{id}/books', [ProfileController::class, 'books'])->name('profile.books');
     Route::get('/profile/{id}/books_pagination', [ProfileController::class, 'books_pagination'])->name('profile.books_pagination');
@@ -141,6 +145,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::prefix('users')->group(function () {
     Route::get('/contact_user/{id}', [UserController::class, 'contact_user'])->name('users.contact_user');
+    Route::get('/{query}/search', [UserController::class, 'search'])->name('users.search');
 });
 Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [SocialController::class, 'callback']);

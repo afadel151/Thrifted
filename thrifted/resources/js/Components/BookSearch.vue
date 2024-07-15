@@ -38,12 +38,14 @@ watch(SearchInput, async (NewSearch, OldSearch) => {
     UsersResults.value = [];
   }
 });
+
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import { Link } from "@inertiajs/vue3";
 </script>
-
+<!-- 'books.search' -->
 <template>
   <div class="">
     <IconField @click="openPosition('top')" >
@@ -104,6 +106,9 @@ import Button from "primevue/button";
             <p v-else class="ml-2 text-red-500">Sold</p>
           </div>
         </div>
+        <Link class="w-full flex justify-end " v-if="SearchResults != []" :href="route('books.search',{query:SearchInput})">
+            <Button label="Show More" text icon="pi pi-arrow-right" /> 
+        </Link>
         <p v-if="!Searching">Users</p>
         <div
           v-for="user in UsersResults"
@@ -131,6 +136,9 @@ import Button from "primevue/button";
           </div>
       </div>
       </div>
+      <Link class="w-full flex justify-end " v-if="SearchResults != []" :href="route('users.search',{query:SearchInput})">
+            <Button label="Show More" text icon="pi pi-arrow-right" /> 
+        </Link>
       <div class="flex justify-end gap-2">
         Search by
         <svg

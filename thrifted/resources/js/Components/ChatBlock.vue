@@ -44,7 +44,7 @@ onBeforeMount(()=>{
         });
 
 });
-const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? 'default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
+const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? '/default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
 </script>
 <template>
     <Link :href="route('chats.show', { id: chat.id })" class="flex  p-2  items-center cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-xl ">

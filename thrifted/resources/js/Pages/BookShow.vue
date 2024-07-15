@@ -148,12 +148,27 @@ async function AddBookToCard()
         >
           {{ props.book.available ? "Available" : "Sold" }}
         </p>
-        <p class="text-xl">
-          Seller :
-          <Link :href="route('profile.show', { id: props.book.user_id })">
-            {{ props.book.user.name }}
+        <div class="text-xl flex space-x-2">
+          <p>Seller :</p>
+          <Link :href="route('profile.show', { id: props.book.user_id })" class="flex items-center">
+            <div
+            v-if="props.book.user.picture"
+            class="w-[30px] h-[30px] rounded-full  bg-cover bg-center"
+            :style="{
+              backgroundImage: `url('${props.book.user.picture.replace(
+                'public/',
+                '/storage/'
+              )}')`,
+            }"
+          ></div>
+          <div
+            v-else
+            class="w-[30px] h-[30px] rounded-full   bg-cover bg-center"
+            style="background-image: url('/default-avatar.jpg')"
+          ></div>
+            <p class="hover:text-gray-700">{{ props.book.user.name }}</p>
           </Link>
-        </p>
+        </div>
 
         <div
           class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full"

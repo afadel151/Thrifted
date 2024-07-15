@@ -96,7 +96,7 @@ onMounted(() => {
     scrollToBottom();
 });
 const UnseenNotSeen = ref(true);
-const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? 'default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
+const profileImage = props.chat.target_id == user.id ? props.chat.creator.picture == null ? '/default-avatar.jpg' : props.chat.creator.picture.replace('public/','/storage/') : props.chat.target.picture == null ? '/default-avatar.jpg' : props.chat.target.picture.replace('public/' , '/storage/') ;
 
 </script>
 <template>

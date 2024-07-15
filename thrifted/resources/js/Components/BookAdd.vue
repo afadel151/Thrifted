@@ -14,7 +14,7 @@ import { usePage } from "@inertiajs/vue3";
 const emit = defineEmits(["addBook"]);
 const props = defineProps({
   user_id: {
-    type: Number,
+    type: String,
     required: true,
   }
 });

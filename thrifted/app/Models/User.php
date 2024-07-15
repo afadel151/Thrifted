@@ -34,7 +34,8 @@ class User extends Authenticatable
         'instagram_url',
         'twitter_url',
         'goodreads_url',
-        'rating'
+        'rating',
+        'wilaya_id'
     ];
 
     /**
@@ -116,4 +117,8 @@ class User extends Authenticatable
         return app(EngineManager::class)->engine('algolia');
     }
    
+    public function wilaya()
+    {
+        return $this->belongsTo(Wilaya::class);
+    }
 }

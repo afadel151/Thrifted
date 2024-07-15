@@ -1,8 +1,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/NewLayout/AuthenticatedLayout.vue';
-import Tag from 'primevue/tag';
-import { Link } from '@inertiajs/vue3';
-import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
@@ -12,17 +9,8 @@ import axios from 'axios';
 import InfiniteLoading from "v3-infinite-loading";
 import { computed, ref } from 'vue';
 import CarouselBook from '@/Components/CarouselBook.vue';
-import BookAdd from '@/Components/BookAdd.vue';
-
-const getSeverity = (status) => {
-    if (status == true) {
-        return 'success';
-    } else {
-        return 'danger';
-    }
-};
 const props = defineProps({
-    user_id:{
+    query:{
         type: String,
         required: true
     }
@@ -104,7 +92,7 @@ const ComputedBooks = computed(() => {
 async function HandleLoadMore()
 {
     try {
-        let response = await axios.get(`/profile/${props.user_id}/books_pagination?page=${Page.value}`);
+        let response = await axios.get(`/api/books/${props.query}/search_pagination?page=${Page.value}`);
         response.data.data.forEach((book) =>{
             Books.value.push(book);
         });
@@ -114,9 +102,7 @@ async function HandleLoadMore()
         console.log(error);
     }
 }
-function AddBook(book) {
-    Books.value.push(book);
-}
+
 </script>
 
 <template>
@@ -164,7 +150,6 @@ function AddBook(book) {
                 <Select v-model="AvailableInput" :options="available" optionLabel="name" optionValue="code"
                     placeholder="Filter By Availability" class="w-52" />
             </div>
-            <BookAdd :user_id="props.user_id" @addBook="AddBook" class="mb-2" />
         </div>
         <div class="w-full  px-32 py-16 grid grid-cols-6">
             <div v-for="book in ComputedBooks" :key="book.id">

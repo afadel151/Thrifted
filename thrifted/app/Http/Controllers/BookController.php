@@ -151,11 +151,23 @@ class BookController extends Controller
 
 
     }
+    public function search_page($query)
+    {
+        return Inertia::render('BookSearch',[
+            'query' => $query
+        ]);
+    }
+    public function search_pagination($query)
+    {
+        $books = Book::search($query)->orderBy('created_at','desc')->paginate(12);
+        $books->load('user');
+        return response()->json($books);
+    }
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $books = Book::search($search)->get();
-        $users = User::search($search)->get();
+        $books = Book::search($search)->take(5)->get();
+        $users = User::search($search)->take(5)->get();
         $users->load('books');
         $books->load(['user', 'tags', 'category']);
         return response()->json([
@@ -266,7 +278,10 @@ class BookController extends Controller
     public function delete(Request $request)
     {
         if(Book::find($request->input('book_id'))->user->id == Auth::user()->id) {
-            if (Book::destroy($request->input('book_id'))) {
+
+            $book = Book::find($request->input('book_id'));
+            if ($book->delete()) {
+                $book->unsearchable();
                 return response(status: 200);
             } else {
                 return response(status: 201);
@@ -274,7 +289,5 @@ class BookController extends Controller
         }else {
             return response(status: 201);
         }
-       
-
     }
 }
