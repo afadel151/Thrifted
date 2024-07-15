@@ -12,6 +12,11 @@ use Laravel\Scout\Searchable;
 
 class Book extends Model
 {
+
+
+
+
+    
     use HasFactory, Searchable;
     protected $fillable = [
         'user_id',
