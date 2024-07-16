@@ -35,7 +35,7 @@ onMounted(()=>{
 </script>
 <template>
   <div>
-    <Button type="button" icon="pi pi-shopping-cart" label="Card" @click="toggle" />
+    <Button type="button" icon="pi pi-shopping-cart" class="sm:w-fit w-full sm:m-0 my-3" label="Card" @click="toggle" />
     <Popover ref="op">
       <div class="flex flex-col gap-4 w-[25rem]">
         <div  v-for="card in Card"

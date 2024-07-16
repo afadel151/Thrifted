@@ -107,7 +107,7 @@ async function HandleLoadMore()
 
 <template>
     <AuthenticatedLayout>
-        <div class="w-full flex justify-start h-24 items-center space-x-4 px-20 mt-16 ">
+        <div class="w-full flex-col sm:flex-row flex justify-start sm:h-24 items-center space-x-4 px-20 mt-16 ">
             <div class="mx-auto justify-self-start flex flex-col justify-start h-full items-start">
                 <p>Filter by search</p>
                 <IconField>
@@ -151,7 +151,7 @@ async function HandleLoadMore()
                     placeholder="Filter By Availability" class="w-52" />
             </div>
         </div>
-        <div class="w-full  px-32 py-16 grid grid-cols-6">
+        <div class="w-full  sm:px-32 px-10 py-16 grid sm:grid-cols-6">
             <div v-for="book in ComputedBooks" :key="book.id">
                 <CarouselBook :book="book"/>
             </div>

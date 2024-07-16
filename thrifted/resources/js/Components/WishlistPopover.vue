@@ -35,7 +35,7 @@ onMounted(()=>{
 </script>
 <template>
   <div>
-    <Button type="button" icon="pi pi-heart" label="WishList" @click="toggle" />
+    <Button type="button" icon="pi pi-heart" class="sm:w-fit w-full sm:m-0 my-3" label="WishList" @click="toggle" />
     <Popover ref="op">
       <div class="flex flex-col gap-4 w-[25rem]">
         <div  v-for="wish in Books"

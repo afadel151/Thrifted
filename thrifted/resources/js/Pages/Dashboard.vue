@@ -51,7 +51,7 @@ import Footer from "@/Components/Footer.vue"
 
 <template>
   <AuthenticatedLayout>
-    <div class=" flex pt-10">
+    <div class=" flex sm:flex-row items-center flex-col-reverse pt-10">
       <div class="h-20 w-1/5">
         <ShopByGenre />
       </div>
@@ -59,9 +59,9 @@ import Footer from "@/Components/Footer.vue"
         <div  class="bg-white shadow-md pt-10 rounded-2xl sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">🕜 NEW BOOKS</p>
           <Carousel
-            v-if="props.newbooks.length > 3"
+           
             :value="props.newbooks"
-            :numVisible="props.newbooks.length < 4 ? props.newbooks.length : 4"
+            :numVisible="1"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
           >
@@ -69,16 +69,14 @@ import Footer from "@/Components/Footer.vue"
               <CarouselBook :book="slotProps.data" />
             </template>
           </Carousel>
-          <div v-else class="flex justify-start">
-            <CarouselBook v-for="book in props.newbooks" :key="book.id" :book="book" />
-          </div>
+         
         </div>
         <div  class="bg-white shadow-md sm:px-6 pt-10 rounded-2xl lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl"> NEW CLASSICS</p>
           <Carousel
-             v-if="props.classics.length > 3"
+         
             :value="props.classics"
-            :numVisible="4"
+            :numVisible="1"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
           >
@@ -86,15 +84,13 @@ import Footer from "@/Components/Footer.vue"
               <CarouselBook :book="slotProps.data" />
             </template>
           </Carousel>
-          <div v-else class="flex justify-start">
-            <CarouselBook v-for="book in props.classics" :key="book.id" :book="book" />
-          </div>
+          
         </div>
         <div  class="bg-white shadow-md rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">RELIGION BOOKS</p>
           <Carousel
             :value="props.newbooks"
-            :numVisible="4"
+            :numVisible="1"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
           >
@@ -106,9 +102,9 @@ import Footer from "@/Components/Footer.vue"
         <div  class="bg-white shadow-md rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">BEST OF LITERATURE</p>
           <Carousel
-           v-if="props.literature.length > 3"
+          
             :value="props.literature"
-            :numVisible="4"
+            :numVisible="1"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
           >
@@ -116,16 +112,14 @@ import Footer from "@/Components/Footer.vue"
               <CarouselBook :book="slotProps.data" />
             </template>
           </Carousel>
-          <div v-else class="flex justify-start">
-            <CarouselBook v-for="book in props.literature" :key="book.id" :book="book" />
-          </div>
+          
         </div>
         <div  class="bg-white shadow-md rounded-2xl pt-10 sm:px-6 lg:px-8 overflow-hidden">
           <p class="mb-2 ml-10 font-bold text-4xl">BEST SELLERS</p>
           <Carousel
-           v-if="props.best_sellers.length > 3"
+          
             :value="props.best_sellers"
-            :numVisible="4"
+            :numVisible="1"
             :numScroll="1"
             :responsiveOptions="responsiveOptions"
           >
@@ -133,9 +127,7 @@ import Footer from "@/Components/Footer.vue"
               <CarouselUser :user="slotProps.data" />
             </template>
           </Carousel>
-          <div v-else class="flex justify-start">
-            <CarouselUser v-for="user in props.best_sellers" :key="user.id" :user="user" />
-          </div>
+          
         </div>
       </div>
       <div class="w-1/5 ">

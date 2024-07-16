@@ -118,7 +118,7 @@ function onChange(e) {
     v-model:visible="visible"
     modal
     header="Add a book"
-    :style="{ width: '40rem' }"
+    class="sm:w-[40rem] w-[90%] "
   >
     <template #header>
       <div class="inline-flex justify-center items-center gap-2">

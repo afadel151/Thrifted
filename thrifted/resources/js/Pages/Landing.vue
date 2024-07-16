@@ -28,22 +28,22 @@ function handleImageError() {
 </script>
 
 <template>
-  <div class="scroll-auto h-screen overscroll-y-scroll snap-proximity snap-y ">
+  <div class=" h-screen  ">
     <header
-      class="flex snap-center justify-between px-64 items-center backdrop-blur-sm bg-white/40 border-b p-4"
+      class="flex  justify-between sm:px-64 items-center backdrop-blur-sm bg-white/40 border-b p-4"
     >
       <div class="text-2xl text-gray-800 font-bold">
         <span class="text-black">ThriftedBooks</span>
         <span class="text-purple-600">Dz</span>
       </div>
       <nav class="space-x-4">
-        <a href="#" class="text-gray-600">Overview</a>
-        <a href="#" class="text-gray-600">Supporters</a>
-        <a href="#" class="text-gray-600">About</a>
+        <a href="#" class=" sm:block hidden text-gray-600">Overview</a>
+        <a href="#" class="sm:block hidden text-gray-600">Supporters</a>
+        <a href="#" class="sm:block hidden text-gray-600">About</a>
         <Button label="Browse now" severity="help" />
       </nav>
     </header>
-    <div class="w-full snap-center   flex px-64 gap-4 py-40">
+    <div class="w-full bg-  flex-col-reverse sm:flex-row  flex sm:px-[20%] gap-4 py-40">
       <div
         v-motion
         :initial="{ opacity: 0, x: -100 }"
@@ -52,7 +52,7 @@ function handleImageError() {
         :hovered="{ scale: 1 }"
         :delay="100"
         :duration="300"
-        class="w-1/2 flex flex-col items-start justify-start "
+        class="sm:w-1/2 w-full flex flex-col items-start justify-start "
       >
         <p class="text-7xl font-black">Sell & buy books in Algeria</p>
         <p class="text-gray-600 text-xl mt-10 mb-16">
@@ -91,7 +91,7 @@ function handleImageError() {
           </template>
         </nav>
       </div>
-      <div class="w-1/2 ">
+      <div class="sm:w-1/2  w-full ">
         <img
           src="/booksimage.jpg"
           v-motion
@@ -106,10 +106,10 @@ function handleImageError() {
         />
       </div>
     </div>
-    <div class="px-52 snap-center mt-20">
+    <div class="sm:px-52 snap-center mt-20">
       <p class="text-center text-6xl">Features</p>
      
-      <div class="grid snap-center grid-cols-2 grid-rows-2 mt-24 px-20 gap-16">
+      <div class="grid  snap-center sm:grid-cols-2 sm:grid-rows-2  mt-24 px-10 sm:px-20 gap-16">
         <div  v-motion
         :initial="{ opacity: 0, x: -100 }"
         :visible="{ opacity: 1, x: 0, scale: 1 }"

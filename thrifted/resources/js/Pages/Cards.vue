@@ -1,12 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/NewLayout/AuthenticatedLayout.vue";
-import axios from "axios";
-import Dialog from "primevue/dialog";
-import Button from "primevue/button";
-
-import Link from "@inertiajs/vue3";
+// import Link from "@inertiajs/vue3";
 import Divider from 'primevue/divider';
 
 const props = defineProps({
@@ -35,11 +30,11 @@ let TotalPrice = computed(()=>{
           :key="card.id"
           class="border"
         >
-          <Link
+          <a
           :href="route('books.show',{id: card.book.id})"
           class="flex p-6 justify-between items-start h-full w-full">
             <p class="text-3xl p-4 font-bold text-gray-950">{{ card.book.title }}</p>
-          </Link>
+      </a>
         </div>
       </div>
       <Divider layout="vertical" />

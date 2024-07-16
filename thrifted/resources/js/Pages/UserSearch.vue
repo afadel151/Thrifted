@@ -45,7 +45,7 @@ async function HandleLoadMore()
                 </IconField>
             </div>
         </div>
-        <div class="w-full  px-32 py-16 grid grid-cols-6">
+        <div class="w-full  sm:px-32 px-10 py-16 grid sm:grid-cols-6">
             <div v-for="user in Users" :key="user.id">
                 <CarouselUser :user="user"/>
             </div>

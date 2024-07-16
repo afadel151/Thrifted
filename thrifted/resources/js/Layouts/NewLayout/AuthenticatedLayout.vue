@@ -213,6 +213,8 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
           }"
           class="sm:hidden z-10"
         >
+          <Card />
+          <WishlistPopover />
           <div class="space-y-1 pt-2 pb-3">
             <ResponsiveNavLink
               :href="route('dashboard')"
@@ -227,7 +229,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
               My Books
             </ResponsiveNavLink>
           </div>
-
+          
           <!-- Responsive Settings Options -->
           <div class="border-gray-200 pt-4 pb-1 border-t">
             <div class="px-4">
@@ -256,6 +258,7 @@ echo.channel(`user.messages.${userId}`).listen("MessageNotification", (e) => {
                 Log Out
               </ResponsiveNavLink>
             </div>
+            
           </div>
         </div>
 

@@ -171,7 +171,7 @@ async function AddBookToCard()
         </div>
 
         <div
-          class="flex justify-self-end justify-start items-center gap-2 mt-auto w-full"
+          class="flex sm:flex-row flex-col justify-self-end justify-start items-center gap-2 mt-auto w-full"
           v-if="props.book.user_id != user.id"
         >
           <Link :href="route('books.chat_with_seller', { id: props.book.id })">

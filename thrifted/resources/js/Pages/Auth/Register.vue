@@ -21,10 +21,10 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout class="px-10">
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="px-10 rounded-xl">
             <a href="/auth/github/redirect"><Button label="Github" class="w-full" severity="contrast" icon="pi pi-github" /></a>
             <a href="/auth/google/redirect"><Button class="w-full mt-5" icon="pi pi-google" label="Google" outlined severity="secondary" /></a>
         
